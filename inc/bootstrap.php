@@ -1,0 +1,52 @@
+<?php
+/*
+	Файл для подключения всех необходимых библиотек и первичной инициализации
+	Данный файл входит в состав системы IoT Core System
+	Разработчик: Роман Сергеевич Гринько
+	E-mail: rsgrinko@gmail.com
+	Сайт: https://it-stories.ru
+*/
+session_start();
+define('START_TIME', microtime(true));														// засекаем время старта скрипта
+require_once __DIR__ . '/config.php';															// подключаем конфигурационный файл
+require_once $CONFIG['DIR'].'/inc/lib/CCache.class.php';			  						// кэширование
+require_once $CONFIG['DIR'].'/inc/lib/CDB.class.php';			  							// работа с базой данных
+require_once $CONFIG['DIR'].'/inc/lib/CEvents.class.php';		  							// работа с событиями системы
+require_once $CONFIG['DIR'].'/inc/lib/CUser.class.php';			  							// работа с пользователями панели
+require_once $CONFIG['DIR'].'/inc/lib/CPagination.class.php';	  							// обработчик пагинации
+require_once $CONFIG['DIR'].'/inc/lib/CMQTT.class.php';			  							// работа с mqtt брокером
+require_once $CONFIG['DIR'].'/inc/func.php';						  						// вспомогательные функции
+require_once $CONFIG['DIR'].'/inc/lib/CCron.class.php';			  							// планировщик задач
+require_once $CONFIG['DIR'].'/inc/lib/CIoT.class.php';			  							// работа с контроллером
+
+$DB = new CDB($CONFIG['DB_HOST'], $CONFIG['DB_LOGIN'], $CONFIG['DB_PASSWORD'], $CONFIG['DB_NAME']); // создаем объект для работы с базой данных
+$DB->query('SET sql_mode = \'\'');                                                          // сбрасываем режим работы sql_mode=only_full_group_by 
+
+
+CIoT::init($DB);											     						 	// инициализация класса работы с контроллером
+CCache::init($CONFIG['CACHEDIR'], true);    	// инициализация модуля кэширования
+
+if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { CCache::clearCache(); }	// сброс кэша по запросу
+CUser::init($DB);																					// инициализация поддержки пользователей панели
+
+CEvents::init($DB);																					// инициализация класса журналирования событий
+CCron::init($DB);																					// инициализация крона
+
+if(CUser::is_user()) {
+	$USER = CUser::getFields();
+} else {
+	$USER = [];
+}
+
+
+CCron::handler();  																					// выполнение периодических задач на хитах
+
+
+$userDevices = getUserDevices($USER['id']);
+
+
+if($userDevices) {
+	$USER['deviceId'] = $userDevices[0]['id'];  // мониторим только первое устройство пользователя при наличии
+} else {
+	$USER['deviceId'] = 9;						// иначе показываем демо плату
+}

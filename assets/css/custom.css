@@ -1,0 +1,148 @@
+.discoBall:before {
+	content: " ";
+    background-image: url(https://radiovanya.ru/assets/images/content/music/online5-1.gif);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    bottom: 15px;
+    left: 6px;
+}
+
+
+.monitoring_value {
+	display: inline-block;
+    font-size: 2em;
+    text-align: center;
+    width: 100%;
+}
+
+.sensor_card_header{
+	text-align: center;
+}
+
+table.table.table-striped.table-borderless {
+    border: 1px solid #7dc855;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f5f5f5;
+}
+
+
+.custom_bold {
+	font-weight: bold;
+}
+
+.custom_text_center{
+	text-align: center;
+}
+
+.footer_debug {
+    text-align: center;
+    display: block;
+    background: #838cc7;
+    color: white;
+    padding: 9px;
+    box-shadow: 0px 0px 4px 0px #0000004a;
+}
+
+
+.control_relay_state {
+	text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 50px;
+    margin-bottom: 25px;
+}
+
+
+
+.relay_state_disabled {
+    background: #f6501d;
+    color: white;
+}
+
+.relay_state_enabled {
+    background: #7cc854;
+    color: white;
+}
+
+li.nav-item.active {
+    background: #7dc855;
+    color: white;
+}
+
+.nav-drawer > .active > a:hover, .nav-drawer > .active > a:focus, .nav-drawer > .active > a:active {
+    background: #7dc855;
+    color: white;	
+}
+
+
+
+.onoff {
+    width: 30px;
+    height: 30px;
+    background: #bdc6cf;
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: -5px;
+    border-radius: 30px;
+}
+
+.onoff.relayon {
+	background: #7dc855;	
+}
+
+.onoff.relayon:before {
+    content: "ON";
+    font-size: 10px;
+    position: absolute;
+    top: 9px;
+    left: 6px;
+    font-weight: bold;
+}
+
+
+.onoff.relayoff {
+    background: #f6501e;
+}
+
+.onoff.relayoff:before {
+    content: "OFF";
+    font-size: 10px;
+    position: absolute;
+    top: 9px;
+    left: 6px;
+    font-weight: bold;
+}
+
+/*.control_block .card-block button.btn {
+    width: 49%;
+}*/
+
+
+.row.maxheight{
+	min-height: calc(100vh - 140px);
+}
+
+	table.sql_query_result tr td {
+		padding:10px;
+	}
+	.table-hover-custom > tbody > tr:hover {
+	    background-color: #56959f;
+		color: white;
+	}
+	
+	.sql-query-result-table-header {
+		background-color: #838cc7 !important;
+		color: white;
+	}
+	
+	textarea[name="query"] {
+	    color: #27458b;
+	    font-size: 18px;
+	}
