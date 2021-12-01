@@ -318,6 +318,7 @@ class CDB
 
     /**
      * Получение строки из таблицы
+     *
      * @param $table
      * @param string $sql
      * @param array $params
