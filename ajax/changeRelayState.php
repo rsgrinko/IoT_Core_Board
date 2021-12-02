@@ -1,4 +1,7 @@
 <?php
+/**
+ * Ajax обработчик для смены состояния реле контроллера
+ */
 require_once __DIR__ . '/../inc/bootstrap.php';
 
 if (!CUser::is_user()) {

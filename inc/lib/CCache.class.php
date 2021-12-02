@@ -12,12 +12,12 @@
 class CCache
 {
     /**
-     * @var $cache_dir Дирректория хранения файлов кэша
+     * @var string $cache_dir Директория хранения файлов кэша
      */
     private static $cache_dir;
 
     /**
-     * @var int $quantity Количество оборащений к кэшу
+     * @var int $quantity Количество обращений к кэшу
      */
     public static $quantity = 0;
 
@@ -40,7 +40,7 @@ class CCache
     private static $class_author = 'Roman S Grinko (rsgrinko@gmail.com)';
     private static $class_description = 'Класс для кэширования данных и работы с кэшэм';
 
-    public static function classinfo()
+    public static function classinfo():array
     {
         $result = [];
         $result['VERSION'] = self::$class_version;
@@ -55,7 +55,7 @@ class CCache
      * @param $dir Дирректория хранения файлов кэша
      * @param bool $enabled Флаг включения кэширования
      */
-    public static function init($dir, $enabled = true)
+    public static function init($dir, $enabled = true):void
     {
         self::$cache_dir = $dir;
         self::$cache_enabled = $enabled;
@@ -67,7 +67,7 @@ class CCache
      * @param $name Имя элемента кэша
      * @return bool Флаг наличия или отсутствия кэша
      */
-    public static function checkCache($name)
+    public static function checkCache($name):bool
     { // Проверка наличия элемента в кэше
         if (!self::$cache_enabled) {
             return false;
@@ -103,7 +103,7 @@ class CCache
      * @param $arValue Значение элемента кэша
      * @return bool Флаг успешной или неудачной записи данных
      */
-    public static function writeCache($name, $arValue)
+    public static function writeCache($name, $arValue):bool
     { // Записать элемент в кэш
         if (!self::$cache_enabled) {
             return false;
@@ -122,7 +122,7 @@ class CCache
      *
      * @return bool Флаг успеха
      */
-    public static function clearCache()
+    public static function clearCache():bool
     { // Очистить кэш
         foreach (scandir(self::$cache_dir) as $file) {
             if ($file == '.' or $file == '..') continue;
@@ -141,7 +141,7 @@ class CCache
      * @param $name Имя элемента кэша
      * @return bool Флаг успеха
      */
-    public static function delFromCache($name)
+    public static function delFromCache($name):bool
     { // Удалить элемент из кэша
         if (self::checkCache($name)) {
             if (!unlink(self::$cache_dir . md5($name) . '.tmp')) {
@@ -170,9 +170,10 @@ class CCache
 
     /**
      * Получение общего размера кэша в байтах
-     * @return false|int Размер кэша в байтах или false
+     * 
+     * @return int Размер кэша в байтах или false
      */
-    public static function getCacheSize()
+    public static function getCacheSize():int
     { // Получить размер кэша
         $return_size = 0;
         foreach (scandir(self::$cache_dir) as $file) {
@@ -184,6 +185,7 @@ class CCache
 
     /**
      * Получение времени существованя кэша в секундах
+     * 
      * @param $name Имя элемента кэша
      * @return false|int Время в секундах или false
      */

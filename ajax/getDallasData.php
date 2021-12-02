@@ -1,6 +1,9 @@
 <?php
+/**
+ * Ajax обработчик для получения показаний датчика DS18B20
+ */
 	require_once __DIR__ . '/../inc/bootstrap.php';
-	//pre($_SESSION);
+
 	if(!CUser::is_user()) {
 		die('403 - Access denied');
 	}

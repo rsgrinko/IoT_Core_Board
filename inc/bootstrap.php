@@ -1,14 +1,14 @@
 <?php
-/*
-	Файл для подключения всех необходимых библиотек и первичной инициализации
-	Данный файл входит в состав системы IoT Core System
-	Разработчик: Роман Сергеевич Гринько
-	E-mail: rsgrinko@gmail.com
-	Сайт: https://it-stories.ru
+/**
+*	Файл для подключения всех необходимых библиотек и первичной инициализации
+*	Данный файл входит в состав системы IoT Core System
+*	Разработчик: Роман Сергеевич Гринько
+*	E-mail: rsgrinko@gmail.com
+*	Сайт: https://it-stories.ru
 */
 session_start();
 define('START_TIME', microtime(true));														// засекаем время старта скрипта
-require_once __DIR__ . '/config.php';															// подключаем конфигурационный файл
+require_once __DIR__ . '/config.php';														// подключаем конфигурационный файл
 require_once $CONFIG['DIR'].'/inc/lib/CCache.class.php';			  						// кэширование
 require_once $CONFIG['DIR'].'/inc/lib/CDB.class.php';			  							// работа с базой данных
 require_once $CONFIG['DIR'].'/inc/lib/CEvents.class.php';		  							// работа с событиями системы
