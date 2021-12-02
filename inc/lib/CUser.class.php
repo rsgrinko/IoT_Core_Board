@@ -129,7 +129,7 @@ class CUser {
 	}
 	
 	//  Проверка на пользователя
-	public static function is_user(){
+	public static function is_user():bool {
 		if(!isset($_SESSION['authorize']) or empty($_SESSION['authorize']) or $_SESSION['authorize']!=='Y') {
 			return false;
 		}
@@ -150,7 +150,7 @@ class CUser {
 	}
 
 	// метод вроверяет админ ли перед нами или нет
-	public static function is_admin(){
+	public static function is_admin():bool {
 		if(self::is_user()) {
 			if(self::getFields(self::$id)['access_level'] == 'admin') {
 				return true;
@@ -163,7 +163,7 @@ class CUser {
 	}
 	
 	// Метод выхода из системы
-	public static function Logout(){
+	public static function Logout():void {
 		$_SESSION['id'] = '';
 		$_SESSION['authorize'] = '';
 		$_SESSION['login'] = '';
@@ -171,8 +171,8 @@ class CUser {
 		$_SESSION['user'] = '';
 		//session_unset();
 		//session_destroy();
-		return true;
-		}
+		return;
+    }
 		
 		
 

@@ -52,7 +52,7 @@ class CCache
     /**
      * Инициализация кэша
      *
-     * @param $dir Дирректория хранения файлов кэша
+     * @param string $dir Дирректория хранения файлов кэша
      * @param bool $enabled Флаг включения кэширования
      */
     public static function init($dir, $enabled = true):void
@@ -64,7 +64,7 @@ class CCache
     /**
      * Проверка наличия элемента в кэше
      *
-     * @param $name Имя элемента кэша
+     * @param string $name Имя элемента кэша
      * @return bool Флаг наличия или отсутствия кэша
      */
     public static function checkCache($name):bool
@@ -82,7 +82,7 @@ class CCache
     /**
      * Получение кэшированых данных из кэша
      *
-     * @param $name Имя элемента кэша
+     * @param string $name Имя элемента кэша
      * @return false|mixed Кэшированные данные
      */
     public static function getCache($name)
@@ -99,8 +99,8 @@ class CCache
     /**
      * Запись значения в кэш
      *
-     * @param $name Имя элемента кэша
-     * @param $arValue Значение элемента кэша
+     * @param string $name Имя элемента кэша
+     * @param mixed $arValue Значение элемента кэша
      * @return bool Флаг успешной или неудачной записи данных
      */
     public static function writeCache($name, $arValue):bool
@@ -138,7 +138,7 @@ class CCache
     /**
      * Удаление элемента из кэша
      *
-     * @param $name Имя элемента кэша
+     * @param string $name Имя элемента кэша
      * @return bool Флаг успеха
      */
     public static function delFromCache($name):bool
@@ -156,7 +156,7 @@ class CCache
     /**
      * Получение размера элемента кэша в байтах
      *
-     * @param $name Имя элемента кэша
+     * @param string $name Имя элемента кэша
      * @return bool|int Размер элемента в байтах или false
      */
     public static function getSize($name)
@@ -186,10 +186,10 @@ class CCache
     /**
      * Получение времени существованя кэша в секундах
      * 
-     * @param $name Имя элемента кэша
+     * @param string $name Имя элемента кэша
      * @return false|int Время в секундах или false
      */
-    public static function ageOfCache($name)
+    public static function ageOfCache(string $name)
     { // Получить возраст элемента кэша
         if (self::checkCache($name)) {
             return (time() - filectime(self::$cache_dir . md5($name) . '.tmp'));

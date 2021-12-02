@@ -11,12 +11,12 @@
 class CCron
 {
     /**
-     * @var $DB Объект базы данных
+     * @var object $DB Объект базы данных
      */
     private static $DB;
 
     /**
-     * @var $table Имя таблицы с заданиями
+     * @var string $table Имя таблицы с заданиями
      */
     private static $table;
 
@@ -36,7 +36,7 @@ class CCron
     /**
      * Инициализация класса и задание начальных параметров
      *
-     * @param $DB Объект базы данных
+     * @param object $DB Объект базы данных
      * @param string $table Имя таблицы с заданиями
      */
     public static function init($DB, $table = 'cron')

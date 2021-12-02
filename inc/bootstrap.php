@@ -38,13 +38,11 @@ if(CUser::is_user()) {
 	$USER = [];
 }
 
-
 CCron::handler();  																					// выполнение периодических задач на хитах
-
 
 $userDevices = getUserDevices($USER['id']);
 
-
+//TODO: реализовать выбор устройства пользователя через панель
 if($userDevices) {
 	$USER['deviceId'] = $userDevices[0]['id'];  // мониторим только первое устройство пользователя при наличии
 } else {
