@@ -1,11 +1,17 @@
 <?php
-/*
-	Вспомогательные функции
-	Данный файл входит в состав системы IoT Core System
-	Разработчик: Роман Сергеевич Гринько
-	E-mail: rsgrinko@gmail.com
-	Сайт: https://it-stories.ru
+/**
+*	Вспомогательные функции
+*	Данный файл входит в состав системы IoT Core System
+*	Разработчик: Роман Сергеевич Гринько
+*	E-mail: rsgrinko@gmail.com
+*   Сайт: https://it-stories.ru
 */	
+
+
+/**
+ * Получение имени CSS класса по типу события
+ * @param string $type
+ */
 function getClassNameByEventType($type){
 	$result = '';
 	switch($type){
@@ -33,12 +39,21 @@ function getClassNameByEventType($type){
 	return $result;
 }
 	
-	
+/**
+ * Обработка строки перед подстановкой в SQL зарпос
+ * @param string $str
+ */	
 function prepareString($str){
 	$str = str_replace('\'', '', $str);
 	return $str;
 }
 
+
+/**
+ * Вывод массива в понятном виде на страницу
+ * @param array $arr
+ * @param bool $stop
+ */
 function pre($arr, $stop = false) {
 	echo '<pre>'.print_r($arr, true).'</pre>';
 	
@@ -47,8 +62,12 @@ function pre($arr, $stop = false) {
 	}
 }
 
-
-// проверка принадлежности пользователя к устройтсву
+/**
+ * Проверка принадлежности пользователя к устройтсву
+ * 
+ * @param int $deviceId
+ * @param int $userId
+ */
 function isHaveAccessToDevice($deviceId, $userId){
 	global $DB;
 	$arDevice = $DB->query('SELECT user FROM devices WHERE id="'.$deviceId.'"');
@@ -64,7 +83,9 @@ function isHaveAccessToDevice($deviceId, $userId){
 	}
 }
 
-// получение ip пользователя
+/**
+ * Получение ip пользователя
+ */
 function getIp() {
 		  $keys = [
 		    'HTTP_CLIENT_IP',
@@ -81,6 +102,9 @@ function getIp() {
 		  }
 	}
 
+/**
+ * Получение информации о клиенте
+ */
 function getClientInfo() {
         $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']);
         if (preg_match('/opera/', $userAgent)) {
@@ -149,7 +173,13 @@ function getClientInfo() {
             'ip' 		=> $real_ip
         );
 }
-	
+
+/**
+ * Получение устройств, принадлежащих пользователю
+ * 
+ * @param int $userId
+ * @return array|bool
+ */
 function getUserDevices($userId) {
 	global $DB;
 	$res = $DB->query('SELECT * FROM devices WHERE user="'.$userId.'"');
@@ -160,7 +190,11 @@ function getUserDevices($userId) {
 	}
 }
 
-
+/**
+ * Получение ОС пользователя
+ * 
+ * @return string
+ */
 function getOS() {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
             $oses = [
