@@ -58,7 +58,7 @@ $(document).ready(function(){
 									<th>Название</th>
 									<th>Описание</th>
 									<th>Интервал</th>
-									<th>Был запуск</th>
+									<th style="width: 116px;">Был запуск</th>
 									<th>Активность</th>
 									<th>Команда</th>
 									<th class="text-center" style="width: 110px;"></th>
