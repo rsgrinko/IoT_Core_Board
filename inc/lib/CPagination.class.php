@@ -1,10 +1,10 @@
 <?php
-/*
-	Класс для постраничной навигации
-	Данный файл входит в состав системы IoT Core System
-	Разработчик: Роман Сергеевич Гринько
-	E-mail: rsgrinko@gmail.com
-	Сайт: https://it-stories.ru
+/**
+*	Класс для постраничной навигации
+*	Данный файл входит в состав системы IoT Core System
+*	Разработчик: Роман Сергеевич Гринько
+*	E-mail: rsgrinko@gmail.com
+*	Сайт: https://it-stories.ru
 */
 
 class CPagination {
@@ -24,13 +24,27 @@ class CPagination {
 		return $result;
 	}
 	
-	public static function execute($page, $total, $limit){
+	/**
+	 * Задание первоначальных данных для пагинации
+	 * 
+	 * @param int $page
+	 * @param int $total
+	 * @param int $limit
+	 */
+	public static function execute($page, $total, $limit):void
+	{
 		self::$page = $page;
 		self::$total = $total;
 		self::$limit = $limit;
 	}
 	
-	public static function getLimit(){
+	/**
+	 * Формирование лимита для выборки из базы элементов текущей страницы
+	 * 
+	 * @return string
+	 */
+	public static function getLimit():string
+	{
 		self::$total_pages = intval((self::$total - 1) / self::$limit) + 1;
 		if(empty(self::$page) or self::$page < 0) {
 			self::$page = 1;
@@ -45,7 +59,14 @@ class CPagination {
 		
 	}
 
-	public static function show($paginator_name = 'page', $params = []){
+	/**
+	 * Вывод пагинации на страницу
+	 * 
+	 * @param string $paginator_name
+	 * @param array $params
+	 */
+	public static function show($paginator_name = 'page', $params = []):void
+	{
 		$url = '?';
 		foreach($params as $key=>$value){
 			$url .= $key.'='.$value.'&';
