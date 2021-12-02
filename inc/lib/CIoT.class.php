@@ -1,10 +1,10 @@
 <?php
-/*
-	Класс для работы с контроллером
-	Данный файл входит в состав системы IoT Core System
-	Разработчик: Роман Сергеевич Гринько
-	E-mail: rsgrinko@gmail.com
-	Сайт: https://it-stories.ru
+/**
+*	Класс для работы с контроллером
+*	Данный файл входит в состав системы IoT Core System
+*	Разработчик: Роман Сергеевич Гринько
+*	E-mail: rsgrinko@gmail.com
+*	Сайт: https://it-stories.ru
 */
 	
 class CIoT {
@@ -21,11 +21,25 @@ class CIoT {
 		return $result;
 	}
 
-	public static function init($DB){
+	/**
+	 * Сохранение объекта базы данных
+	 * 
+	 * @param object $DB
+	 */
+	public static function init($DB):void
+	{
 		self::$DB = $DB;
 	}
 	
-	public static function isDeviceExists($mac){
+
+	/**
+	 * Проверка устройства на существование
+	 * 
+	 * @param string $mac
+	 * @return bool
+	 */
+	public static function isDeviceExists($mac):bool
+	{
 		$result = self::$DB->query('SELECT id FROM devices WHERE mac="'.$mac.'"');
 		if($result) {
 			return true;
@@ -34,7 +48,12 @@ class CIoT {
 		}
 	}
 	
-	public static function getDeviceId($mac){
+
+	/**
+	 * Получение идентификатора устройства по мак адресу
+	 */
+	public static function getDeviceId($mac)
+	{
 		$result = self::$DB->query('SELECT id FROM devices WHERE mac="'.$mac.'"');
 		if($result) {
 			return $result[0]['id'];
