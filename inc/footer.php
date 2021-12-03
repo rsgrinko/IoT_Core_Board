@@ -9,7 +9,7 @@
 /**
  * Защита от запуска файла без подключения ядра
  */
-if(!defined(CORE_LOADED) or CORE_LOADED !== true) {
+if(!defined('CORE_LOADED') or CORE_LOADED !== true) {
     die();
 }
 
