@@ -18,6 +18,7 @@ if(CUser::is_user()) {
 			         } else {
 				         $auth = false;
 				         CEvents::add('Неудачная попытка авториации в системе (IP: '.getIp().', '.$_REQUEST['login'].', OS: '.getOS().')', 'warning', 'panel');
+						 adminSendMail('Попытка вторжения', 'Неудачная попытка авториации в системе (IP: '.getIp().', '.$_REQUEST['login'].', OS: '.getOS().')', 'warning', 'panel');
 				         }
 	            } else {
 		            $auth = false;
