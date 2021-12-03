@@ -30,7 +30,7 @@ define('USE_CACHE', true);
 /**
  * Директория хранения файлов кэша
  */
-define('CACHEDIR', DIR.'/cache/');
+define('CACHEDIR', $_SERVER['DOCUMENT_ROOT'].'/cache/');
 
 /**
  * Сервер базы данных
