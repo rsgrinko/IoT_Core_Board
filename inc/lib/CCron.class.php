@@ -50,8 +50,7 @@ class CCron
      */
     public static function cronUpdate()
     {
-        global $CONFIG;
-        file_put_contents($CONFIG['DIR'] . '/cron.run', time());
+        file_put_contents(DIR . '/cron.run', time());
         return;
     }
 
@@ -62,17 +61,15 @@ class CCron
      */
     public static function cron_is_run()
     {
-        global $CONFIG;
-
-        if (!file_exists($CONFIG['DIR'] . '/cron.run')) {
+        if (!file_exists(DIR . '/cron.run')) {
             CEvents::add('Ошибка в работе CRON - время последнего запуска превысило таймаут!', 'warning', 'cron');
             return false;
         }
 
-        $last_run = file_get_contents($CONFIG['DIR'] . '/cron.run');
+        $last_run = file_get_contents(DIR . '/cron.run');
         if ($last_run < (time() - 120)) {
             if ($last_run != '0') {
-                file_put_contents($CONFIG['DIR'] . '/cron.run', '0');
+                file_put_contents(DIR . '/cron.run', '0');
                 CEvents::add('Ошибка в работе CRON - время последнего запуска превысило таймаут!', 'warning', 'cron');
             }
             return false;

@@ -97,40 +97,40 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                                 <li class="nav-item nav-drawer-header">Основное</li>
 
                                 <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/"><i class="ion-ios-speedometer"></i> Мониторинг</a>
+                                    <a href="<?php echo HOME; ?>/"><i class="ion-ios-speedometer"></i> Мониторинг</a>
                                 </li>
 
                                 <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'control.php' ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/control.php"><i class="ion-ios-toggle"></i> Управление</a>
+                                    <a href="<?php echo HOME; ?>/control.php"><i class="ion-ios-toggle"></i> Управление</a>
                                 </li>
                                 
                                 <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'board.php' ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/board.php"><i class="ion-android-settings"></i> Конфигурация</a>
+                                    <a href="<?php echo HOME; ?>/board.php"><i class="ion-android-settings"></i> Конфигурация</a>
                                 </li>
 
                                 <li class="nav-item nav-drawer-header">Компоненты</li>
 								
 								<?php if(CUSer::is_admin()): ?>
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'events.php' ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/events.php"><i class="fa fa-list"></i> Журнал событий</a>
+                                    <a href="<?php echo HOME; ?>/events.php"><i class="fa fa-list"></i> Журнал событий</a>
 								</li>  
 								
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/users.php"><i class="fa fa-user	"></i> Пользователи</a>
+                                    <a href="<?php echo HOME; ?>/users.php"><i class="fa fa-user	"></i> Пользователи</a>
 								</li>    
 								
 								<li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'cron.php' or basename($_SERVER['PHP_SELF']) == 'add_cron.php' or basename($_SERVER['PHP_SELF']) == 'edit_cron.php') ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/cron.php"><i class="fa fa-tasks"></i> Планировщик</a>
+                                    <a href="<?php echo HOME; ?>/cron.php"><i class="fa fa-tasks"></i> Планировщик</a>
 								</li> 
 								
 								<li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'sql.php') ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/sql.php"><i class="fa fa-database"></i> SQL запросы</a>
+                                    <a href="<?php echo HOME; ?>/sql.php"><i class="fa fa-database"></i> SQL запросы</a>
 								</li> 
 								<?php endif; ?>
 								
 								
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'firmware_list.php' ? 'active' : '';?>">
-                                    <a href="<?php echo $CONFIG['HOME']; ?>/firmware_list.php"><i class="fa fa-upload"></i> Прошивки</a>
+                                    <a href="<?php echo HOME; ?>/firmware_list.php"><i class="fa fa-upload"></i> Прошивки</a>
 								</li>  
 								
 								
