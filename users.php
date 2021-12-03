@@ -33,7 +33,7 @@
                                             </thead>
                                             <tbody>
 	                                            <?php
-													CPagination::execute($_REQUEST['page'], CUser::count_users(), $CONFIG['PAGINATION_LIMIT']);
+													CPagination::execute($_REQUEST['page'], CUser::count_users(), PAGINATION_LIMIT);
 													$limit = CPagination::getLimit();	
 												?>
 	                                            <?php foreach(CUser::getUsers($limit, 'ASC') as $user): ?>
@@ -42,7 +42,7 @@
                                                     <td><?php echo $user['login']; ?></td>
                                                     <td><?php echo $user['name']; ?></td>
                                                     <td><?php echo $user['access_level']; ?></td>
-                                                    <td style="text-align:center;"><a href="<?php echo $user['image']; ?>" target="_blank"><img style="max-width: 40px;" src="<?php echo $user['image']; ?>"></a></td>
+                                                    <td style="text-align:center;"><a href="<?php echo $user['image']; ?>" target="_blank"><img style="max-width: 40px;" src="<?php echo $user['image']; ?>" alt="avatar"></a></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $user['last_active']); ?></td>
                                                     <td><a href="login_as.php?id=<?php echo $user['id']; ?>" class="btn btn-app-blue btn-block">Войти</a></td>
                                                 </tr>

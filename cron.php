@@ -47,7 +47,7 @@ $(document).ready(function(){
                 
                 <div class="card-block">
 	                    <?php
-							CPagination::execute($_REQUEST['page'], CCron::count_tasks(), PAGINATION_LIMI);
+							CPagination::execute($_REQUEST['page'], CCron::count_tasks(), PAGINATION_LIMIT);
 							$limit = CPagination::getLimit();
 						?>
 						<div class="table-responsive">

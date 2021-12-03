@@ -4,8 +4,8 @@
  */
 require_once $_SERVER['DOCUMENT_ROOT'].'/inc/bootstrap.php';
 if(!CUser::is_admin()) {
-	die('403 - Access denied');
+    die('403 - Access denied');
 }
 
-$result = getClientInfo();
-pre($result);
+adminSendMail('Тестовое уведомление', 'Запушен тестовый скрипт для проверки функционала почтовых уведомлений.<br>Если Вы видите данное сообщение - значит система работает.');
+echo 'ok';
