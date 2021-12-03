@@ -190,7 +190,7 @@ class CCache
      */
     public static function ageOfCache(string $name)
     {
-        return (time() - filectime(self::$cache_dir . md5($name) . '.tmp'));
+        return (time() - @filectime(self::$cache_dir . md5($name) . '.tmp'));
     }
 }
 

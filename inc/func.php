@@ -70,7 +70,6 @@ function pre($arr, $stop = false) {
  */
 function isHaveAccessToDevice($deviceId, $userId){
     $cacheId = md5('isHaveAccessToDevice_'.$deviceId.'_'.$userId);
-    echo $cacheId;
     if(CCache::checkCache($cacheId)){
         $arDevice = CCache::getCache($cacheId);
     } else {
