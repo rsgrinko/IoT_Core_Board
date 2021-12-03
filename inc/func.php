@@ -251,8 +251,8 @@ function getOS() {
     ';
      
     // прикрепляем лог, если он есть
-    if(isset($file) and !empty($file) and file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $file)){
-        $mail->addFile($_SERVER['DOCUMENT_ROOT'] . '/' . $file);
+    if(isset($file) and !empty($file) and file_exists($file)){
+        $mail->addFile($file);
     }
     $mail->send();
 
