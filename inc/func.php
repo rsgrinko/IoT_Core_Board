@@ -235,7 +235,7 @@ function getOS() {
 /**
  * Отправка уведомления на почту администратору
  */
- function adminSendMail($subject, $message){
+ function adminSendMail($subject, $message, $file = false){
     $mail = new CMail;
     $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
     $mail->to(ADMIN_EMAIL, 'Администратор панели');
@@ -251,8 +251,8 @@ function getOS() {
     ';
      
     // прикрепляем лог, если он есть
-    if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/log.txt')){
-        $mail->addFile($_SERVER['DOCUMENT_ROOT'] . '/log.txt');
+    if(isset($file) and !empty($file) and file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $file)){
+        $mail->addFile($_SERVER['DOCUMENT_ROOT'] . '/' . $file);
     }
     $mail->send();
 
