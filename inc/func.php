@@ -245,7 +245,7 @@ function getOS() {
         <p>'.$message.'</p>
         <hr>
         <p>
-            С уважением, система IoT Core Board
+            С уважением, система IoT Core Board v.'.VERSION.'
             <br><a href="http://'.$_SERVER['SERVER_NAME'].'">http://'.$_SERVER['SERVER_NAME'].'</a>
         </p>
     ';
