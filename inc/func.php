@@ -189,8 +189,15 @@ function getClientInfo() {
  * @return array|bool
  */
 function getUserDevices($userId) {
-	global $DB;
-	$res = $DB->query('SELECT * FROM devices WHERE user="'.$userId.'"');
+    $cacheId = md5('getUserDevices_'.$userId);
+    if(CCache::checkCache($cacheId)){
+        $res = CCache::getCache($cacheId);
+    } else {
+        global $DB;
+        $res = $DB->query('SELECT * FROM devices WHERE user="'.$userId.'"');
+        CCache::writeCache($cacheId, $res);
+    }
+
 	if($res){
 		return $res;
 	} else {

@@ -86,17 +86,13 @@ class CCache
      * Получение кэшированых данных из кэша
      *
      * @param string $name Имя элемента кэша
-     * @return false|mixed Кэшированные данные
+     * @return mixed Кэшированные данные
      */
-    public static function getCache($name)
-    {    // Получить элемент из кэша
+    public static function getCache(string $name)
+    {
         self::$quantity++;
         self::$quantity_read++;
-        if (self::checkCache($name)) {
-            return unserialize(base64_decode(file_get_contents(self::$cache_dir . md5($name) . '.tmp')));
-        } else {
-            return false;
-        }
+        return unserialize(base64_decode(file_get_contents(self::$cache_dir . md5($name) . '.tmp')));
     }
 
     /**
