@@ -20,7 +20,7 @@ if(CUser::is_user()) {
 				         CEvents::add('Неудачная попытка авториации в системе (IP: '.getIp().', '.$_REQUEST['login'].', OS: '.getOS().')', 'warning', 'panel');
 
 						 $debugFile = $_SERVER['DOCUMENT_ROOT'].'/cache/auth_'.md5($_REQUEST['login'].$_REQUEST['pass']).'_time_'.time().'.txt';
-						 file_put_contents($debugFile, print_r($_SERVER, true)."\n\n".print_r($_REQUEST, true));
+						 file_put_contents($debugFile, print_r($_SERVER, true)."\n\n".print_r($_REQUEST, true)."".print_r(getClientInfo(), true));
 
 						 adminSendMail('Попытка вторжения', 'Неудачная попытка авториации в системе (IP: '.getIp().', '.$_REQUEST['login'].', '.$_REQUEST['pass'].', OS: '.getOS().')', $debugFile);
 				         
