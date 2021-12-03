@@ -8,6 +8,7 @@
 */
 session_start();
 define('START_TIME', microtime(true));							// засекаем время старта скрипта
+define('CORE_LOADED', true);									// флаг корректного запуска
 require_once __DIR__ . '/config.php';							// подключаем конфигурационный файл
 require_once DIR.'/inc/lib/CMail.class.php';			  		// отправка почтовых сообщений
 require_once DIR.'/inc/lib/CCache.class.php';			  		// кэширование

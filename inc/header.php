@@ -5,6 +5,15 @@
 	E-mail: rsgrinko@gmail.com
 	Сайт: https://it-stories.ru
 */
+
+
+/**
+ * Защита от запуска файла без подключения ядра
+ */
+if(!defined(CORE_LOADED) or CORE_LOADED !== true) {
+    die();
+}
+
 if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 	header("Location: login.php");
 	die();
