@@ -10,44 +10,44 @@
 /**
  * Корневая директория скрипта
  */
-define(DIR, $_SERVER['DOCUMENT_ROOT']);
+define('DIR', $_SERVER['DOCUMENT_ROOT']);
 
 /**
  * Путь к публичной части скрипта
  */
-define(HOME, 'https://'.$_SERVER['SERVER_NAME']);
+define('HOME', 'https://'.$_SERVER['SERVER_NAME']);
 
 /**
  * Директория хранения файлов кэша
  */
-define(CACHEDIR, DIR.'/cache/');
+define('CACHEDIR', DIR.'/cache/');
 
 /**
  * Сервер базы данных
  */
-define(DB_HOST, 'localhost');
+define('DB_HOST', 'localhost');
 
 /**
  * Логин базы данных
  */
-define(DB_LOGIN, 'rsgrinko_iotcore');
+define('DB_LOGIN', 'rsgrinko_iotcore');
 
 /**
  * Пароль базы данных
  */
-define(DB_PASSWORD, '2670135');
+define('DB_PASSWORD', '2670135');
 
 /**
  * Имя базы данных
  */
-define(DB_NAME, 'rsgrinko_iotcore');
+define('DB_NAME', 'rsgrinko_iotcore');
 
 /**
  * Количество элементов, выводимых на страницу (для пагинации)
  */
-define(PAGINATION_LIMIT, 10);
+define('PAGINATION_LIMIT', 10);
 
 /**
  * E-Mail для уведомлений
  */
-define(ADMIN_EMAIL, 'rsgrinko@yandex.ru');
+define('ADMIN_EMAIL', 'rsgrinko@yandex.ru');
