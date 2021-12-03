@@ -23,6 +23,11 @@ define('DIR', $_SERVER['DOCUMENT_ROOT']);
 define('HOME', 'https://'.$_SERVER['SERVER_NAME']);
 
 /**
+ * Использовать ли кэширование данных
+ */
+define('USE_CACHE', true);
+
+/**
  * Директория хранения файлов кэша
  */
 define('CACHEDIR', DIR.'/cache/');
