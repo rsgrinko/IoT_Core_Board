@@ -72,6 +72,9 @@ class CCache
         if (!self::$cache_enabled) {
             return false;
         }
+        if(self::ageOfCache($name) > CACHE_TTL) {
+            return false;
+        }
         if (file_exists(self::$cache_dir . md5($name) . '.tmp')) {
             return true;
         } else {
@@ -187,15 +190,11 @@ class CCache
      * Получение времени существованя кэша в секундах
      * 
      * @param string $name Имя элемента кэша
-     * @return false|int Время в секундах или false
+     * @return int Время в секундах или false
      */
     public static function ageOfCache(string $name)
-    { // Получить возраст элемента кэша
-        if (self::checkCache($name)) {
-            return (time() - filectime(self::$cache_dir . md5($name) . '.tmp'));
-        } else {
-            return false;
-        }
+    {
+        return (time() - filectime(self::$cache_dir . md5($name) . '.tmp'));
     }
 }
 

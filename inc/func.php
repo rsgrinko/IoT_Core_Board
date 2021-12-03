@@ -69,8 +69,16 @@ function pre($arr, $stop = false) {
  * @param int $userId
  */
 function isHaveAccessToDevice($deviceId, $userId){
-	global $DB;
-	$arDevice = $DB->query('SELECT user FROM devices WHERE id="'.$deviceId.'"');
+    $cacheId = md5('isHaveAccessToDevice_'.$deviceId.'_'.$userId);
+    echo $cacheId;
+    if(CCache::checkCache($cacheId)){
+        $arDevice = CCache::getCache($cacheId);
+    } else {
+        global $DB;
+        $arDevice = $DB->query('SELECT user FROM devices WHERE id="'.$deviceId.'"');
+        CCache::writeCache($cacheId, $arDevice);
+    }
+
 	
 	if($arDevice){
 		if($arDevice[0]['user'] == $userId){

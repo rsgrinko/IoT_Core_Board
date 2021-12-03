@@ -33,6 +33,11 @@ define('USE_CACHE', true);
 define('CACHEDIR', $_SERVER['DOCUMENT_ROOT'].'/cache/');
 
 /**
+ * Время актуальности кэша в секундах
+ */
+define('CACHE_TTL', 3600);
+
+/**
  * Сервер базы данных
  */
 define('DB_HOST', 'localhost');
