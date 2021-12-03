@@ -236,7 +236,7 @@ function getOS() {
  * Отправка уведомления на почту администратору
  */
  function adminSendMail($subject, $message){
-    $mail = new Mail;
+    $mail = new CMail;
     $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
     $mail->to(ADMIN_EMAIL, 'Администратор панели');
     $mail->subject = $subject;
