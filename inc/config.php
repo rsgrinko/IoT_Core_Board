@@ -46,3 +46,8 @@ define(DB_NAME, 'rsgrinko_iotcore');
  * Количество элементов, выводимых на страницу (для пагинации)
  */
 define(PAGINATION_LIMIT, 10);
+
+/**
+ * E-Mail для уведомлений
+ */
+define(ADMIN_EMAIL, 'rsgrinko@yandex.ru');

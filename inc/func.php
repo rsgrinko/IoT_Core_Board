@@ -230,3 +230,31 @@ function getOS() {
             }
             return 'Unknown OS';
         }
+
+
+/**
+ * Отправка уведомления на почту администратору
+ */
+ function adminSendMail($subject, $message){
+    $mail = new Mail;
+    $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
+    $mail->to(ADMIN_EMAIL, 'Администратор панели');
+    $mail->subject = $subject;
+    $mail->body = '
+        <h1>Уведомление от системы IoT Core</h1>
+        <p>'.$message.'</p>
+        <hr>
+        <p>
+            С уважением, система IoT Core Board
+            <br><a href="http://'.$_SERVER['SERVER_NAME'].'">http://'.$_SERVER['SERVER_NAME'].'</a>
+        </p>
+    ';
+     
+    // прикрепляем лог, если он есть
+    if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/log.txt')){
+        $mail->addFile($_SERVER['DOCUMENT_ROOT'] . '/log.txt');
+    }
+    $mail->send();
+
+    return;
+ }
