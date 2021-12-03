@@ -31,7 +31,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/inc/header.php';
                             </thead>
                             <tbody>
                             <?php
-                            CPagination::execute($_REQUEST['page'], CEvents::count(), $CONFIG['PAGINATION_LIMIT']);
+                            CPagination::execute($_REQUEST['page'], CEvents::count(), PAGINATION_LIMIT);
                             $limit = CPagination::getLimit();
                             ?>
                             <?php foreach (CEvents::getEvents('', $limit, 'DESC') as $event): ?>

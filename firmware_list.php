@@ -31,7 +31,7 @@
                                             </thead>
                                             <tbody>
 	                                            <?php
-													CPagination::execute($_REQUEST['page'], CIoT::countFirmwareList(), $CONFIG['PAGINATION_LIMIT']);
+													CPagination::execute($_REQUEST['page'], CIoT::countFirmwareList(), PAGINATION_LIMIT);
 													$limit = CPagination::getLimit();	
 												?>
 	                                            <?php foreach(CIoT::getFirmwareList($hw = false, $limit, 'DESC') as $arFirmware): ?>
