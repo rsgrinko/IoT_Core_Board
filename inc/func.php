@@ -258,3 +258,26 @@ function getOS() {
 
     return;
  }
+
+
+
+ /**
+  * Преобразорвание массива $_FILES в более логичный вид при множественной загрузке
+  * 
+  * @param array $arrFiles Массив $_FILES
+  * @param string $name Имя поля прикрепления файла (ключ)
+  *
+  * @return array
+  */
+
+  function prepareArrFiles($arrFiles, $name) {
+    $files = array();
+    foreach($arrFiles[$name] as $k => $l) {
+        foreach($l as $i => $v) {
+            $files[$i][$k] = $v;
+        }
+    }		
+    $arrFiles[$name] = $files;
+    
+    return $arrFiles;
+  }
