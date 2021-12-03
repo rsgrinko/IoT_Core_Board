@@ -9,6 +9,7 @@
 session_start();
 define('START_TIME', microtime(true));														// засекаем время старта скрипта
 require_once __DIR__ . '/config.php';														// подключаем конфигурационный файл
+require_once $CONFIG['DIR'].'/inc/lib/CMail.class.php';			  							// отправка почтовых сообщений
 require_once $CONFIG['DIR'].'/inc/lib/CCache.class.php';			  						// кэширование
 require_once $CONFIG['DIR'].'/inc/lib/CDB.class.php';			  							// работа с базой данных
 require_once $CONFIG['DIR'].'/inc/lib/CEvents.class.php';		  							// работа с событиями системы
@@ -18,6 +19,7 @@ require_once $CONFIG['DIR'].'/inc/lib/CMQTT.class.php';			  							// работ
 require_once $CONFIG['DIR'].'/inc/func.php';						  						// вспомогательные функции
 require_once $CONFIG['DIR'].'/inc/lib/CCron.class.php';			  							// планировщик задач
 require_once $CONFIG['DIR'].'/inc/lib/CIoT.class.php';			  							// работа с контроллером
+
 
 $DB = new CDB($CONFIG['DB_HOST'], $CONFIG['DB_LOGIN'], $CONFIG['DB_PASSWORD'], $CONFIG['DB_NAME']); // создаем объект для работы с базой данных
 $DB->query('SET sql_mode = \'\'');                                                          // сбрасываем режим работы sql_mode=only_full_group_by 
