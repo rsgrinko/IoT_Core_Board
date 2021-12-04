@@ -49,5 +49,5 @@ $userDevices = getUserDevices($USER['id']);
 if($userDevices) {
 	$USER['deviceId'] = $userDevices[0]['id']; 	 				// мониторим только первое устройство пользователя при наличии
 } else {
-	$USER['deviceId'] = 9;										// иначе показываем демо плату
+	$USER['deviceId'] = 10;//9;										// иначе показываем демо плату
 }
