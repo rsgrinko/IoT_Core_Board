@@ -51,6 +51,8 @@ class CIoT {
 
 	/**
 	 * Получение идентификатора устройства по мак адресу
+     *
+     * @param string $mac
 	 */
 	public static function getDeviceId($mac)
 	{
@@ -61,25 +63,43 @@ class CIoT {
 			return false;
 		}
 	}
-	
-	
-	public static function addDevice($mac, $chipid, $hw, $fw) {
+
+    /**
+     * Добавление устройства в базу
+     *
+     * @param $mac
+     * @param $chipid
+     * @param $hw
+     * @param $fw
+     */
+	public static function addDevice($mac, $chipid, $hw, $fw):void {
 		self::$DB->addItem('devices', array('mac' => $mac, 'chipid' => $chipid, 'hw' => $hw, 'fw' => $fw, 'user' => 'SYSTEM', 'time' => time(), 'last_active' => time()));
 		$deviceId = self::getDeviceId($mac);
 		self::$DB->addItem('relays', array('device' => $deviceId, 'relay1' => '0', 'relay2' => '0', 'relay3' => '0', 'relay4' => '0'));
-		self::$DB->addItem('configs', array('device' => $deviceId, 'ds_resulution' => '9'));
+		self::$DB->addItem('configs', array('device' => $deviceId, 'ds_resulution' => '9', 'sending_interval' => '2000'));
 		return;
 	}
-	
-	
-	public static function updateDeviceInfo($deviceId, $fw){
+
+    /**
+     * Обновление информации об устройстве
+     *
+     * @param $deviceId
+     * @param $fw
+     */
+	public static function updateDeviceInfo($deviceId, $fw):void{
 		self::$DB->update('devices', array('id' => $deviceId), array('fw' => $fw, 'last_active' => time()));
 		return;
 	}
-	
-	
-	
-	public static function addDallasData($deviceId, $sensor, $value) {
+
+
+    /**
+     * Добавление показаний датчика DS18B20 в базу
+     *
+     * @param $deviceId
+     * @param $sensor
+     * @param $value
+     */
+	public static function addDallasData($deviceId, $sensor, $value):void {
 		if($value == '-127.00' or  $value == '85.00' or $value == 'nan') { return; }
 		$result = self::$DB->addItem('sensors', array('device' => $deviceId, 'sensor' => $sensor, 'value' => $value, 'date' => date("Y-m-d H:i:00"), 'time' => time()));
 		
@@ -87,8 +107,13 @@ class CIoT {
 		self::$DB->query('DELETE FROM sensors WHERE device="'.$deviceId.'" and time<'.$delTime.'');
 		return;
 	}
-	
-	
+
+    /**
+     * Получение состояний релейных выходов устройства
+     *
+     * @param int $id Идентификатор устройства
+     * @return array
+     */
 	public static function getRelaysState($id){
 		$result = self::$DB->query('SELECT * FROM relays WHERE device="'.$id.'"');
 		$arResult = [];
@@ -98,14 +123,26 @@ class CIoT {
 		$arResult[3] = $result[0]['relay4'];
 		return $arResult;
 	}
-	
-	public static function setRelayState($deviceId, $relay, $state){
-		$result = self::$DB->update('relays', array('device' => $deviceId), array('relay'.$relay => $state ? '1' : '0'));
+
+    /**
+     * Установка состояния релейного выхода устройства
+     *
+     * @param $deviceId
+     * @param $relay
+     * @param $state
+     */
+	public static function setRelayState($deviceId, $relay, $state):void{
+		self::$DB->update('relays', array('device' => $deviceId), array('relay'.$relay => $state ? '1' : '0'));
 		return;
 	}
-	
-	// получаем количество датчиков устройства
-	public static function getCountDallas($deviceId){
+
+    /**
+     * Получаем количество датчиков устройства
+     *
+     * @param $deviceId
+     * @return int
+     */
+	public static function getCountDallas($deviceId):int{
 		$res = self::$DB->query('SELECT DISTINCT sensor FROM sensors WHERE device = "'.$deviceId.'"');
 		
 		if($res) {
@@ -114,13 +151,25 @@ class CIoT {
 			return 0;
 		}
 	}
-	
+
+    /**
+     * Получение последнюю актуальную температуру датчика DS18B20 из базы
+     *
+     * @param $deviceId
+     * @param $ds
+     * @return mixed
+     */
 	public static function getDallasData($deviceId, $ds){
 		$result = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="'.$ds.'" ORDER BY id DESC LIMIT 1');
 		return $result[0];
 	}
-	
-	
+
+    /**
+     * Получение последнюю актуальную температуру датчика DTH из базы
+     *
+     * @param $deviceId
+     * @return array|false
+     */
 	public static function getDTHData($deviceId){
 		$result = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="dth_t" ORDER BY id DESC LIMIT 1');
 		$result2 = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="dth_h" ORDER BY id DESC LIMIT 1');
@@ -129,8 +178,15 @@ class CIoT {
 		} else {
 			return false;
 		}
-	}	
-		
+	}
+
+    /**
+     * Проверка датчика DS18B20 на существование
+     *
+     * @param $deviceId
+     * @param $ds
+     * @return bool
+     */
 	public static function isDallasFound($deviceId, $ds){
 		$result = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="ds'.$ds.'" ORDER BY id DESC LIMIT 1');
 		if($result){
@@ -138,8 +194,14 @@ class CIoT {
 		} else {
 			return false;
 		}
-	}	
-	
+	}
+
+    /**
+     * Получаем показания со всех 10 датчиков DS18B20
+     *
+     * @param $deviceId
+     * @return array
+     */
 	public static function getDallasArrData($deviceId) {
 		$count = self::getCountDallas($deviceId);
 		$res = self::$DB->query('SELECT DISTINCT sensor, value, time, id FROM sensors WHERE device="'.$deviceId.'" ORDER BY id DESC LIMIT 10');
@@ -154,7 +216,13 @@ class CIoT {
 			return [];
 		}
 	}
-	
+
+    /**
+     * Получаем массив с данными об устройстве
+     *
+     * @param $deviceId
+     * @return array|bool
+     */
 	public static function getDevice($deviceId) {
 		$res = self::$DB->query('SELECT * FROM devices WHERE id="'.$deviceId.'"');
 		if($res){
@@ -163,7 +231,14 @@ class CIoT {
 			return false;
 		}
 	}
-	
+
+    /**
+     * Получаем массив с показаниями датчика для построения графика
+     *
+     * @param $deviceId
+     * @param $sensor
+     * @return array
+     */
 	public static function getPlotDallasValues($deviceId, $sensor) {
 		$result = [];
 		/*$res = self::$DB->query('SELECT id, device, sensor, value, time FROM sensors WHERE device="'.$deviceId.'" and sensor="ds'.$sensor.'" AND (time % 300) = 0 AND time > '.(time()-86400*24).' ORDER BY id DESC LIMIT 100');
@@ -177,9 +252,16 @@ class CIoT {
 			return [];
 		}
 	}
-	
-	
-	
+
+
+    /**
+     * Получение списка прошивок
+     *
+     * @param false $hw
+     * @param int $limit
+     * @param string $sort
+     * @return array
+     */
 	public static function getFirmwareList($hw = false, $limit = 10, $sort = 'DESC') {
 		$result = [];
 		if(!$hw) {
@@ -197,27 +279,35 @@ class CIoT {
 		
 		return $result;
 	}
-	
-	
+
+    /**
+     * Получаем количество прошивок
+     *
+     * @param $hw
+     * @return int
+     */
 	public static function countFirmwareList($hw = false) {
 		$result = 0;
 		if(!$hw) {
 			$res = self::$DB->query('SELECT id FROM firmware');
 		} else {
 			$res = self::$DB->query('SELECT id FROM firmware WHERE hw="'.$hw.'"');
-		}	
-			
+		}
 		if($res) {
 			$result = count($res);
 		} else {
 			$result = 0;
 		}
-		
-		
 		return $result;
 	}
-	
-	
+
+
+    /**
+     * Получение конфигурации устройства
+     *
+     * @param $deviceId
+     * @return array
+     */
 	public static function getBoardConfig($deviceId){
 		$res = self::$DB->query('SELECT * FROM configs WHERE device="'.$deviceId.'"');
 		
@@ -229,8 +319,13 @@ class CIoT {
 		
 		return $result;
 	}
-	
-	
+
+    /**
+     * Формируем строку с датой измерения для графика
+     *
+     * @param int $time
+     * @return false|string
+     */
 	public static function plotDate($time = 0) {
 		if($time == 0) {
 			$time = time();
@@ -245,8 +340,11 @@ class CIoT {
 		
 		return $result;
 	}
-		
-	public static function initHighcharts(){
+
+    /**
+     * Инициализация скрипта для отрисовки графиков
+     */
+	public static function initHighcharts():void{
 		echo '<script type="text/javascript">
 		    Highcharts.setOptions({
                 lang: {
@@ -266,7 +364,12 @@ class CIoT {
         return;
 	}
 
-
+    /**
+     * Отрисовка графика
+     *
+     * @param $sensor
+     * @param $arValues
+     */
 	public static function drawHighcharts($sensor, $arValues){
 		$categories = '';
 		$temp = '';

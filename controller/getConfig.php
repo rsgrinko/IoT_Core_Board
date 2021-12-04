@@ -18,6 +18,7 @@
 	$arr = array (
 				'dallas_resolution' => $boardConfig['ds_resolution'], // 9..12
 				'deviceId' => $deviceId,
+                'sendingInterval' => '2000',
 				'mac' => $mac,
 				'date' => date("d.m.y H:i:s"),
 				'support' => 'rsgrinko@gmail.com'
