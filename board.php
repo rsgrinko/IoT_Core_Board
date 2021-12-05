@@ -35,11 +35,25 @@
 									<option value="11" <?php if($boardConfig['ds_resolution'] == '11') { echo 'selected'; } ?>>11 бит</option>
 									<option value="12" <?php if($boardConfig['ds_resolution'] == '12') { echo 'selected'; } ?>>12 бит</option>
 								</select>
-								
-							</div>
+                            </div>
 						</div>
 					</div>
-					<div class="form-group m-b-0">
+
+                    <div class="form-group">
+                        <div class="col-sm-9">
+                            <div class="form-material">
+                                <label for="sending_interval-select">Интервал обмена данными </label>
+                                <select class="form-control" id="sending_interval-select" name="sending_interval">
+                                    <option value="1000" <?php if($boardConfig['sending_interval'] == '1000') { echo 'selected'; } ?>>1 секунда</option>
+                                    <option value="2000" <?php if($boardConfig['sending_interval'] == '2000') { echo 'selected'; } ?>>2 секунды</option>
+                                    <option value="3000" <?php if($boardConfig['sending_interval'] == '3000') { echo 'selected'; } ?>>3 секунды</option>
+                                    <option value="4000" <?php if($boardConfig['sending_interval'] == '4000') { echo 'selected'; } ?>>4 секунды</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group m-b-0">
 					<div class="col-sm-9">
 					<button class="btn btn-app" type="submit">Сохранить</button>
 					</div>
