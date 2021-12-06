@@ -1,16 +1,7 @@
 <?php
 	require_once __DIR__ . '/inc/bootstrap.php';
 	require_once __DIR__ . '/inc/header.php';
-	
-	/*$userDevices = getUserDevices($USER['id']);
-	if($userDevices) {
-		$deviceId = $userDevices[0]['id']; // мониторим только первое устройство пользователя при наличии
-	} else {
-		$deviceId = 9;						// иначе показываем демо плату
-	}*/
-	$arSensors = CIoT::getDallasArrData($USER['deviceId']);
-
-?>	
+?>
 
 <div class="row maxheight test-draggable-items control_block">
 	

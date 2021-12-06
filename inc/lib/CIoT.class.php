@@ -235,6 +235,8 @@ class CIoT {
 	/**
      * Получаем массив с данными об устройствах
      *
+     * @param string $limit
+     * @param string $sort
      * @return array|bool
      */
 	public static function getDevices($limit = 10, $sort = 'ASC') {
