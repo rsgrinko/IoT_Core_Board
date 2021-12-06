@@ -14,7 +14,7 @@ if (!isset($_REQUEST['deviceId']) or $_REQUEST['deviceId'] == '') {
 
 $deviceId = prepareString($_REQUEST['deviceId']);
 
-if (!isHaveAccessToDevice($deviceId, $USER['id'])) {
+if (!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::is_admin()) {
     die('403 - Access denied');
 }
 

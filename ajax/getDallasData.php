@@ -16,7 +16,7 @@
 	$sensor = prepareString($_REQUEST['sensor']);
 	
 	
-	if(!isHaveAccessToDevice($deviceId, $USER['id'])) {
+	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::is_admin()) {
 		die('403 - Access denied');
 	}
 
