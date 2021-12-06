@@ -190,6 +190,7 @@ class CDB
 
         $endTime = microtime(true);
         self::$workingTime += ($endTime - $startTime);
+
         if ($result) {
             return $result;
         } else {

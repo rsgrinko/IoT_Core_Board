@@ -2,7 +2,14 @@
 require_once __DIR__ . '/inc/bootstrap.php';
 require_once __DIR__ . '/inc/header.php';
 
-$arSensors = CIoT::getDallasArrData($USER['deviceId']);
+$cacheId = md5('CIoT::getDallasArrData_'.$USER['deviceId']);
+if(CCache::checkCache($cacheId)) {
+    $arSensors = CCache::getCache($cacheId);
+} else {
+    $arSensors = CIoT::getDallasArrData($USER['deviceId']);
+    CCache::writeCache($cacheId, $arSensors);
+}
+
 
 ?>
     <!-- Page JS Code -->
