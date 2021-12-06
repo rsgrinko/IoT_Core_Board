@@ -26,6 +26,7 @@ if(isset($_REQUEST['reg']) and $_REQUEST['reg'] == 'Y'){
               'user', $_REQUEST['name'],
               'assets/img/avatars/default_avatar.jpg');
           CUser::SecurityAuthorize($_REQUEST['login'], $_REQUEST['pass']);
+          CEvents::add('Зарегистрирован новый пользователь <b>'.$_REQUEST['login'].'</b>', 'info', 'reguser');
           header("Location: index.php");
           die();
       } else {
