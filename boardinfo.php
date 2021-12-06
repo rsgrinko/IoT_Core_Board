@@ -11,8 +11,22 @@
 	
 	require_once __DIR__ . '/inc/header.php';
 
-	$arDevice = CIoT::getDevice($deviceId);
-	$arDeviceUser = CUser::getFields($arDevice['user']);
+    $cacheId = md5('CIoT::getDevice_'.$deviceId);
+    if(CCache::checkCache($cacheId)) {
+        $arDevice = CCache::getCache($cacheId);
+    } else {
+        $arDevice = CIoT::getDevice($deviceId);
+        CCache::writeCache($cacheId, $arDevice);
+    }
+
+    $cacheId = md5('CUser::getFields_'.$arDevice['user']);
+    if(CCache::checkCache($cacheId)) {
+        $arDeviceUser = CCache::getCache($cacheId);
+    } else {
+        $arDeviceUser = CUser::getFields($arDevice['user']);
+        CCache::writeCache($cacheId, $arDeviceUser);
+    }
+
 ?>	
 <div class="row">
 	<div class="col-md-12">

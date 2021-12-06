@@ -53,9 +53,9 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
         <link rel="stylesheet" id="css-bootstrap" href="assets/css/bootstrap.css" />
         <link rel="stylesheet" id="css-app" href="assets/css/app.css" />
         <link rel="stylesheet" id="css-app-custom" href="assets/css/app-custom.css" />
-        
+
         <!-- End Stylesheets -->
-        
+
         <!-- AppUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock and App.js -->
         <script src="assets/js/core/jquery.min.js"></script>
         <script src="assets/js/core/bootstrap.min.js"></script>
@@ -72,16 +72,16 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
         <script src="assets/js/plugins/flot/jquery.flot.pie.min.js"></script>
         <script src="assets/js/plugins/flot/jquery.flot.stack.min.js"></script>
         <script src="assets/js/plugins/flot/jquery.flot.resize.min.js"></script>
-        
+
         <script src="assets/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
 		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.highcharts.com/modules/export-data.js"></script>
 		<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-		
+
 		<link rel="stylesheet" id="css-app-custom" href="assets/css/custom.css" />
-		
+
     </head>
 
     <body class="app-ui layout-has-drawer layout-has-fixed-header">
@@ -112,43 +112,43 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                                 <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'control.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/control.php"><i class="ion-ios-toggle"></i> Управление</a>
                                 </li>
-                                
+
                                 <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'board.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/board.php"><i class="ion-android-settings"></i> Конфигурация</a>
                                 </li>
 
                                 <li class="nav-item nav-drawer-header">Компоненты</li>
-								
+
 								<?php if(CUSer::is_admin()): ?>
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'events.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/events.php"><i class="fa fa-list"></i> Журнал событий</a>
-								</li>  
-								
+								</li>
+
                                 <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'boardlist.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/boardlist.php"><i class="fa fa-wifi"></i> Устройства</a>
-								</li> 
+								</li>
 
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/users.php"><i class="fa fa-user"></i> Пользователи</a>
-								</li>    
-								
+								</li>
+
 								<li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'cron.php' or basename($_SERVER['PHP_SELF']) == 'add_cron.php' or basename($_SERVER['PHP_SELF']) == 'edit_cron.php') ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/cron.php"><i class="fa fa-tasks"></i> Планировщик</a>
-								</li> 
-								
+								</li>
+
 								<li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'sql.php') ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/sql.php"><i class="fa fa-database"></i> SQL запросы</a>
-								</li> 
+								</li>
 								<?php endif; ?>
-								
-								
+
+
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'firmware_list.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/firmware_list.php"><i class="fa fa-upload"></i> Прошивки</a>
-								</li>  
-								
-								
-								
-                                    
+								</li>
+
+
+
+
                                 <li class="nav-item nav-item-has-subnav">
                                     <a href="javascript:void(0)"><i class="ion-ios-calculator-outline"></i> UI Elements</a>
                                     <ul class="nav nav-subnav">
@@ -358,16 +358,15 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                             </div>
 
                             <div class="collapse navbar-collapse" id="header-navbar-collapse">
-                               
+
 
                                 <ul id="main-menu" class="nav navbar-nav navbar-left">
                                     <li class="dropdown">
                                         <a href="#" data-toggle="dropdown">Устройства <span class="caret"></span></a>
 
                                         <ul class="dropdown-menu">
-	                                        <?php 
-		                                        $userDevices = getUserDevices($USER['id']);
-		                                        
+	                                        <?php
+                                                $userDevices = getUserDevices($USER['id']);
 		                                        foreach($userDevices as $device):
 	                                        ?>
                                             	<li><a href="boardinfo.php?id=<?php echo $device['id'];?>">MAC: <?php echo $device['mac'];?>, HW: <?php echo $device['hw'];?>, FW: <?php echo $device['fw'];?></a></li>

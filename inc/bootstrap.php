@@ -25,18 +25,26 @@ require_once DIR.'/inc/lib/CIoT.class.php';			  			// работа с контр
 $DB = new CDB(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME); 		// создаем объект для работы с базой данных
 $DB->query('SET sql_mode = \'\'');                              // сбрасываем режим работы sql_mode=only_full_group_by 
 
-
 CIoT::init($DB);											    // инициализация класса работы с контроллером
 CCache::init(CACHEDIR, USE_CACHE);    							// инициализация модуля кэширования
 
-if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { CCache::clearCache(); }	// сброс кэша по запросу
-CUser::init($DB);												// инициализация поддержки пользователей панели
+if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
+    CCache::clearCache();
+}
 
+CUser::init($DB);												// инициализация поддержки пользователей панели
 CEvents::init($DB);												// инициализация класса журналирования событий
 CCron::init($DB);												// инициализация крона
 
 if(CUser::is_user()) {
-	$USER = CUser::getFields();
+    $cacheId = md5('CUser::getFields_noparams_'.CUser::$id);
+    if(CCache::checkCache($cacheId)) {
+        $USER = CCache::getCache($cacheId);
+    } else {
+        $USER = CUser::getFields();
+        CCache::writeCache($cacheId, $USER);
+    }
+
 } else {
 	$USER = [];
 }
@@ -44,13 +52,7 @@ if(CUser::is_user()) {
 CCron::handler();  												// выполнение периодических задач на хитах
 
 
-$cacheId = md5('getUserDevices_'.$USER['id']);
-if(CCache::checkCache($cacheId)) {
-	$userDevices = CCache::getCache($cacheId);
-} else {
-	$userDevices = getUserDevices($USER['id']);
-	CCache::writeCache($cacheId, $userDevice);
-}
+$userDevices = getUserDevices($USER['id']);
 
 //TODO: реализовать выбор устройства пользователя через панель
 if($userDevices) {

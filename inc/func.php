@@ -5,7 +5,7 @@
 *	Разработчик: Роман Сергеевич Гринько
 *	E-mail: rsgrinko@gmail.com
 *   Сайт: https://it-stories.ru
-*/	
+*/
 
 
 /**
@@ -17,32 +17,32 @@ function getClassNameByEventType($type){
 	switch($type){
 		case 'info':
 			$result = 'btn btn-app-blue btn-block';
-		break;	
-			
+		break;
+
 		case 'warning':
 			$result = 'btn btn-app-red btn-block';
-		break;	
-		
+		break;
+
 		case 'success':
 			$result = 'btn btn-app-green btn-block';
 		break;
-		
+
 		case 'notice':
 			$result = 'btn btn-app-orange btn-block';
 		break;
-					
+
 		default:
 			$result = 'btn btn-app-blue btn-block';
 		break;
 	}
-	
+
 	return $result;
 }
-	
+
 /**
  * Обработка строки перед подстановкой в SQL зарпос
  * @param string $str
- */	
+ */
 function prepareString($str){
 	$str = str_replace('\'', '', $str);
 	return $str;
@@ -56,7 +56,7 @@ function prepareString($str){
  */
 function pre($arr, $stop = false) {
 	echo '<pre>'.print_r($arr, true).'</pre>';
-	
+
 	if($stop) {
 		die();
 	}
@@ -64,7 +64,7 @@ function pre($arr, $stop = false) {
 
 /**
  * Проверка принадлежности пользователя к устройтсву
- * 
+ *
  * @param int $deviceId
  * @param int $userId
  */
@@ -78,7 +78,7 @@ function isHaveAccessToDevice($deviceId, $userId){
         CCache::writeCache($cacheId, $arDevice);
     }
 
-	
+
 	if($arDevice){
 		if($arDevice[0]['user'] == $userId){
 			return true;
@@ -155,7 +155,7 @@ function getClientInfo() {
         else {
             $platform = 'unrecognized';
         }
-        
+
         $keys = [
 		    'HTTP_CLIENT_IP',
 		    'HTTP_X_FORWARDED_FOR',
@@ -183,7 +183,7 @@ function getClientInfo() {
 
 /**
  * Получение устройств, принадлежащих пользователю
- * 
+ *
  * @param int $userId
  * @return array|bool
  */
@@ -200,13 +200,13 @@ function getUserDevices($userId) {
 	if($res){
 		return $res;
 	} else {
-		return false;
+		return [];
 	}
 }
 
 /**
  * Получение ОС пользователя
- * 
+ *
  * @return string
  */
 function getOS() {
@@ -263,7 +263,7 @@ function getOS() {
             <br><a href="http://'.$_SERVER['SERVER_NAME'].'">http://'.$_SERVER['SERVER_NAME'].'</a>
         </p>
     ';
-     
+
     // прикрепляем лог, если он есть
     if(isset($file) and !empty($file) and file_exists($file)){
         $mail->addFile($file);
@@ -277,7 +277,7 @@ function getOS() {
 
 /**
  * Преобразование массива $_FILES в более логичный вид при множественной загрузке
- * 
+ *
  * @param array $arrFiles Массив $_FILES
  * @param string $name Имя поля прикрепления файла (ключ)
  *
@@ -289,8 +289,8 @@ function prepareArrFiles($arrFiles, $name) {
         foreach($l as $i => $v) {
             $files[$i][$k] = $v;
         }
-    }		
+    }
     $arrFiles[$name] = $files;
-    
+
     return $arrFiles;
 }

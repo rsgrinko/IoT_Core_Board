@@ -201,13 +201,13 @@ class CUser {
 	 * @return bool
 	 */
 	public static function is_user():bool {
-		if(!isset($_SESSION['authorize']) or empty($_SESSION['authorize']) or $_SESSION['authorize']!=='Y') {
+		if(!isset($_SESSION['authorize']) or empty($_SESSION['authorize']) or $_SESSION['authorize'] !== 'Y') {
 			return false;
 		}
-		$result = self::$DB->getItem(self::$table, array('login'=>$_SESSION['login']));
+		$result = self::$DB->getItem(self::$table, array('login' => $_SESSION['login']));
 		if($result) {
-				if($result['password']==$_SESSION['password']){
-					self::$DB->update(self::$table, array('id'=>$result['id']), array('last_active' => time()));
+				if($result['password'] == $_SESSION['password']){
+					self::$DB->update(self::$table, array('id' => $result['id']), array('last_active' => time()));
 					self::$id = $result['id'];
 					$_SESSION['id'] = $result['id'];
 					return true;

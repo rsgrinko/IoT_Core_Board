@@ -14,22 +14,17 @@ if(!defined('CORE_LOADED') or CORE_LOADED !== true) {
 }
 
 $finish_time = microtime(true);
-$delta=round($finish_time - START_TIME, 3);
+$delta = round($finish_time - START_TIME, 3);
 if ($delta < 0.001) {
 	$delta = 0.001;
 }
 echo '<span class="footer_debug">Использовано памяти: '.round(memory_get_usage() / 1024 / 1024, 2).' МБ / Время обращений к базе: '.round($DB::$workingTime, 3).' сек ('.$DB::$quantity.' шт.) / Сгенерировано за '.$delta.' сек</span>';
 ?>
-</div>
-              </main>
-
             </div>
-            <!-- .app-layout-container -->
-        </div>
-        <!-- .app-layout-canvas -->
+        </main>
+    </div>
+</div>
 
-        <!-- Apps Modal -->
-        <!-- Opens from the button in the header -->
         <div id="apps-modal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-sm modal-dialog modal-dialog-top">
                 <div class="modal-content">
@@ -74,7 +69,6 @@ echo '<span class="footer_debug">Использовано памяти: '.round(
         <script>
             $(function()
             {
-                // Init page helpers (Slick Slider plugin)
                 App.initHelpers('slick');
             });
         </script>
