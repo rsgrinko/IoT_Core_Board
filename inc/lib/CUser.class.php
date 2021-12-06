@@ -102,8 +102,8 @@ class CUser {
 	 * @param string $name
 	 * @param string $image
 	 */
-	public static function Registration($login, $password, $level = 'user', $name = '', $image = ''):void {
-		self::$DB->addItem(self::$table, array('login' => $login, 'password' => $password, 'access_level' => $level, 'name' => $name,'image' => $image, 'last_active' => time()));
+	public static function Registration($login, $password, $email, $level = 'user', $name = '', $image = ''):void {
+		self::$DB->addItem(self::$table, array('login' => $login, 'password' => $password, 'access_level' => $level, 'name' => $name,'image' => $image, 'email' => $email, 'last_active' => time()));
 		$result = self::$DB->getItem(self::$table, array('login'=>$login, 'password' => $password));
 		
 		self::$id = $result['id'];

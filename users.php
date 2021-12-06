@@ -25,6 +25,7 @@
                                                     <th class="text-center" style="width: 50px;">ID</th>
                                                     <th>Логин</th>
                                                     <th>Имя</th>
+                                                    <th>E-Mail</th>
                                                     <th>Доступ</th>
                                                     <th>Изображение</th>
                                                     <th>Последняя активность</th>
@@ -41,6 +42,7 @@
                                                     <td class="text-center"><?php echo $user['id']; ?></td>
                                                     <td><?php echo $user['login']; ?></td>
                                                     <td><?php echo $user['name']; ?></td>
+                                                    <td><a href="mailto:<?php echo $user['email']; ?>"><?php echo $user['email']; ?></a></td>
                                                     <td><?php echo $user['access_level']; ?></td>
                                                     <td style="text-align:center;"><a href="<?php echo $user['image']; ?>" target="_blank"><img style="max-width: 40px;" src="<?php echo $user['image']; ?>" alt="avatar"></a></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $user['last_active']); ?></td>

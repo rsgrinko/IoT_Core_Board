@@ -179,7 +179,7 @@ class CCron
     {
         if (!isset($id) or empty($id)) return false;
         $res = self::$DB->remove(self::$table, array('id' => $id));
-        CEvents::add('Задание с ID: ' . $id . '. было удалено', 'info', 'cron');
+        CEvents::add('Задание с ID: ' . $id . ' было удалено', 'info', 'cron');
         return true;
     }
 
