@@ -36,9 +36,9 @@
 	}
 	
 	
-	if(isset($_REQUEST['dht_t']) and !empty($_REQUEST['dht_t'])){
-		CIoT::addDallasData($DEVICE['id'], 'dht_t', $_REQUEST['dht_t']);
-		CIoT::addDallasData($DEVICE['id'], 'dht_h', $_REQUEST['dht_h']);
+	if(isset($_REQUEST['dht_t']) and !empty($_REQUEST['dht_t'])){		 // если получены данные с датчика DTH
+		CIoT::addDallasData($DEVICE['id'], 'dht_t', $_REQUEST['dht_t']); //забиваем показания температуры
+		CIoT::addDallasData($DEVICE['id'], 'dht_h', $_REQUEST['dht_h']); // забиваем показания влажности
 	}
 	
 	
