@@ -34,17 +34,34 @@
                                             </thead>
                                             <tbody>
 	                                            <?php
-													CPagination::execute($_REQUEST['page'], CIoT::getCountDevices(), PAGINATION_LIMIT);
-													$limit = CPagination::getLimit();	
+                                                    $cacheId = md5('CIoT::getCountDevices');
+                                                    if(CCache::checkCache($cacheId)) {
+                                                        $countDevices = CCache::getCache($cacheId);
+                                                    } else {
+                                                        $countDevices = CIoT::getCountDevices();
+                                                        CCache::writeCache($cacheId, $countDevices);
+                                                    }
+													CPagination::execute($_REQUEST['page'], $countDevices, PAGINATION_LIMIT);
+													$limit = CPagination::getLimit();
 												?>
-	                                            <?php foreach(CIoT::getDevices($limit, 'ASC') as $device): ?>
+	                                            <?php
+                                                    $cacheId = md5('CIoT::getDevices_'.$limit.'_ASC');
+                                                    if(CCache::checkCache($cacheId)) {
+                                                        $arrDevices = CCache::getCache($cacheId);
+                                                    } else {
+                                                        $arrDevices = CIoT::getDevices($limit, 'ASC');
+                                                        CCache::writeCache($cacheId, $arrDevices);
+                                                    }
+                                                    foreach($arrDevices as $device):
+                                                    $arrUserFields = CUser::getFields($device['user']);
+                                                ?>
                                                 <tr>
                                                     <td class="text-center"><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['id']; ?></a></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['mac']; ?></a></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['chipid']; ?></a></td>
                                                     <td><?php echo $device['hw']; ?></td>
                                                     <td><?php echo $device['fw']; ?></td>
-                                                    <td><?php echo CUser::getFields($device['user'])['name']; ?> (ID: <?php echo $device['user'];?>)</td>
+                                                    <td><?php echo $arrUserFields['name']; ?> (<?php echo $arrUserFields['login'];?>, ID: <?php echo $device['user'];?>)</td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['time']); ?></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['last_active']); ?></td>
                                                 </tr>

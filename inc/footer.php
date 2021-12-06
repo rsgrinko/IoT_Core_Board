@@ -18,7 +18,7 @@ $delta=round($finish_time - START_TIME, 3);
 if ($delta < 0.001) {
 	$delta = 0.001;
 }
-echo '<span class="footer_debug">Использовано памяти: '.round(memory_get_usage() / 1024 / 1024, 2).' МБ / Время обращений к базе: '.round($DB::$workingTime, 3).' сек / Сгенерировано за '.$delta.' сек</span>';
+echo '<span class="footer_debug">Использовано памяти: '.round(memory_get_usage() / 1024 / 1024, 2).' МБ / Время обращений к базе: '.round($DB::$workingTime, 3).' сек ('.$DB::$quantity.' шт.) / Сгенерировано за '.$delta.' сек</span>';
 ?>
 </div>
               </main>
