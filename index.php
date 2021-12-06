@@ -78,7 +78,15 @@ $arSensors = CIoT::getDallasArrData($USER['deviceId']);
         CIoT::initHighcharts();
         //pre($arSensors);
         foreach ($arSensors as $arSensor):
-            $arValues = CIoT::getPlotDallasValues($USER['deviceId'], $arSensor['sensor']);
+            $cacheId = md5('CIoT::getPlotDallasValues_'.$USER['deviceId'].'_'.$arSensor['sensor']);
+            if(CCache::checkCache($cacheId) and CCache::ageOfCache($cacheId) < 300) {
+                $arValues = CCache::getCache($cacheId);
+            } else {
+                $arValues = CIoT::getPlotDallasValues($USER['deviceId'], $arSensor['sensor']);
+                CCache::writeCache($cacheId, $arValues);
+            }
+
+            
             ?>
             <div class="col-sm-6 col-lg-6">
                 <div class="card" id="graphCard_<?php echo $arSensor['sensor']; ?>">
