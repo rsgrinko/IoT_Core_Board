@@ -13,13 +13,14 @@
 	}
 	$mac = prepareString($_REQUEST['mac']);
 	$deviceId = CIoT::getDeviceId($mac);
+
 	header('Content-type: application/json; charset=utf-8');
 	$boardConfig = CIoT::getBoardConfig($deviceId);
 	$arr = array (
-				'dallas_resolution' => $boardConfig['ds_resolution'], // 9..12
-				'deviceId' => $deviceId,
-                'sendingInterval' => '2000',
-				'mac' => $mac,
+				'dallas_resolution' => $boardConfig['ds_resolution'],	 // разрядность датчика 9..12
+				'deviceId' => $deviceId,								 // идентификатор устройства
+                'sendingInterval' => $boardConfig['sending_interval'],	 // интервал обмена
+				'mac' => $mac,					 					     // MAC адрес устройства
 				'date' => date("d.m.y H:i:s"),
 				'support' => 'rsgrinko@gmail.com'
 				);
