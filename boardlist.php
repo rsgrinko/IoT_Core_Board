@@ -41,6 +41,7 @@
                                                         $countDevices = CIoT::getCountDevices();
                                                         CCache::writeCache($cacheId, $countDevices);
                                                     }
+
 													CPagination::execute($_REQUEST['page'], $countDevices, PAGINATION_LIMIT);
 													$limit = CPagination::getLimit();
 												?>
@@ -52,6 +53,7 @@
                                                         $arrDevices = CIoT::getDevices($limit, 'ASC');
                                                         CCache::writeCache($cacheId, $arrDevices);
                                                     }
+                                                    
                                                     foreach($arrDevices as $device):
                                                     $arrUserFields = CUser::getFields($device['user']);
                                                 ?>
