@@ -124,8 +124,12 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                                     <a href="<?php echo HOME; ?>/events.php"><i class="fa fa-list"></i> Журнал событий</a>
 								</li>  
 								
-								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '';?>">
-                                    <a href="<?php echo HOME; ?>/users.php"><i class="fa fa-user	"></i> Пользователи</a>
+                                <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '';?>">
+                                    <a href="<?php echo HOME; ?>/users.php"><i class="fa fa-user"></i> Устройства</a>
+								</li> 
+
+								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'boadrlist.php' ? 'active' : '';?>">
+                                    <a href="<?php echo HOME; ?>/boadrlist.php"><i class="fa fa-user"></i> Пользователи</a>
 								</li>    
 								
 								<li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'cron.php' or basename($_SERVER['PHP_SELF']) == 'add_cron.php' or basename($_SERVER['PHP_SELF']) == 'edit_cron.php') ? 'active' : '';?>">

@@ -40,11 +40,11 @@
 	                                            <?php foreach(CIoT::getDevices($limit, 'ASC') as $device): ?>
                                                 <tr>
                                                     <td class="text-center"><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['id']; ?></a></td>
-                                                    <td><?php echo $device['mac']; ?></td>
-                                                    <td><?php echo $device['chipid']; ?></td>
+                                                    <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['mac']; ?></a></td>
+                                                    <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['chipid']; ?></a></td>
                                                     <td><?php echo $device['hw']; ?></td>
                                                     <td><?php echo $device['fw']; ?></td>
-                                                    <td><?php echo $device['user']; ?></td>
+                                                    <td><?php echo CUser::getFields($device['user'])['name']; ?> (ID: <?php echo $device['user'];?>)</td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['time']); ?></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['last_active']); ?></td>
                                                 </tr>
