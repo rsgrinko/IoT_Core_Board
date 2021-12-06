@@ -185,26 +185,14 @@ background-color: #d8dbe2;
 			<?php if($err_mess): ?>
 				<span class="error_text">Ошибка авторизации</span>
 			<?php endif;?>
-		    <form class="register-form">
-		      <input type="text" placeholder="name"/>
-		      <input type="password" placeholder="password"/>
-		      <input type="text" placeholder="email address"/>
-		      <button>Создать</button>
-		      <p class="message">Уже зарегистрированы? <a href="#">Войти</a></p>
-		    </form>
 		    <form class="login-form">
 		      <input type="text" name="login" placeholder="Имя пользователя"/>
 		      <input type="password" name="pass" placeholder="Пароль"/>
 		      <button>Войти</button>
-		      <?/*<p class="message">Новый пользователь? <a href="#">Создать аккаунт</a></p>*/?>
+		      <p class="message">Новый пользователь? <a href="register.php">Создать аккаунт</a></p>
 		    </form>
 		  </div>
 		</div>
-		<script>
-			$('.message a').click(function(){
-			   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-			});
-		</script>
 	</body>
 </html>
 
