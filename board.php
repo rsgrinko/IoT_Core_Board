@@ -1,6 +1,6 @@
 <?php
-	require_once $_SERVER['DOCUMENT_ROOT'].'/inc/bootstrap.php';
-	require_once $_SERVER['DOCUMENT_ROOT'].'/inc/header.php';
+	require_once __DIR__.'/inc/bootstrap.php';
+	require_once __DIR__.'/inc/header.php';
 	
 	if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
 		$DB->update('configs', array('device' => $USER['deviceId']), array('ds_resolution' => $_REQUEST['ds_resolution'], 'sending_interval' => $_REQUEST['sending_interval']));
@@ -65,5 +65,5 @@
 </div>
 
 <?php	
-	require_once $_SERVER['DOCUMENT_ROOT'].'/inc/footer.php';
+	require_once __DIR__.'/inc/footer.php';
 ?>

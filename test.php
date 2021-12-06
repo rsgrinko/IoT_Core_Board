@@ -2,7 +2,7 @@
 /**
  * Файл для тестирования и отладки нового функционала
  */
-require_once $_SERVER['DOCUMENT_ROOT'].'/inc/bootstrap.php';
+require_once __DIR__.'/inc/bootstrap.php';
 if(!CUser::is_admin()) {
     die('403 - Access denied');
 }

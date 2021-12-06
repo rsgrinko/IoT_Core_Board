@@ -1,6 +1,6 @@
 <?php
-	require_once $_SERVER['DOCUMENT_ROOT'].'/inc/bootstrap.php';
-	require_once $_SERVER['DOCUMENT_ROOT'].'/inc/header.php';
+	require_once __DIR__.'/inc/bootstrap.php';
+	require_once __DIR__.'/inc/header.php';
 	$arFirmwareList = CIoT::getFirmwareList();
 ?>
 
@@ -62,5 +62,5 @@
 </div>
 
 <?php	
-	require_once $_SERVER['DOCUMENT_ROOT'].'/inc/footer.php';
+	require_once __DIR__.'/inc/footer.php';
 ?>
