@@ -43,7 +43,14 @@ if(CUser::is_user()) {
 
 CCron::handler();  												// выполнение периодических задач на хитах
 
-$userDevices = getUserDevices($USER['id']);
+
+$cacheId = md5('getUserDevices_'.$USER['id']);
+if(CCache::checkCache($cacheId)) {
+	$userDevices = CCache::getCache($cacheId);
+} else {
+	$userDevices = getUserDevices($USER['id']);
+	CCache::writeCache($cacheId, $userDevice);
+}
 
 //TODO: реализовать выбор устройства пользователя через панель
 if($userDevices) {
