@@ -1,15 +1,33 @@
 <?php
-/*
-	Класс для работы с пользователями панели управления
-	Данный файл входит в состав системы IoT Core System
-	Разработчик: Роман Сергеевич Гринько
-	E-mail: rsgrinko@gmail.com
-	Сайт: https://it-stories.ru
+/**
+*	Класс для работы с пользователями панели управления
+*	Данный файл входит в состав системы IoT Core System
+*	Разработчик: Роман Сергеевич Гринько
+*	E-mail: rsgrinko@gmail.com
+*	Сайт: https://it-stories.ru
 */
 	
 class CUser {
+
+	/**
+	 * ID текущего пользователя
+	 * 
+	 * @var int
+	 */
 	public static $id;
+
+	/**
+	 * Таблица с пользователями
+	 * 
+	 * @var string
+	 */
 	public static $table;
+
+	/**
+	 * Объект базы данных
+	 * 
+	 * @var object
+	 */
 	public static $DB;
 	private static $class_version = '1.0.1';
 	private static $class_author = 'Roman S Grinko (rsgrinko@gmail.com)';
@@ -23,7 +41,13 @@ class CUser {
 		return $result;
 	}
 	
-	public static function init($DB, $table = 'users') {
+	/**
+	 * Инициализация класса
+	 * 
+	 * @param object $DB
+	 * @param string $table
+	 */
+	public static function init($DB, $table = 'users'):void {
 		self::$table = $table;
 		self::$DB = $DB;
 		if(isset($_SESSION['authorize']) and $_SESSION['authorize'] == 'Y'){
@@ -31,7 +55,12 @@ class CUser {
 		}
 	}	
 	
-	// Получение всех полей пользователя
+	/**
+	 * Получение всех полей пользователя
+	 * 
+	 * @param int $id
+	 * @return array|bool
+	 */
 	public static function getFields($id = ''){
 		if(empty($id) or $id == ''){
 			$id = self::$id;
@@ -50,15 +79,30 @@ class CUser {
 		}
 	}
 	
-	// Получение всех пользователей панели
+	/**
+	 * Получение всех пользователей панели
+	 * 
+	 * @param int $limit
+	 * @param string $sort
+	 * 
+	 * @return array
+	 */
 	public static function getUsers($limit = 10, $sort = 'ASC'){
 		$res = self::$DB->query('SELECT * FROM `'.self::$table.'` ORDER BY `id` '.$sort.' LIMIT '.$limit);
 		return $res;
 	}
 
 	
-	// Метод выполняет регистрацию пользователя в системе
-	public static function Registration($login, $password, $level = 'user', $name = '', $image = ''){
+	/**
+	 * Выполняет регистрацию пользователя в системе
+	 * 
+	 * @param string $login
+	 * @param string $password
+	 * @param string $level
+	 * @param string $name
+	 * @param string $image
+	 */
+	public static function Registration($login, $password, $level = 'user', $name = '', $image = ''):void {
 		self::$DB->addItem(self::$table, array('login' => $login, 'password' => $password, 'access_level' => $level, 'name' => $name,'image' => $image, 'last_active' => time()));
 		$result = self::$DB->getItem(self::$table, array('login'=>$login, 'password' => $password));
 		
@@ -72,8 +116,14 @@ class CUser {
 		
 	}
 	
-	// Метод проеряет занятость логина в системе
-	public static function user_exists($login){
+	/**
+	 * Проверяет логин на существование
+	 * 
+	 * @param string $login
+	 * 
+	 * @return bool
+	 */
+	public static function user_exists($login):bool{
 		$result = self::$DB->getItem(self::$table, array('login'=>$login));
 		
 		if($result) {
@@ -83,19 +133,29 @@ class CUser {
 		}
 	}
 	
-	// считает количество пользователей
-	public static function count_users(){
+	/**
+	 * Считает количество пользователей
+	 * 
+	 * @return int
+	 */
+	public static function count_users():int{
 		$result = self::$DB->getItems(self::$table, array('id'=>'>0'));
 		
 		if($result) {
 			return count($result);
 		} else {
-			return false;
+			return 0;
 		}
 	}
 		
-	// Метод выполняет авторизацию пользователя в системе по ID
-	public static function Authorize($id){
+	/**
+	 * Выполняет авторизацию пользователя в системе по ID
+	 * 
+	 * @param int $id
+	 * 
+	 * @return bool
+	 */
+	public static function Authorize($id):bool{
 		$result = self::$DB->getItem(self::$table, array('id'=>$id), true);
 		
 		if($result) {
@@ -111,8 +171,15 @@ class CUser {
 		}
 	}
 	
-	// Метод выполняет авторизацию пользователя в системе по логину и паролю
-	public static function SecurityAuthorize($login, $password){
+	/**
+	 * Выполняет авторизацию пользователя в системе по логину и паролю
+	 * 
+	 * @param string $login
+	 * @param string $password
+	 * 
+	 * @return bool
+	 */
+	public static function SecurityAuthorize($login, $password):bool{
 		
 		$result = self::$DB->getItem(self::$table, array('login'=>$login, 'password' => $password), true);
 		if($result) {
@@ -128,7 +195,11 @@ class CUser {
 		}
 	}
 	
-	//  Проверка на пользователя
+	/**
+	 * Проверка на пользователя
+	 * 
+	 * @return bool
+	 */
 	public static function is_user():bool {
 		if(!isset($_SESSION['authorize']) or empty($_SESSION['authorize']) or $_SESSION['authorize']!=='Y') {
 			return false;
@@ -149,7 +220,11 @@ class CUser {
 		}
 	}
 
-	// метод вроверяет админ ли перед нами или нет
+	/**
+	 * Проверка на админа
+	 * 
+	 * @return bool
+	 */
 	public static function is_admin():bool {
 		if(self::is_user()) {
 			if(self::getFields(self::$id)['access_level'] == 'admin') {
@@ -162,7 +237,9 @@ class CUser {
 		}
 	}
 	
-	// Метод выхода из системы
+	/**
+	 * Метод выхода из системы
+	 */
 	public static function Logout():void {
 		$_SESSION['id'] = '';
 		$_SESSION['authorize'] = '';
