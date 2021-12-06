@@ -6,9 +6,6 @@
 	require_once $_SERVER['DOCUMENT_ROOT'].'/inc/header.php';
 	
 ?>
-
-
-
 <div class="row maxheight">
 <div class="col-md-12">
 <!-- Floating Labels -->
