@@ -232,6 +232,34 @@ class CIoT {
 		}
 	}
 
+	/**
+     * Получаем массив с данными об устройствах
+     *
+     * @return array|bool
+     */
+	public static function getDevices($limit = 10, $sort = 'ASC') {
+		$res = self::$DB->query('SELECT * FROM devices ORDER BY `id` '.$sort.' LIMIT '.$limit);
+		if($res){
+			return $res;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Получаем количество устройств
+     *
+     * @return int
+     */
+	public static function getCountDevices():int {
+		$res = self::$DB->query('SELECT id FROM devices');
+		if($res){
+			return count($res);
+		} else {
+			return 0;
+		}
+	}
+
     /**
      * Получаем массив с показаниями датчика для построения графика
      *
