@@ -250,7 +250,7 @@ class CUser {
 		//session_destroy();
 		return;
     }
-		
+
 		
 
 }

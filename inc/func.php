@@ -273,6 +273,38 @@ function getOS() {
     return;
  }
 
+/**
+ * Отправка уведомления пользователю
+ *
+ * @param int $userId
+ * @param string $subject
+ * @param string $message
+ * @param string|false $file
+ */
+ function userSendMail($userId, $subject, $message, $file = false) {
+     $arUser = CUser::getFields($userId);
+     $mail = new CMail;
+     $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
+     $mail->to($arUser['email'], $arUser['name']);
+     $mail->subject = $subject;
+     $mail->body = '
+        <h1>Уведомление от системы IoT Core</h1>
+        <p>'.$message.'</p>
+        <hr>
+        <p>
+            С уважением, система IoT Core Board v.'.VERSION.'
+            <br><a href="http://'.$_SERVER['SERVER_NAME'].'">http://'.$_SERVER['SERVER_NAME'].'</a>
+        </p>
+    ';
+
+     // прикрепляем лог, если он есть
+     if(isset($file) and !empty($file) and file_exists($file)){
+         $mail->addFile($file);
+     }
+     $mail->send();
+
+     return;
+ }
 
 
 /**
