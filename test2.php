@@ -7,6 +7,9 @@ if(!CUser::is_admin()) {
     die('403 - Access denied');
 }
 
+$output=null;
+$retval=null;
+exec('uptime', $output, $retval);
 
 
     $mail = new CMail2;
@@ -18,8 +21,8 @@ if(!CUser::is_admin()) {
     $mail->assignTemplateVars(
         array(
             'HEADER' => 'IoT Core Board',
-            'MESSAGE' => 'Произошла проверка почтовой рассылки с помощью нового класса',
-            'TITLE' => 'Уведомление системы',
+            'MESSAGE' => '<pre>'.print_r($output, true).'</pre>',
+            'TITLE' => 'Код: '.$retval,
             'LINK' => 'https://it-stories.ru/',
             'LINKNAME' => 'Перейти в панель',
             'FOOTER' => 'Сообщение сгенерировано автоматически',
