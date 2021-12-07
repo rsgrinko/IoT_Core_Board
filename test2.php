@@ -11,7 +11,7 @@ if(!CUser::is_admin()) {
 
     $mail = new CMail2;
     $mail->dump = true;
-    $mail->dumpPath = $_SERVER['DOCUMENT_ROOT'].'/uploads';
+    $mail->dumpPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/emails';
     $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
     $mail->to(ADMIN_EMAIL, 'Администратор панели');
     $mail->subject = 'Проверка почтовой подсистемы';
