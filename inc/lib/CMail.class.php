@@ -283,7 +283,7 @@ class CMail
 		
 		$body = file_get_contenst(__DIR__.'/../../assets/mail_template/'.$template.'.html');
 		foreach($this->arrTemplate as $templateKey => $templateValue){
-			$body = str_replace('{'.$templateKey.'}', $templateValue), $body);
+			$body = str_replace('{'.$templateKey.'}', $templateValue, $body);
 		}
 
 	
