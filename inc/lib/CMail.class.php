@@ -281,7 +281,7 @@ class CMail
 		// Тема письма
 		$subject = (empty($this->subject)) ? 'No subject' : $this->subject;
 		
-		$body = file_get_contenst(__DIR__.'/../../assets/mail_template/'.$template.'.html');
+		$body = file_get_contents(__DIR__.'/../../assets/mail_template/'.$template.'.html');
 		foreach($this->arrTemplate as $templateKey => $templateValue){
 			$body = str_replace('{'.$templateKey.'}', $templateValue, $body);
 		}
