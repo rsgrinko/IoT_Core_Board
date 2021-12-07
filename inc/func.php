@@ -289,7 +289,8 @@ function adminSendMailWithTemplate($template, $subject, $message, $file = false)
             'TITLE' => 'test title',
             'LINK' => 'https://it-stories.ru/',
             'LINKNAME' => 'Go to site',
-            'FOOTER' => 'Thanks!'
+            'FOOTER' => 'Thanks!',
+            'SERVERNAME' => 'it-stories.ru'
         )
     );
 
