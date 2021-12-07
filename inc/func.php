@@ -287,6 +287,7 @@ function adminSendMailWithTemplate($template, $subject, $message, $file = false)
             'HEADER' => 'IoT Core',
             'MESSAGE' => 'test0',
             'TITLE' => 'test title',
+            'LINK' => 'https://it-stories.ru/',
             'LINKNAME' => 'Go to site',
             'FOOTER' => 'Thanks!'
         )
