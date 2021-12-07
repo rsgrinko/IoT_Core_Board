@@ -31,6 +31,11 @@ class CMail
 	 * Текст
 	 */
 	public $body = '';
+
+	/**
+	 * Массив с данными для подстановки в шаблон
+	 */
+	public $arrTemplate = [];
 	
 	/**
 	 * Массив заголовков файлов
@@ -111,6 +116,10 @@ class CMail
 	{
 		$this->toEmail = $email;
 		$this->toName = $name;
+	}
+
+	public function assignTemplateVars($arrVars) {
+		$this->arrTemplate = $arrVars;
 	}
 	
 	/**
@@ -239,7 +248,80 @@ class CMail
 			// Дамп письма в файл
 			if ($this->dump == true) {
 				if (empty($this->dumpPath)) {
-					$this->dumpPath = dirname(__FILE__) . '/sendmail';
+					$this->dumpPath = dirname(__FILE__) . '/uploads';
+				}
+				
+				$dump = array_merge($headers, array('To: ' . $to, 'Subject: ' . $subject, ''), $message);
+				$file = $this->safeFile($this->dumpPath . '/' . date('Y-m-d_H-i-s') . '.eml');
+				file_put_contents($file, implode("\r\n", $dump));
+			}
+			$res[] = mb_send_mail($to, $subject, implode("\r\n", $message), implode("\r\n", $headers));
+		}
+		
+		return $res;
+	}
+
+	public function sendUsingTemplate($template = 'default') {
+		if (empty($this->toEmail)) {
+			return false;
+		}
+		
+		// От кого
+		$from = (empty($this->fromName)) ? $this->fromEmail : '=?UTF-8?B?' . base64_encode($this->fromName) . '?= <' . $this->fromEmail . '>';
+		
+		// Кому
+		$array_to = array();
+		foreach (explode(',', $this->toEmail) as $row) {
+			$row = trim($row);
+			if (!empty($row)) {
+				$array_to[] = (empty($this->toName)) ? $row : '=?UTF-8?B?' . base64_encode($this->toName) . '?= <' . $row . '>';
+			}
+		}
+		
+		// Тема письма
+		$subject = (empty($this->subject)) ? 'No subject' : $this->subject;
+		
+		$body = file_get_contenst(__DIR__.'/../../assets/mail_template/'.$template.'.html');
+		foreach($this->arrTemplate as $templateKey => $templateValue){
+			$body = str_replace('{'.$templateKey.'}', $templateValue), $body);
+		}
+
+	
+		$boundary = md5(uniqid(time()));
+		
+		// Заголовок письма
+		$headers = array(
+			'Content-Type: multipart/mixed; boundary="' . $boundary . '"',
+			'Content-Transfer-Encoding: 7bit',
+			'MIME-Version: 1.0',
+			'From: ' . $from,
+			'Date: ' . date('r')
+		);
+		
+		// Тело письма
+		$message = array(
+			'--' . $boundary,
+			'Content-Type: text/html; charset=UTF-8',
+			'Content-Transfer-Encoding: base64',
+			'',
+			chunk_split(base64_encode($body))
+		);
+		
+		if (!empty($this->_files)) {
+			foreach ($this->_files as $row) {
+				$message = array_merge($message, array('', '--' . $boundary), $row);
+			}
+		}
+		
+		$message[] = '';
+		$message[] = '--' . $boundary . '--';
+		$res = array();
+		
+		foreach ($array_to as $to) {
+			// Дамп письма в файл
+			if ($this->dump == true) {
+				if (empty($this->dumpPath)) {
+					$this->dumpPath = dirname(__FILE__) . '/uploads';
 				}
 				
 				$dump = array_merge($headers, array('To: ' . $to, 'Subject: ' . $subject, ''), $message);
