@@ -369,7 +369,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                                                 $userDevices = getUserDevices($USER['id']);
 		                                        foreach($userDevices as $device):
 	                                        ?>
-                                            	<li><a href="boardinfo.php?id=<?php echo $device['id'];?>">MAC: <?php echo $device['mac'];?>, HW: <?php echo $device['hw'];?>, FW: <?php echo $device['fw'];?></a></li>
+                                            	<li><a href="boardinfo.php?id=<?php echo $device['id']; ?>">MAC: <?php echo $device['mac'];?>, HW: <?php echo $device['hw'];?>, FW: <?php echo $device['fw'];?></a></li>
                                             <?php endforeach; ?>
                                         </ul>
                                     </li>
