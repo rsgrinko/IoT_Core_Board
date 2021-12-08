@@ -379,3 +379,13 @@ function bytesToString($bytes) {
         return number_format($bytes / 1099511627776, 2) . ' TB';
     }
 }
+
+
+/**
+ * Генерация GUID
+ */
+function generateGUID():string {
+    $uid = dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) );
+    $guid = vsprintf('RG%s-1000-%s-8%.3s-%s%s%s0', str_split($uid,4));
+    return strtoupper($guid);
+}
