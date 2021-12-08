@@ -273,6 +273,37 @@ function getOS() {
     return;
  }
 
+
+ /**
+ * Отправка уведомления на почту администратору с использованием шаблонов
+ */
+function adminSendMailWithTemplate($template, $subject, $message, $file = false){
+    $mail = new CMail;
+    $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
+    $mail->to(ADMIN_EMAIL, 'Администратор панели');
+    $mail->subject = $subject;
+    $mail->assignTemplateVars(
+        array(
+            'HEADER' => 'IoT Core',
+            'MESSAGE' => 'test0',
+            'TITLE' => 'test title',
+            'LINK' => 'https://it-stories.ru/',
+            'LINKNAME' => 'Go to site',
+            'FOOTER' => 'Thanks!',
+            'SERVERNAME' => 'it-stories.ru'
+        )
+    );
+
+    
+
+    // прикрепляем лог, если он есть
+    if(isset($file) and !empty($file) and file_exists($file)){
+        $mail->addFile($file);
+    }
+    $mail->sendUsingTemplate($template);
+
+    return;
+ }
 /**
  * Отправка уведомления пользователю
  *

@@ -173,7 +173,7 @@ class CCache
      * @return int Размер кэша в байтах или false
      */
     public static function getCacheSize():int
-    {
+    { // Получить размер кэша
         $return_size = 0;
         foreach (scandir(self::$cache_dir) as $file) {
             if ($file == '.' or $file == '..') continue;
