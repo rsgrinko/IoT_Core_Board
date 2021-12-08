@@ -1,9 +1,9 @@
 <?php
-/*
-	Данный файл входит в состав системы IoT Core System
-	Разработчик: Роман Сергеевич Гринько
-	E-mail: rsgrinko@gmail.com
-	Сайт: https://it-stories.ru
+/**
+*	Данный файл входит в состав системы IoT Core System
+*	Разработчик: Роман Сергеевич Гринько
+*	E-mail: rsgrinko@gmail.com
+*	Сайт: https://it-stories.ru
 */
 
 
@@ -377,6 +377,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                                         <a href="#" data-toggle="dropdown">Профиль <span class="caret"></span></a>
 
                                         <ul class="dropdown-menu">
+                                            <li><a href="editprofile.php">Редактировать профиль</a></li>
                                             <li><a href="logout.php">Выход</a></li>
                                             <li><a href="javascript:void(0)">Visits</a></li>
                                             <li><a href="javascript:void(0)">Changelog</a></li>

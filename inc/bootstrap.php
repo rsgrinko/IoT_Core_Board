@@ -38,7 +38,7 @@ CEvents::init($DB);												// инициализация класса жур
 CCron::init($DB);												// инициализация крона
 
 if(CUser::is_user()) {
-    $cacheId = md5('CUser::getFields_noparams_'.CUser::$id);
+    $cacheId = md5('CUser::getFields_'.CUser::$id);
     if(CCache::checkCache($cacheId)) {
         $USER = CCache::getCache($cacheId);
     } else {
@@ -47,7 +47,7 @@ if(CUser::is_user()) {
     }
 
 } else {
-	$USER = [];
+	$USER = ['id' => 0];
 }
 
 CCron::handler();  												// выполнение периодических задач на хитах
