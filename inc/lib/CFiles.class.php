@@ -2,8 +2,8 @@
 /**
  * Работа с файлами и директориями.
  */
-Class Files
-{
+Class CFiles {
+
     /**
      * Конвертирование размера файла. Байты в килобайты, мегабайты
      *
@@ -18,11 +18,13 @@ Class Files
             $size /= 1024;
         }
 
-        $size = str_replace('.', ',', round($size, 1));
+        $size = round($size, 1);
         switch ($i) {
             case 0: return $size .= ' байт';
             case 1: return $size .= ' КБ';
             case 2: return $size .= ' МБ';
+            case 3: return $size .= ' ГБ';
+            case 4: return $size .= ' ТБ';
         }
     }
 
