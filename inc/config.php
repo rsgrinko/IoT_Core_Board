@@ -66,3 +66,8 @@ define('PAGINATION_LIMIT', 10);
  * E-Mail для уведомлений
  */
 define('ADMIN_EMAIL', 'rsgrinko@yandex.ru');
+
+/**
+ * Время, в течении которого считаем пользователя онлайн, сек.
+ */
+define('USER_ONLINE_TIME', 20);

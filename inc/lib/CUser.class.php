@@ -92,6 +92,25 @@ class CUser {
 		return $res;
 	}
 
+    /**
+     * Проверка пользователя на онлайн
+     *
+     * @param $int $id
+     */
+    public static function isOnline($id = false) {
+        if(!$id) {
+            return false;
+        }
+        $res = self::$DB->query('SELECT last_active FROM `'.self::$table.'` WHERE id='.$id);
+        $last_active = $res[0]['last_active'];
+        $timeNow = time();
+        if($last_active > ($timeNow - USER_ONLINE_TIME)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 	
 	/**
 	 * Выполняет регистрацию пользователя в системе

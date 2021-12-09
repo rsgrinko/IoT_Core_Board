@@ -24,6 +24,7 @@
                                                 <tr>
                                                     <th class="text-center" style="width: 50px;">ID</th>
                                                     <th>Логин</th>
+                                                    <th>Онлайн</th>
                                                     <th>Имя</th>
                                                     <th>E-Mail</th>
                                                     <th>Доступ</th>
@@ -42,6 +43,7 @@
                                                 <tr>
                                                     <td class="text-center"><?php echo $user['id']; ?></td>
                                                     <td><?php echo $user['login']; ?></td>
+                                                    <th><?php if(CUser::isOnline($user['id'])) { ?><span class="bg-green label">Online</span><?php } else {?><span class="bg-red label">Offline</span><?php } ?></th>
                                                     <td><?php echo $user['name']; ?></td>
                                                     <td><a href="mailto:<?php echo $user['email']; ?>"><?php echo $user['email']; ?></a></td>
                                                     <td><?php echo $user['access_level']; ?></td>
