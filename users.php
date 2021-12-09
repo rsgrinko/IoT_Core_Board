@@ -30,6 +30,7 @@
                                                     <th>Изображение</th>
                                                     <th>Последняя активность</th>
                                                     <th></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -46,6 +47,7 @@
                                                     <td><?php echo $user['access_level']; ?></td>
                                                     <td style="text-align:center;"><a href="<?php echo $user['image']; ?>" target="_blank"><img style="max-width: 40px;" src="<?php echo $user['image']; ?>" alt="avatar"></a></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $user['last_active']); ?></td>
+                                                    <td><a href="editprofile.php?id=<?php echo $user['id']; ?>" class="btn btn-app-orange btn-block">Изменить</a></td>
                                                     <td><a href="login_as.php?id=<?php echo $user['id']; ?>" class="btn btn-app-blue btn-block">Войти</a></td>
                                                 </tr>
                                                 <?php endforeach; ?>
