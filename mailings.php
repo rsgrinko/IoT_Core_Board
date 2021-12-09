@@ -66,7 +66,7 @@ if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
         )
     );
 
-    $mail->template = 'default';
+    $mail->template = $_REQUEST['template'] ?? 'default';
     $mail->templateDir = $_SERVER['DOCUMENT_ROOT'].'/assets/mail_templates';
 
     /*
