@@ -464,6 +464,21 @@ class CMail2 {
 		return $name . $prefix . $ext;
 	}
 
+	/**
+	 * Получение списка всех доступных шаблонов
+	 * 
+	 * @return array
+	 */
+	public static function getMailTemplates() {
+		$arrTemplates = array_diff(scandir(__DIR__.'/../../assets/mail_templates/'), array('..', '.'));
+		if(empty($arrTemplates)) {
+			return [];
+		}
+		$arrTemplates =  array_map(function($element){ return str_replace('.html', '', $element); }, $arrTemplates);
+		sort($arrTemplates);
+		return $arrTemplates;
+	}
+
     /**
      * Отправка
      */
