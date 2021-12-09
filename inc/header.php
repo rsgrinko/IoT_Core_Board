@@ -43,6 +43,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                             'userLogin': '<?php echo $USER['login']; ?>',
                             'date': '<?php echo date("d.m.Y H:i:s"); ?>',
                         };
+            var arrUser = <?php echo CJson::create($USER); ?>            
         </script>
         
         <!-- Favicons -->

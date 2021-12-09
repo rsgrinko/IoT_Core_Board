@@ -44,6 +44,7 @@ if(CUser::is_user()) {
         $USER = CCache::getCache($cacheId);
     } else {
         $USER = CUser::getFields();
+        unset($USER['password']);
         CCache::writeCache($cacheId, $USER);
     }
 
