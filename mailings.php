@@ -23,45 +23,22 @@ endif;
                 <div class="card-block">
                     <form class="form-horizontal m-t-sm" action="" method="post">
                         <input type="hidden" name="save" value="Y">
-
+                        
                         <div class="form-group">
-                            <label class="col-xs-12">Логин:</label>
-                            <div class="col-sm-9">
-                                <div class="form-control-static"><?php echo $arrUser['login']; ?></div>
-                            </div>
+                            <label class="col-xs-12" for="template-select">Select</label>
+                                <div class="col-sm-9">
+                                <select class="form-control" id="template-select" name="template" size="1">
+                                    <?php foreach(CMail2::getMailTemplates() as $mailTemplate): ?>
+									    <option value="<?php echo $mailTemplate; ?>"><?php echo $mailTemplate; ?></option>
+                                    <?php endforeach; ?>
+								</select>
+                                </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-12">Права:</label>
-                            <div class="col-sm-9">
-                                <div class="form-control-static"><?php echo $arrUser['access_level']; ?></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-12" for="login-input">Имя:</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" id="login-input" name="name" placeholder="" value="<?php echo $arrUser['name']; ?>">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-12" for="email-input">E-Mail:</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="email" id="email-input" name="email" placeholder="" value="<?php echo $arrUser['email']; ?>">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-12" for="avatar-input">Путь к изображению профиля:</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" id="avatar-input" name="image" placeholder="" value="<?php echo $arrUser['image']; ?>">
-                            </div>
-                        </div>
+                        
 
                         <div class="form-group m-b-0">
                             <div class="col-sm-9">
-                                <button class="btn btn-app" type="submit">Сохранить</button>
+                                <button class="btn btn-app" type="submit">Запустить</button>
                             </div>
                         </div>
                     </form>
