@@ -86,7 +86,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                 $(document).ready(function () {
                     setInterval(function () {
                         $.ajax({
-                            url: "ajax/getDallasData.php",
+                            url: "ajax/keepAlive.php",
                             data: {
                                 userId: "<?php echo $USER['id']; ?>",
                             },
