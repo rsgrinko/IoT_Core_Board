@@ -162,7 +162,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 								</li>
 
                                 <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'mailings.php') ? 'active' : '';?>">
-                                    <a href="<?php echo HOME; ?>/mailings.php"><i class="fa fa-tasks"></i> Почтовые рассылки</a>
+                                    <a href="<?php echo HOME; ?>/mailings.php"><i class="fa fa-envelope-o"></i> Почтовые рассылки</a>
 								</li>
 
 								<li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'cron.php' or basename($_SERVER['PHP_SELF']) == 'add_cron.php' or basename($_SERVER['PHP_SELF']) == 'edit_cron.php') ? 'active' : '';?>">

@@ -12,7 +12,7 @@ $retval=null;
 exec('uptime', $output, $retval);
 
 
-    $mail = new CMail2;
+    $mail = new CMail;
     $mail->dump = true;
     $mail->dumpPath = $_SERVER['DOCUMENT_ROOT'].'/uploads/emails';
     $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
