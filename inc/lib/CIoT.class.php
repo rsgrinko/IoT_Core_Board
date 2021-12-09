@@ -351,6 +351,25 @@ class CIoT {
 	}
 
     /**
+     * Проверка устройства на онлайн
+     *
+     * @param $int $id
+     */
+    public static function isOnline($id = false) {
+        if(!$id) {
+            return false;
+        }
+        $res = self::$DB->query('SELECT last_active FROM `devices` WHERE id='.$id);
+        $last_active = $res[0]['last_active'];
+        $timeNow = time();
+        if($last_active > ($timeNow - DEVICE_ONLINE_TIME)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Формируем строку с датой измерения для графика
      *
      * @param int $time

@@ -24,7 +24,7 @@
                                                 <tr>
                                                     <th class="text-center" style="width: 50px;">ID</th>
                                                     <th>Логин</th>
-                                                    <th>Онлайн</th>
+                                                    <th>Статус</th>
                                                     <th>Имя</th>
                                                     <th>E-Mail</th>
                                                     <th>Доступ</th>

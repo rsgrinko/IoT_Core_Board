@@ -71,3 +71,8 @@ define('ADMIN_EMAIL', 'rsgrinko@yandex.ru');
  * Время, в течении которого считаем пользователя онлайн, сек.
  */
 define('USER_ONLINE_TIME', 20);
+
+/**
+ * Время, в течении которого считаем устройство онлайн, сек.
+ */
+define('DEVICE_ONLINE_TIME', 30);

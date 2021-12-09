@@ -44,6 +44,19 @@
 							<div class="form-control-static"><?php echo $arDevice['id'];?></div>
 						</div>
 					</div>
+
+                    <div class="form-group">
+                        <label class="col-xs-12 custom_bold">Статус</label>
+                        <div class="col-sm-9">
+                            <div class="form-control-static">
+                                <?php if(CIoT::isOnline($arDevice['id'])) { ?>
+                                    <span class="bg-green label">Online</span>
+                                <?php } else {?>
+                                    <span class="bg-red label">Offline</span>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
 					
 					<div class="form-group">
 						<label class="col-xs-12 custom_bold">Владелец</label>

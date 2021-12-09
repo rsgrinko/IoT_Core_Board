@@ -23,6 +23,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center" style="width: 50px;">ID</th>
+                                                    <th>Статус</th>
                                                     <th>MAC</th>
                                                     <th>ID чипа</th>
                                                     <th>HW</th>
@@ -59,6 +60,7 @@
                                                 ?>
                                                 <tr>
                                                     <td class="text-center"><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['id']; ?></a></td>
+                                                    <td><?php if(CIoT::isOnline($device['id'])) { ?><span class="bg-green label">Online</span><?php } else {?><span class="bg-red label">Offline</span><?php } ?></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['mac']; ?></a></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['chipid']; ?></a></td>
                                                     <td><?php echo $device['hw']; ?></td>
