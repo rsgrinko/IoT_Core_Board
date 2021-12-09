@@ -6,7 +6,6 @@
 *	Сайт: https://it-stories.ru
 */
 
-
 /**
  * Защита от запуска файла без подключения ядра
  */
@@ -36,6 +35,11 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
         <meta name="author" content="rustheme" />
         <meta name="robots" content="noindex, nofollow" />
 
+        <script>
+            var userId = "<?php echo $USER['id']; ?>";
+            var userLogin = "<?php echo $USER['id']; ?>";
+        </script>
+        
         <!-- Favicons -->
         <link rel="apple-touch-icon" href="assets/img/favicons/apple-touch-icon.png" />
         <link rel="icon" href="assets/img/favicons/favicon.ico" />
@@ -88,7 +92,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                         $.ajax({
                             url: "ajax/keepAlive.php",
                             data: {
-                                userId: "<?php echo $USER['id']; ?>",
+                                userId: userId,
                             },
                             success: function (data) {
                                 if(data.status !== 'ok') {
