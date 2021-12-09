@@ -82,6 +82,25 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 
 		<link rel="stylesheet" id="css-app-custom" href="assets/css/custom.css" />
 
+        <script>
+                $(document).ready(function () {
+                    setInterval(function () {
+                        $.ajax({
+                            url: "ajax/getDallasData.php",
+                            data: {
+                                userId: "<?php echo $USER['id']; ?>",
+                            },
+                            success: function (data) {
+                                if(data.status !== 'ok') {
+                                    document.location.href = "login.php";
+                                }
+                            },
+                            dataType: "json"
+                        });
+                    }, 5000);
+                });
+        </script>
+
     </head>
 
     <body class="app-ui layout-has-drawer layout-has-fixed-header">
