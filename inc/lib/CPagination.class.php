@@ -78,6 +78,9 @@ class CPagination {
 		if (self::$page != self::$total_pages) {
 			$nextpage = '<li class="page-item"><a class="page-link" href="'.$url.$paginator_name.'='.(self::$page + 1).'" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>';
 		}
+        if(self::$page - 4 > 0) {
+            $page4left = '<li class="page-item"><a class="page-link" href="'.$url.$paginator_name.'='.(self::$page - 4).'">'.(self::$page - 4).'</a></li>';
+        }
         if(self::$page - 3 > 0) {
             $page3left = '<li class="page-item"><a class="page-link" href="'.$url.$paginator_name.'='.(self::$page - 3).'">'.(self::$page - 3).'</a></li>';
         }
@@ -87,6 +90,9 @@ class CPagination {
 		if(self::$page - 1 > 0) {
 			$page1left = '<li class="page-item"><a class="page-link" href="'.$url.$paginator_name.'='.(self::$page - 1).'">'.(self::$page - 1).'</a></li>';
 		}
+        if(self::$page + 4 <= self::$total_pages) {
+            $page4right = '<li class="page-item"><a class="page-link" href="'.$url.$paginator_name.'='.(self::$page + 4).'">'.(self::$page + 4).'</a></li>';
+        }
         if(self::$page + 3 <= self::$total_pages) {
             $page3right = '<li class="page-item"><a class="page-link" href="'.$url.$paginator_name.'='.(self::$page + 3).'">'.(self::$page + 3).'</a></li>';
         }
@@ -98,7 +104,7 @@ class CPagination {
 		}
 
 
-		echo '<ul class="pagination pg-primary">'.$pervpage.$page3left.$page2left.$page1left.'<li class="page-item active"><span class="page-link">'.self::$page.'</span></li>'.$page1right.$page2right.$page3right.$nextpage.'</ul>';
+		echo '<ul class="pagination pg-primary">'.$pervpage.$page4left.$page3left.$page2left.$page1left.'<li class="page-item active"><span class="page-link">'.self::$page.'</span></li>'.$page1right.$page2right.$page3right.$page4right.$nextpage.'</ul>';
 		return;
 	}	
 }
