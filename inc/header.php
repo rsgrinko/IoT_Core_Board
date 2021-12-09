@@ -37,7 +37,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 
         <script>
             var userId = "<?php echo $USER['id']; ?>";
-            var userLogin = "<?php echo $USER['id']; ?>";
+            var userLogin = "<?php echo $USER['login']; ?>";
         </script>
         
         <!-- Favicons -->
