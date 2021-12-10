@@ -192,6 +192,36 @@ class CCache
     {
         return (time() - @filectime(self::$cache_dir . md5($name) . '.tmp'));
     }
+
+
+    /**
+     * Тестовый метод для записи в мемкэш
+     * TODO: переделать
+     */
+    public static function memcacheWrite($name, $value):bool {
+        $memcache = memcache_connect('localhost', 11211);
+
+        if ($memcache) {
+            $memcache->set($name, serialize($value));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Тестовый метод для чтения из мемкэша
+     * TODO: переделать
+     */
+    public static function memcacheGet($name) {
+        $memcache = memcache_connect('localhost', 11211);
+
+        if ($memcache) {
+           return $memcache->get($name);
+        } else {
+           return false;
+        }
+    }
 }
 
 ?>
