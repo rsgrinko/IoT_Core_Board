@@ -161,12 +161,27 @@ class CCron
     {
         $res = self::$DB->query('SELECT * FROM `' . self::$table . '` WHERE id=\'' . $id . '\'');
         $res = $res[0];
-        ob_start();
-        eval(base64_decode($res['command']));
-        $result = ob_get_clean();
-        self::$DB->update(self::$table, array('id' => $id), array('last_run' => time()));
-        CEvents::add('Выполнено задание с ID: ' . $id . '.' . (!empty($result) ? "\n" . 'Результат выполнения:' . "\n" . '<code>' . $result . '</code>' : ''), 'success', 'cron');
+
+        try {
+            ob_start();
+            eval(base64_decode($res['command']));
+            $result = ob_get_clean();
+            self::$DB->update(self::$table, array('id' => $id), array('last_run' => time()));
+            CEvents::add('Выполнено задание с ID: ' . $id . '.' . (!empty($result) ? "\n" . 'Результат выполнения:' . "\n" . '<code>' . $result . '</code>' : ''), 'success', 'cron');
+            return true;
+
+        } catch (ParseError $p) {
+            ob_clean();
+            CEvents::add('Ошибка синтаксиса задания с ID ' . $id . ': <code>' . $p->getMessage() . '</code>', 'warning', 'cron');
+            return false;
+
+        } catch (Throwable $t) {
+            ob_clean();
+            CEvents::add('Фатальная ошибка при выполнении задания с ID ' . $id, 'warning', 'cron');
+            return false;
+        }
         return true;
+
     }
 
     /**
