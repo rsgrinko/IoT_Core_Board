@@ -81,7 +81,7 @@ class CDB
      * @param $where
      * @return false|mixed|string
      */
-    private function createWhere($where)
+    private function createWhere($where, $logic = 'AND')
     {
         if (!is_array($where)) {
             return $where;
@@ -103,7 +103,7 @@ class CDB
             } else {
                 $symbol = '=';
             }
-            $where_string = $where_string . ' (' . $where_key . $symbol . '\'' . $where_item . '\') AND';
+            $where_string = $where_string . ' (' . $where_key . $symbol . '\'' . $where_item . '\') '.$logic;
         }
         $where_string = substr($where_string, 0, -4);
 
