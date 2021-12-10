@@ -8,12 +8,12 @@
 */
 require_once __DIR__ . '/inc/bootstrap.php';
 
-if(CUser::is_user()) {
+if(CUser::isUser()) {
 	          $auth = true;
 	         } else {
 	          $auth = false;	
 	          if($_REQUEST['login']!=='' and $_REQUEST['pass']!=='' and !empty($_REQUEST['login'] and !empty($_REQUEST['pass']))){
-		         if(CUser::SecurityAuthorize($_REQUEST['login'], $_REQUEST['pass'])) {
+		         if(CUser::securityAuthorize($_REQUEST['login'], $_REQUEST['pass'])) {
 			         $auth = true;
 			         } else {
 				        $auth = false;

@@ -38,7 +38,7 @@ CUser::init($DB);												// инициализация поддержки п
 CEvents::init($DB);												// инициализация класса журналирования событий
 CCron::init($DB);												// инициализация крона
 
-if(CUser::is_user()) {
+if(CUser::isUser()) {
     $cacheId = md5('CUser::getFields_'.CUser::$id);
     if(CCache::check($cacheId)) {
         $USER = CCache::get($cacheId);

@@ -7,5 +7,5 @@
 *	Сайт: https://it-stories.ru
 */
 require_once __DIR__ . '/inc/bootstrap.php';
-CUser::Logout();
+CUser::logout();
 header("Location: index.php");

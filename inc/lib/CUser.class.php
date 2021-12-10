@@ -121,7 +121,7 @@ class CUser {
 	 * @param string $name
 	 * @param string $image
 	 */
-	public static function Registration($login, $password, $email, $level = 'user', $name = '', $image = ''):void {
+	public static function registration($login, $password, $email, $level = 'user', $name = '', $image = ''):void {
 		self::$DB->addItem(self::$table, array('login' => $login, 'password' => $password, 'access_level' => $level, 'name' => $name,'image' => $image, 'email' => $email, 'last_active' => time()));
 		$result = self::$DB->getItem(self::$table, array('login'=>$login, 'password' => $password));
 		
@@ -142,7 +142,7 @@ class CUser {
 	 * 
 	 * @return bool
 	 */
-	public static function user_exists($login):bool{
+	public static function isUserExists($login):bool{
 		$result = self::$DB->getItem(self::$table, array('login'=>$login));
 		
 		if($result) {
@@ -157,7 +157,7 @@ class CUser {
 	 * 
 	 * @return int
 	 */
-	public static function count_users():int{
+	public static function countUsers():int{
 		$result = self::$DB->getItems(self::$table, array('id'=>'>0'));
 		
 		if($result) {
@@ -174,7 +174,7 @@ class CUser {
 	 * 
 	 * @return bool
 	 */
-	public static function Authorize($id):bool{
+	public static function authorize($id):bool{
 		$result = self::$DB->getItem(self::$table, array('id'=>$id), true);
 		
 		if($result) {
@@ -198,7 +198,7 @@ class CUser {
 	 * 
 	 * @return bool
 	 */
-	public static function SecurityAuthorize($login, $password):bool{
+	public static function securityAuthorize($login, $password):bool{
 		
 		$result = self::$DB->getItem(self::$table, array('login'=>$login, 'password' => $password), true);
 		if($result) {
@@ -219,7 +219,7 @@ class CUser {
 	 * 
 	 * @return bool
 	 */
-	public static function is_user():bool {
+	public static function isUser():bool {
 		if(!isset($_SESSION['authorize']) or empty($_SESSION['authorize']) or $_SESSION['authorize'] !== 'Y') {
 			return false;
 		}
@@ -244,8 +244,8 @@ class CUser {
 	 * 
 	 * @return bool
 	 */
-	public static function is_admin():bool {
-		if(self::is_user()) {
+	public static function isAdmin():bool {
+		if(self::isUser()) {
 			if(self::getFields(self::$id)['access_level'] == 'admin') {
 				return true;
 			} else {
@@ -259,7 +259,7 @@ class CUser {
 	/**
 	 * Метод выхода из системы
 	 */
-	public static function Logout():void {
+	public static function logout():void {
 		$_SESSION['id'] = '';
 		$_SESSION['authorize'] = '';
 		$_SESSION['login'] = '';

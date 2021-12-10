@@ -9,7 +9,7 @@
 require_once __DIR__ . '/inc/bootstrap.php';
 $err_mess = false;
 
-if(CUser::is_user()) {
+if(CUser::isUser()) {
     header("Location: index.php");
     die();
 }
@@ -19,13 +19,13 @@ if(isset($_REQUEST['reg']) and $_REQUEST['reg'] == 'Y'){
       isset($_REQUEST['email']) and $_REQUEST['email'] !=='' and
       isset($_REQUEST['pass']) and $_REQUEST['pass'] !=='') {
 
-      if(!CUser::user_exists($_REQUEST['login'])) {
-          CUser::Registration($_REQUEST['login'],
+      if(!CUser::isUserExists($_REQUEST['login'])) {
+          CUser::registration($_REQUEST['login'],
               $_REQUEST['pass'],
               $_REQUEST['email'],
               'user', $_REQUEST['name'],
               'assets/img/avatars/default_avatar.jpg');
-          CUser::SecurityAuthorize($_REQUEST['login'], $_REQUEST['pass']);
+          CUser::securityAuthorize($_REQUEST['login'], $_REQUEST['pass']);
           CEvents::add('Зарегистрирован новый пользователь <b>'.$_REQUEST['login'].'</b>', 'info', 'reguser');
           header("Location: index.php");
           die();

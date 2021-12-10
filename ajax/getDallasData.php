@@ -4,7 +4,7 @@
  */
 	require_once __DIR__ . '/../inc/bootstrap.php';
 
-	if(!CUser::is_user()) {
+	if(!CUser::isUser()) {
 		die('403 - Access denied');
 	}
 	
@@ -16,7 +16,7 @@
 	$sensor = prepareString($_REQUEST['sensor']);
 	
 	
-	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::is_admin()) {
+	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::isAdmin()) {
 		die('403 - Access denied');
 	}
 

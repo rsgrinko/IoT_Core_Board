@@ -1,6 +1,6 @@
 <?php
 	require_once __DIR__ . '/inc/bootstrap.php';
-	if(!CUSer::is_admin()) {
+	if(!CUSer::isAdmin()) {
 		die('403 - Access denied');
 	}
 	require_once __DIR__ . '/inc/header.php';

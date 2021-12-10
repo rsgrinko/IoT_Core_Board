@@ -8,7 +8,7 @@ require_once __DIR__ . '/inc/header.php';
 $userId = $USER['id'];
 
 
-if (isset($_REQUEST['id']) and !empty($_REQUEST['id']) and CUser::is_admin()) {
+if (isset($_REQUEST['id']) and !empty($_REQUEST['id']) and CUser::isAdmin()) {
     $userId = $_REQUEST['id'];
 }
 

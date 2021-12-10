@@ -9,9 +9,9 @@
 	}
 	$id = prepareString($_REQUEST['id']);
 	
-	CUser::Logout();
+	CUser::logout();
 	session_start(); //TODO: нужно будет убрать при корректировке метода Logout
-	CUser::Authorize($id);
+	CUser::authorize($id);
 	
 	header("Location: index.php");
 	die();

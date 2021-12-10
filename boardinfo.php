@@ -5,7 +5,7 @@
 		header("Location: index.php?"); die();
 	}
 	$deviceId = prepareString($_REQUEST['id']);
-	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::is_admin()) {
+	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::isAdmin()) {
 		die('403 - Access denied');
 	}
 	

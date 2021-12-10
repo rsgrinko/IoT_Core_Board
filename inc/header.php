@@ -13,7 +13,7 @@ if(!defined('CORE_LOADED') or CORE_LOADED !== true) {
     die();
 }
 
-if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
+if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 	header("Location: login.php");
 	die();
 }
@@ -148,7 +148,7 @@ if(!CUser::is_user() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 
                                 <li class="nav-item nav-drawer-header">Компоненты</li>
 
-								<?php if(CUSer::is_admin()): ?>
+								<?php if(CUSer::isAdmin()): ?>
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'events.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/events.php"><i class="fa fa-list"></i> Журнал событий</a>
 								</li>

@@ -1,6 +1,6 @@
 <?php
 	require_once __DIR__.'/inc/bootstrap.php';
-	if(!CUSer::is_admin()) {
+	if(!CUSer::isAdmin()) {
 		die('403 - Access denied');
 	}
 	require_once __DIR__.'/inc/header.php';
@@ -36,7 +36,7 @@
                                             </thead>
                                             <tbody>
 	                                            <?php
-													CPagination::execute($_REQUEST['page'], CUser::count_users(), PAGINATION_LIMIT);
+													CPagination::execute($_REQUEST['page'], CUser::countUsers(), PAGINATION_LIMIT);
 													$limit = CPagination::getLimit();	
 												?>
 	                                            <?php foreach(CUser::getUsers($limit, 'ASC') as $user): ?>
