@@ -217,7 +217,7 @@ class CCache
         $memcache = memcache_connect('localhost', 11211);
 
         if ($memcache) {
-           return $memcache->get($name);
+           return unserialize($memcache->get($name));
         } else {
            return false;
         }
