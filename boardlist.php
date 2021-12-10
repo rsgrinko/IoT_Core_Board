@@ -36,11 +36,11 @@
                                             <tbody>
 	                                            <?php
                                                     $cacheId = md5('CIoT::getCountDevices');
-                                                    if(CCache::checkCache($cacheId)) {
-                                                        $countDevices = CCache::getCache($cacheId);
+                                                    if(CCache::check($cacheId)) {
+                                                        $countDevices = CCache::get($cacheId);
                                                     } else {
                                                         $countDevices = CIoT::getCountDevices();
-                                                        CCache::writeCache($cacheId, $countDevices);
+                                                        CCache::write($cacheId, $countDevices);
                                                     }
 
 													CPagination::execute($_REQUEST['page'], $countDevices, PAGINATION_LIMIT);
@@ -48,11 +48,11 @@
 												?>
 	                                            <?php
                                                     $cacheId = md5('CIoT::getDevices_'.$limit.'_ASC');
-                                                    if(CCache::checkCache($cacheId)) {
-                                                        $arrDevices = CCache::getCache($cacheId);
+                                                    if(CCache::check($cacheId)) {
+                                                        $arrDevices = CCache::get($cacheId);
                                                     } else {
                                                         $arrDevices = CIoT::getDevices($limit, 'ASC');
-                                                        CCache::writeCache($cacheId, $arrDevices);
+                                                        CCache::write($cacheId, $arrDevices);
                                                     }
                                                     
                                                     foreach($arrDevices as $device):

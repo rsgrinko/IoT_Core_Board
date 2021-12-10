@@ -22,11 +22,11 @@ if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
 endif;
 
 
-if (CCache::checkCache($cacheId)) {
-    $arrUser = CCache::getCache($cacheId);
+if (CCache::check($cacheId)) {
+    $arrUser = CCache::get($cacheId);
 } else {
     $arrUser = CUser::getFields($userId);
-    CCache::writeCache($cacheId, $arrUser);
+    CCache::write($cacheId, $arrUser);
 }
 //pre($arrUser);
 ?>

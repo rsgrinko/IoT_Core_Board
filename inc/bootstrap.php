@@ -40,12 +40,12 @@ CCron::init($DB);												// инициализация крона
 
 if(CUser::is_user()) {
     $cacheId = md5('CUser::getFields_'.CUser::$id);
-    if(CCache::checkCache($cacheId)) {
-        $USER = CCache::getCache($cacheId);
+    if(CCache::check($cacheId)) {
+        $USER = CCache::get($cacheId);
     } else {
         $USER = CUser::getFields();
         unset($USER['password']);
-        CCache::writeCache($cacheId, $USER);
+        CCache::write($cacheId, $USER);
     }
 
 } else {

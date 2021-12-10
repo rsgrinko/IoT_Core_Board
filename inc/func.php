@@ -70,12 +70,12 @@ function pre($arr, $stop = false) {
  */
 function isHaveAccessToDevice($deviceId, $userId){
     $cacheId = md5('isHaveAccessToDevice_'.$deviceId.'_'.$userId);
-    if(CCache::checkCache($cacheId)){
-        $arDevice = CCache::getCache($cacheId);
+    if(CCache::check($cacheId)){
+        $arDevice = CCache::get($cacheId);
     } else {
         global $DB;
         $arDevice = $DB->query('SELECT user FROM devices WHERE id="'.$deviceId.'"');
-        CCache::writeCache($cacheId, $arDevice);
+        CCache::write($cacheId, $arDevice);
     }
 
 
@@ -189,12 +189,12 @@ function getClientInfo() {
  */
 function getUserDevices($userId) {
     $cacheId = md5('getUserDevices_'.$userId);
-    if(CCache::checkCache($cacheId)){
-        $res = CCache::getCache($cacheId);
+    if(CCache::check($cacheId)){
+        $res = CCache::get($cacheId);
     } else {
         global $DB;
         $res = $DB->query('SELECT * FROM devices WHERE user="'.$userId.'"');
-        CCache::writeCache($cacheId, $res);
+        CCache::write($cacheId, $res);
     }
 
 	if($res){

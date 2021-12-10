@@ -3,11 +3,11 @@ require_once __DIR__ . '/inc/bootstrap.php';
 require_once __DIR__ . '/inc/header.php';
 
 $cacheId = md5('CIoT::getDallasArrData_'.$USER['deviceId']);
-if(CCache::checkCache($cacheId)) {
-    $arSensors = CCache::getCache($cacheId);
+if(CCache::check($cacheId)) {
+    $arSensors = CCache::get($cacheId);
 } else {
     $arSensors = CIoT::getDallasArrData($USER['deviceId']);
-    CCache::writeCache($cacheId, $arSensors);
+    CCache::write($cacheId, $arSensors);
 }
 
 
@@ -86,11 +86,11 @@ if(CCache::checkCache($cacheId)) {
         //pre($arSensors);
         foreach ($arSensors as $arSensor):
             $cacheId = md5('CIoT::getPlotDallasValues_'.$USER['deviceId'].'_'.$arSensor['sensor']);
-            if(CCache::checkCache($cacheId) and CCache::ageOfCache($cacheId) < 300) {
-                $arValues = CCache::getCache($cacheId);
+            if(CCache::check($cacheId) and CCache::getAge($cacheId) < 300) {
+                $arValues = CCache::get($cacheId);
             } else {
                 $arValues = CIoT::getPlotDallasValues($USER['deviceId'], $arSensor['sensor']);
-                CCache::writeCache($cacheId, $arValues);
+                CCache::write($cacheId, $arValues);
             }
 
             

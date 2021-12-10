@@ -67,12 +67,12 @@ class CCache
      * @param string $name Имя элемента кэша
      * @return bool Флаг наличия или отсутствия кэша
      */
-    public static function checkCache($name):bool
+    public static function check($name):bool
     { // Проверка наличия элемента в кэше
         if (!self::$cache_enabled) {
             return false;
         }
-        if(self::ageOfCache($name) > CACHE_TTL) {
+        if(self::getAge($name) > CACHE_TTL) {
             return false;
         }
         if (file_exists(self::$cache_dir . md5($name) . '.tmp')) {
@@ -88,7 +88,7 @@ class CCache
      * @param string $name Имя элемента кэша
      * @return mixed Кэшированные данные
      */
-    public static function getCache(string $name)
+    public static function get(string $name)
     {
         self::$quantity++;
         self::$quantity_read++;
@@ -102,7 +102,7 @@ class CCache
      * @param mixed $arValue Значение элемента кэша
      * @return bool Флаг успешной или неудачной записи данных
      */
-    public static function writeCache($name, $arValue):bool
+    public static function write($name, $arValue):bool
     { // Записать элемент в кэш
         if (!self::$cache_enabled) {
             return false;
@@ -142,7 +142,7 @@ class CCache
      */
     public static function del($name):bool
     { // Удалить элемент из кэша
-        if (self::checkCache($name)) {
+        if (self::check($name)) {
             if (!unlink(self::$cache_dir . md5($name) . '.tmp')) {
                 self::$quantity++;
                 self::$quantity_write++;
@@ -160,7 +160,7 @@ class CCache
      */
     public static function getSize($name)
     { // Получить размер элемента в кэше
-        if (self::checkCache($name)) {
+        if (self::check($name)) {
             return filesize(self::$cache_dir . md5($name) . '.tmp');
 
         }
@@ -188,7 +188,7 @@ class CCache
      * @param string $name Имя элемента кэша
      * @return int Время в секундах или false
      */
-    public static function ageOfCache(string $name)
+    public static function getAge(string $name)
     {
         return (time() - @filectime(self::$cache_dir . md5($name) . '.tmp'));
     }

@@ -12,19 +12,19 @@
 	require_once __DIR__ . '/inc/header.php';
 
     $cacheId = md5('CIoT::getDevice_'.$deviceId);
-    if(CCache::checkCache($cacheId)) {
-        $arDevice = CCache::getCache($cacheId);
+    if(CCache::check($cacheId)) {
+        $arDevice = CCache::get($cacheId);
     } else {
         $arDevice = CIoT::getDevice($deviceId);
-        CCache::writeCache($cacheId, $arDevice);
+        CCache::write($cacheId, $arDevice);
     }
 
     $cacheId = md5('CUser::getFields_'.$arDevice['user']);
-    if(CCache::checkCache($cacheId)) {
-        $arDeviceUser = CCache::getCache($cacheId);
+    if(CCache::check($cacheId)) {
+        $arDeviceUser = CCache::get($cacheId);
     } else {
         $arDeviceUser = CUser::getFields($arDevice['user']);
-        CCache::writeCache($cacheId, $arDeviceUser);
+        CCache::write($cacheId, $arDeviceUser);
     }
 
 ?>	
