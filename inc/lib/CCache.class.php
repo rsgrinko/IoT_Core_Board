@@ -222,6 +222,17 @@ class CCache
            return false;
         }
     }
+
+
+    /**
+     * Тестовый метод для очистки мемкэша
+     * TODO: переделать
+     */
+    public static function memcacheFlush($name) {
+        $memcache = memcache_connect('localhost', 11211);
+        $memcache_obj->flush();
+    }
+    
 }
 
 ?>
