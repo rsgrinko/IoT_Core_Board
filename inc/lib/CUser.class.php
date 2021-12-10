@@ -265,8 +265,6 @@ class CUser {
 		$_SESSION['login'] = '';
 		$_SESSION['password'] = '';
 		$_SESSION['user'] = '';
-		//session_unset();
-		//session_destroy();
 		return;
     }
 
