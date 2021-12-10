@@ -228,7 +228,7 @@ class CCache
      * Тестовый метод для очистки мемкэша
      * TODO: переделать
      */
-    public static function memcacheFlush($name) {
+    public static function memcacheFlush() {
         $memcache = memcache_connect('localhost', 11211);
         $memcache_obj->flush();
     }
