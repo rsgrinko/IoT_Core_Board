@@ -175,7 +175,7 @@ class CCron
             CEvents::add('Ошибка синтаксиса задания с ID ' . $id . ': <code>' . $p->getMessage() . '</code>', 'warning', 'cron');
             return false;
 
-        } catch (Throwable $t) {
+        } catch (Throwable $e) {
             ob_clean();
             CEvents::add('Фатальная ошибка при выполнении задания с ID ' . $id, 'warning', 'cron');
             return false;

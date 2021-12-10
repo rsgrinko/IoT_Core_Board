@@ -171,7 +171,11 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 
 								<li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'sql.php') ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/sql.php"><i class="fa fa-database"></i> SQL запросы</a>
-								</li>
+                                </li>
+
+                                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'php_cmd.php') ? 'active' : ''; ?>">
+                                     <a href="<?php echo HOME; ?>/php_cmd.php"><i class="fa fa-database"></i> PHP команды</a>
+                                 </li>
 								<?php endif; ?>
 
 

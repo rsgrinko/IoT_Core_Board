@@ -62,6 +62,18 @@ class CCache
     }
 
     /**
+     * Обработка вызова несуществующего метода
+     *
+     * @param $method
+     * @param $args
+     */
+    public function __callStatic($method, $args)
+    {
+        echo json_encode(['status' => 'fail', 'error' => 'Unsupported method', 'method' => $method, 'args' => $args], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    /**
      * Проверка наличия элемента в кэше
      *
      * @param string $name Имя элемента кэша
@@ -192,6 +204,8 @@ class CCache
     {
         return (time() - @filectime(self::$cache_dir . md5($name) . '.tmp'));
     }
+
+
 
 
     /**

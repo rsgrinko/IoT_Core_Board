@@ -74,6 +74,29 @@ class CDB
         $this->db = new PDO('mysql:host=' . $db_server . ';dbname=' . $db_name, $db_user, $db_pass);
     }
 
+    /**
+     * Обработка вызова несуществующего метода
+     *
+     * @param $method
+     * @param $args
+     */
+    public function __call($method, $args)
+    {
+        echo json_encode(['status' => 'fail', 'error' => 'Unsupported method', 'method' => $method, 'args' => $args], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    /**
+     * Обработка вызова несуществующего метода
+     *
+     * @param $method
+     * @param $args
+     */
+    public function __callStatic($method, $args)
+    {
+        echo json_encode(['status' => 'fail', 'error' => 'Unsupported method', 'method' => $method, 'args' => $args], JSON_UNESCAPED_UNICODE);
+        die();
+    }
 
     /**
      * Вспомогательный метод, формирует WHERE из массива
