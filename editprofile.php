@@ -16,7 +16,7 @@ $cacheId = md5('CUser::getFields_' . $userId);
 
 if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
     $DB->update('users', array('id' => $userId), array('name' => $_REQUEST['name'], 'email' => $_REQUEST['email'], 'image' => $_REQUEST['image']));
-    CCache::delFromCache($cacheId);
+    CCache::del($cacheId);
     CEvents::add('Изменен профиль пользователя с ID: '.$userId.', инициатор ID: '.CUser::$id.' ('.$USER['login'].')', 'notice', 'user');
     echo '<script>alert("Профиль успешно отредактирован");</script>';
 endif;

@@ -31,7 +31,7 @@ CIoT::init($DB);											    // инициализация класса раб
 CCache::init(CACHEDIR, USE_CACHE);    							// инициализация модуля кэширования
 
 if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
-    CCache::clearCache();
+    CCache::flush();
 }
 
 CUser::init($DB);												// инициализация поддержки пользователей панели

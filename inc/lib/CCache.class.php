@@ -121,7 +121,7 @@ class CCache
      *
      * @return bool Флаг успеха
      */
-    public static function clearCache():bool
+    public static function flush():bool
     { // Очистить кэш
         foreach (scandir(self::$cache_dir) as $file) {
             if ($file == '.' or $file == '..') continue;
@@ -140,7 +140,7 @@ class CCache
      * @param string $name Имя элемента кэша
      * @return bool Флаг успеха
      */
-    public static function delFromCache($name):bool
+    public static function del($name):bool
     { // Удалить элемент из кэша
         if (self::checkCache($name)) {
             if (!unlink(self::$cache_dir . md5($name) . '.tmp')) {
