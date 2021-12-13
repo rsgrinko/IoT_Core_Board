@@ -47,14 +47,18 @@
 <div class="card">
     <div class="card-block">
 	<?php
-    try {
-        eval($_REQUEST['query']);
-    } catch (ParseError $p) {
-        echo '(ParseError) Ошибка парсинга: '.$p->getMessage();
-    } catch (Throwable $e) {
-        echo '(Throwable) Ошибка при выполнении: '.$e->getMessage();
-    } catch (Error $e) {
-        echo '(Error) Ошибка при выполнении: '.$e->getMessage();
+    if(isGod($USER['id'])) {
+        try {
+            eval($_REQUEST['query']);
+        } catch (ParseError $p) {
+            echo '(ParseError) Ошибка парсинга: ' . $p->getMessage();
+        } catch (Throwable $e) {
+            echo '(Throwable) Ошибка при выполнении: ' . $e->getMessage();
+        } catch (Error $e) {
+            echo '(Error) Ошибка при выполнении: ' . $e->getMessage();
+        }
+    } else {
+        echo '<div class="alert alert-danger"><p>Вашей учетной записи не назначена роль "Администратор сервера" - вы не можете использовать данный функционал.</div>';
     }
 ?>
     </div>

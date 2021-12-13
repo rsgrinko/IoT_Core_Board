@@ -47,41 +47,43 @@
 <div class="card">
     <div class="card-block">
 	<?php
-		$res = $DB->query($_REQUEST['query']);
-		
-		if($res){
-			
-			echo '<div class="table-responsive"><table class="table table-bordered table-striped table-vcenter table-hover-custom"><tr class="sql-query-result-table-header">';
-			
-			foreach($res[0] as $key => $value){
-				echo '<td style="font-weight: bold; text-align:center;">'.$key.'</td>';
-			}
-			echo '</tr>';
-			
-			
-			foreach($res as $item){
-				echo '<tr>';
-				
-				foreach($item as $index => $value){
-					echo '<td>'.$value.'</td>';
-				}
-				
-				
-				echo '</tr>';
-				
-				
-				
-			}
-			
-			
-			echo '</table></div>';
-			
-		} else {
-			echo ' <div class="alert alert-danger"><p><strong>MySQL</strong> вернула пустой результат</p></div>';
-		}
-		
-		
-		
+    if(isGod($USER['id'])) {
+        $res = $DB->query($_REQUEST['query']);
+
+        if ($res) {
+
+            echo '<div class="table-responsive"><table class="table table-bordered table-striped table-vcenter table-hover-custom"><tr class="sql-query-result-table-header">';
+
+            foreach ($res[0] as $key => $value) {
+                echo '<td style="font-weight: bold; text-align:center;">' . $key . '</td>';
+            }
+            echo '</tr>';
+
+
+            foreach ($res as $item) {
+                echo '<tr>';
+
+                foreach ($item as $index => $value) {
+                    echo '<td>' . $value . '</td>';
+                }
+
+
+                echo '</tr>';
+
+
+            }
+
+
+            echo '</table></div>';
+
+        } else {
+            echo ' <div class="alert alert-danger"><p><strong>MySQL</strong> вернула пустой результат</p></div>';
+        }
+
+
+    } else {
+        echo '<div class="alert alert-danger"><p>Вашей учетной записи не назначена роль "Администратор сервера" - вы не можете использовать данный функционал.</div>';
+    }
 	?>
     </div>
     <!-- .card-block -->

@@ -7,6 +7,19 @@
 *   Сайт: https://it-stories.ru
 */
 
+/**
+ * Проверка на создателя для критического функционала
+ * TODO: переделать
+ *
+ * @param $id
+ */
+function isGod($id) {
+    if($id == '1') {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /**
  * Получение имени CSS класса по типу события
