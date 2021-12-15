@@ -262,29 +262,37 @@ function getOS() {
 /**
  * Отправка уведомления на почту администратору
  */
- function adminSendMail($subject, $message, $file = false){
+function adminSendMail($subject, $message, $file = false)
+{
     $mail = new CMail;
-    $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
+    $mail->dump = true;
+    $mail->dumpPath = $_SERVER['DOCUMENT_ROOT'] . '/uploads/emails';
+    $mail->from('iot@' . $_SERVER['SERVER_NAME'], 'IoT Core Board v.' . VERSION);
     $mail->to(ADMIN_EMAIL, 'Администратор панели');
     $mail->subject = $subject;
-    $mail->body = '
-        <h1>Уведомление от системы IoT Core</h1>
-        <p>'.$message.'</p>
-        <hr>
-        <p>
-            С уважением, система IoT Core Board v.'.VERSION.'
-            <br><a href="http://'.$_SERVER['SERVER_NAME'].'">http://'.$_SERVER['SERVER_NAME'].'</a>
-        </p>
-    ';
+    $mail->assignTemplateVars(
+        array(
+            'HEADER' => 'Автоматическая рассылка',
+            'MESSAGE' => $message,
+            'TITLE' => 'Уведомление от панели',
+            'LINK' => 'https://new-dev.it-stories.ru/',
+            'LINKNAME' => 'Перейти в панель',
+            'HOME' => 'https://it-stories.ru'
+        )
+    );
+
+    $mail->template = 'default_red';
+    $mail->templateDir = $_SERVER['DOCUMENT_ROOT'] . '/assets/mail_templates';
 
     // прикрепляем лог, если он есть
-    if(isset($file) and !empty($file) and file_exists($file)){
+    if (isset($file) and !empty($file) and file_exists($file)) {
         $mail->addFile($file);
     }
+
     $mail->send();
 
     return;
- }
+}
 
 
 /**

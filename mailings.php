@@ -6,20 +6,7 @@ require_once __DIR__ . '/inc/bootstrap.php';
 require_once __DIR__ . '/inc/header.php';
 
 if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
-    //TODO: делаем рассылку
 
-    /*
-    Array (
-        [save] => Y
-        [template] => default
-        [subject] => Почтовая рассылка IoT Core Board
-        [header] => Заголовок
-        [message] => ТЕкст123
-                                    1234567
-        [admin] => on
-        [user] => on
-    )
-    */
     $userEmails = [];
 
     if(isset($_REQUEST['admin']) and $_REQUEST['admin'] == 'on') {
@@ -62,7 +49,7 @@ if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
             'TITLE' => $_REQUEST['title'],
             'LINK' => 'https://it-stories.ru/',
             'LINKNAME' => 'Перейти в панель',
-            'SERVERNAME' => 'it-stories.ru'
+            'HOME' => 'https://it-stories.ru'
         )
     );
 
