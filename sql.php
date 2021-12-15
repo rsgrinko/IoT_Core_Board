@@ -77,7 +77,7 @@
             echo '</table></div>';
 
         } else {
-            echo ' <div class="alert alert-danger"><p><strong>MySQL</strong> вернула пустой результат</p></div>';
+            echo '<div class="alert alert-danger"><p><strong>MySQL</strong> вернула пустой результат</p></div>';
         }
 
 
