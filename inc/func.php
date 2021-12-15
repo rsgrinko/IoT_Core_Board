@@ -120,6 +120,7 @@ function getIp() {
 		      }
 		    }
 		  }
+          return 'undefined';
 	}
 
 /**
@@ -264,22 +265,21 @@ function getOS() {
  */
 function adminSendMail($subject, $message, $file = false)
 {
+    $arMailFields = [
+        'HEADER' => 'Автоматическая рассылка',
+        'MESSAGE' => $message,
+        'TITLE' => 'Уведомление от панели',
+        'LINK' => 'https://new-dev.it-stories.ru/',
+        'LINKNAME' => 'Перейти в панель',
+        'HOME' => 'https://it-stories.ru'
+    ];
     $mail = new CMail;
     $mail->dump = true;
     $mail->dumpPath = $_SERVER['DOCUMENT_ROOT'] . '/uploads/emails';
     $mail->from('iot@' . $_SERVER['SERVER_NAME'], 'IoT Core Board v.' . VERSION);
     $mail->to(ADMIN_EMAIL, 'Администратор панели');
     $mail->subject = $subject;
-    $mail->assignTemplateVars(
-        array(
-            'HEADER' => 'Автоматическая рассылка',
-            'MESSAGE' => $message,
-            'TITLE' => 'Уведомление от панели',
-            'LINK' => 'https://new-dev.it-stories.ru/',
-            'LINKNAME' => 'Перейти в панель',
-            'HOME' => 'https://it-stories.ru'
-        )
-    );
+    $mail->assignTemplateVars($arMailFields);
 
     $mail->template = 'default_red';
     $mail->templateDir = $_SERVER['DOCUMENT_ROOT'] . '/assets/mail_templates';
@@ -290,7 +290,7 @@ function adminSendMail($subject, $message, $file = false)
     }
 
     $mail->send();
-
+    CEvents::add('Выполнена отправка письма администратору. <code>'.CJson::create($arMailFields).'</code>', 'info', 'core');
     return;
 }
 
