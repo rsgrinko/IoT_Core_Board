@@ -39,10 +39,13 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
             var userId = "<?php echo $USER['id']; ?>";
             var userLogin = "<?php echo $USER['login']; ?>";
             var phpVars = {
-                            'userId': '<?php echo $USER['id']; ?>',
-                            'userLogin': '<?php echo $USER['login']; ?>',
-                            'date': '<?php echo date("d.m.Y H:i:s"); ?>',
-                        };
+                'user': {
+                    'id': <?php echo $USER['id']; ?>,
+                    'login': '<?php echo $USER['login']; ?>',
+                },
+                'date': '<?php echo date("d.m.Y H:i:s"); ?>',
+                'version': '<?php echo VERSION; ?>',
+            };
             var arrUser = <?php echo CJson::create($USER); ?>            
         </script>
         
@@ -90,6 +93,7 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 		<script src="https://code.highcharts.com/modules/export-data.js"></script>
 		<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+        <script src="assets/js/custom.js"></script>
 		<link rel="stylesheet" id="css-app-custom" href="assets/css/custom.css" />
 
         <script>
