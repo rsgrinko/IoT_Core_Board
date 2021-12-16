@@ -1,7 +1,7 @@
 # IoT_Core_Board
 
 Панель управления контроллером на базе прошивки IoT Core<br>
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/0SdUhtJU9m4/0.jpg)](https://www.youtube.com/watch?v=0SdUhtJU9m4)
+[![Click to watch](https://img.youtube.com/vi/0SdUhtJU9m4/0.jpg)](https://www.youtube.com/watch?v=0SdUhtJU9m4)
 
 # Возможности
 ## Основной функционал
