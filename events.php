@@ -22,7 +22,7 @@ require_once __DIR__ . '/inc/header.php';
                         <table class="table table-striped table-borderless table-header-bg">
                             <thead>
                             <tr>
-                                <th class="text-center" style="width: 50px;">ID</th>
+                                <th class="text-center" style="width: 74px;">ID <i class="fa fa-arrow-down"></i></th>
                                 <th style="width: 220px;">Дата</th>
                                 <th>Событие</th>
                                 <th style="width: 130px;">Тип события</th>
