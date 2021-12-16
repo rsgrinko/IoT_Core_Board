@@ -6,9 +6,11 @@
 *	E-mail: rsgrinko@gmail.com
 *	Сайт: https://it-stories.ru
 */
+
 session_start();
-define('START_TIME', microtime(true));							// засекаем время старта скрипта
+define('START_TIME', microtime(true));					// засекаем время старта скрипта
 define('CORE_LOADED', true);									// флаг корректного запуска
+define('DEBUG', false);                                         // отладка
 require_once __DIR__ . '/config.php';							// подключаем конфигурационный файл
 require_once DIR.'/inc/lib/CFiles.class.php';			  		// работа с файлами и папками
 require_once DIR.'/inc/lib/CJson.class.php';			  		// работа с json

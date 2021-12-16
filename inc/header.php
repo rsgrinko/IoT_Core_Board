@@ -189,7 +189,7 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 
 
 
-
+                                <?php if(DEBUG === true) { ?>
                                 <li class="nav-item nav-item-has-subnav">
                                     <a href="javascript:void(0)"><i class="ion-ios-calculator-outline"></i> UI Elements</a>
                                     <ul class="nav nav-subnav">
@@ -366,6 +366,7 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                                 </li>
 
                             </ul>
+                            <?php } ?>
                         </nav>
                         <!-- End drawer navigation -->
 
