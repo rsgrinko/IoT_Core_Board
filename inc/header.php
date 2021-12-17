@@ -403,15 +403,18 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 
 
                                 <ul id="main-menu" class="nav navbar-nav navbar-left">
+                                    <li class="dropdown"><a href="boardinfo.php?id=<?php echo $USER['deviceId']; ?>">Используется ID: <?php echo $USER['deviceId']; ?></a></li>
                                     <li class="dropdown">
-                                        <a href="#" data-toggle="dropdown">Устройства <span class="caret"></span></a>
+                                        <?php $userDevices = getUserDevices($USER['id']); ?>
+                                        <a href="#" data-toggle="dropdown">Мои устройства (<?php echo count($userDevices);?>)<span class="caret"></span></a>
 
                                         <ul class="dropdown-menu">
 	                                        <?php
-                                                $userDevices = getUserDevices($USER['id']);
-		                                        foreach($userDevices as $device):
+		                                        foreach($userDevices as $key => $device):
 	                                        ?>
-                                            	<li><a href="boardinfo.php?id=<?php echo $device['id']; ?>">MAC: <?php echo $device['mac'];?>, HW: <?php echo $device['hw'];?>, FW: <?php echo $device['fw'];?></a></li>
+                                            	<li>
+                                                    <a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo ++$key; ?>) ID: <?php echo $device['id']; ?>, MAC: <?php echo $device['mac'];?></a>
+                                                </li>
                                             <?php endforeach; ?>
                                         </ul>
                                     </li>

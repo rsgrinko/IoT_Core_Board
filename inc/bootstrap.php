@@ -10,7 +10,6 @@
 session_start();
 define('START_TIME', microtime(true));					// засекаем время старта скрипта
 define('CORE_LOADED', true);									// флаг корректного запуска
-define('DEBUG', false);                                         // отладка
 require_once __DIR__ . '/config.php';							// подключаем конфигурационный файл
 require_once DIR.'/inc/lib/CFiles.class.php';			  		// работа с файлами и папками
 require_once DIR.'/inc/lib/CJson.class.php';			  		// работа с json
@@ -49,7 +48,6 @@ if(CUser::isUser()) {
         unset($USER['password']);
         CCache::write($cacheId, $USER);
     }
-
 } else {
 	$USER = ['id' => 0];
 }
@@ -61,7 +59,12 @@ $userDevices = getUserDevices($USER['id']);
 
 //TODO: реализовать выбор устройства пользователя через панель
 if($userDevices) {
-	$USER['deviceId'] = $userDevices[0]['id']; 	 				// мониторим только первое устройство пользователя при наличии
+    if(CIoT::getSelectedDevice()) {
+        $USER['deviceId'] = CIoT::getSelectedDevice();
+    } else {
+        $USER['deviceId'] = $userDevices[0]['id'];
+    }
+
 } else {
 	$USER['deviceId'] = 10;//9;										// иначе показываем демо плату
 }

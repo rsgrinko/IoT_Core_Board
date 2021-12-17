@@ -27,6 +27,12 @@
         CCache::write($cacheId, $arDeviceUser);
     }
 
+
+     if(isset($_REQUEST['select']) and $_REQUEST['select'] == 'Y') {
+         CIoT::setSelectedDevice($_REQUEST['id']);
+         echo '<script>alert("Устройство выбрано")</script>';
+     }
+
 ?>	
 <div class="row">
 	<div class="col-md-12">
@@ -37,9 +43,15 @@
 			</div>
 			<div class="card-block">
 				<form class="form-horizontal" onsubmit="return false;">
-					
+
+                    <div class="form-group">
+                        <div class="col-sm-9">
+                            <a href="boardinfo.php?id=<?php echo $_REQUEST['id']; ?>&select=Y" class="btn btn-sm btn-app-cyan-outline" type="button">Выбрать для использования</a>
+                        </div>
+                    </div>
+
 					<div class="form-group">
-						<label class="col-xs-12 custom_bold">ID устройства</label>
+                        <label class="col-xs-12 custom_bold">ID устройства</label>
 						<div class="col-sm-9">
 							<div class="form-control-static"><?php echo $arDevice['id'];?></div>
 						</div>
@@ -89,7 +101,7 @@
 					<div class="form-group">
 						<label class="col-xs-12 custom_bold">Версия прошивки</label>
 						<div class="col-sm-9">
-							<div class="form-control-static"><code><?php $fw = str_split($arDevice['fw']); echo implode('.', $fw);?></code></div>
+							<div class="form-control-static"><code><?php echo CIoT::parseFW($arDevice['fw']);?></code></div>
 						</div>
 					</div>
 					

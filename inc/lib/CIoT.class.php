@@ -165,6 +165,17 @@ class CIoT {
 	}
 
     /**
+     * Преобразование версии прошивки в человеческий вид
+     *
+     * @param $fw
+     * @return string
+     */
+    public static function parseFW($fw):string {
+        $fw = str_split($fw);
+        return implode('.', $fw);
+    }
+
+    /**
      * Получение последнюю актуальную температуру датчика DTH из базы
      *
      * @param $deviceId
@@ -231,6 +242,29 @@ class CIoT {
 			return false;
 		}
 	}
+
+    /**
+     * Получение идентификатора выбранного устройства
+     *
+     * @return false|mixed
+     */
+    public static function getSelectedDevice() {
+        if(isset($_SESSION['selected_device']) and $_SESSION['selected_device'] !== '') {
+            return $_SESSION['selected_device'];
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Задать выбранное устройство
+     *
+     * @param $deviceId
+     */
+    public static function setSelectedDevice($deviceId):void {
+        $_SESSION['selected_device'] = $deviceId;
+        return;
+    }
 
 	/**
      * Получаем массив с данными об устройствах

@@ -38,6 +38,11 @@ define('CACHEDIR', $_SERVER['DOCUMENT_ROOT'].'/cache/');
 define('CACHE_TTL', 3600);
 
 /**
+ * Использование отладки
+ */
+define('DEBUG', false);
+
+/**
  * Сервер базы данных
  */
 define('DB_HOST', 'localhost');
