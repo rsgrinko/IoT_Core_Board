@@ -58,6 +58,11 @@ define('DB_PASSWORD', '2670135');
 define('DB_NAME', 'rsgrinko_iotcore');
 
 /**
+ * ID системного пользователя
+ */
+define('SYSTEM_USER_ID', 10);
+
+/**
  * Количество элементов, выводимых на страницу (для пагинации)
  */
 define('PAGINATION_LIMIT', 10);

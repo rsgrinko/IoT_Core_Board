@@ -73,7 +73,7 @@ class CIoT {
      * @param $fw
      */
 	public static function addDevice($mac, $chipid, $hw, $fw):void {
-		self::$DB->addItem('devices', array('mac' => $mac, 'chipid' => $chipid, 'hw' => $hw, 'fw' => $fw, 'user' => 'SYSTEM', 'time' => time(), 'last_active' => time()));
+		self::$DB->addItem('devices', array('mac' => $mac, 'chipid' => $chipid, 'hw' => $hw, 'fw' => $fw, 'user' => SYSTEM_USER_ID, 'time' => time(), 'last_active' => time()));
 		$deviceId = self::getDeviceId($mac);
 		self::$DB->addItem('relays', array('device' => $deviceId, 'relay1' => '0', 'relay2' => '0', 'relay3' => '0', 'relay4' => '0'));
 		self::$DB->addItem('configs', array('device' => $deviceId, 'ds_resulution' => '9', 'sending_interval' => '2000'));

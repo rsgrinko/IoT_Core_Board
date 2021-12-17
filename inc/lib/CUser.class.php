@@ -61,15 +61,15 @@ class CUser {
 	 * @param int $id
 	 * @return array|bool
 	 */
-	public static function getFields($id = ''){
-		if(empty($id) or $id == ''){
+	public static function getFields($id = false){
+		if(empty($id) or $id === false){
 			$id = self::$id;
 		}
 		
 		if(is_array($id)){
 			$where = $id;
 		} else {
-			$where = array('id'=>$id);
+			$where = array('id' => $id);
 		}
 		$result = self::$DB->getItem(self::$table, $where);
 		if($result) {
