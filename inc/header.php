@@ -400,9 +400,7 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                             </div>
 
                             <div class="collapse navbar-collapse" id="header-navbar-collapse">
-
-
-                                <ul id="main-menu" class="nav navbar-nav navbar-left">
+                            <ul id="main-menu" class="nav navbar-nav navbar-left">
                                     <li class="dropdown"><a href="boardinfo.php?id=<?php echo $USER['deviceId']; ?>">Используется ID: <?php echo $USER['deviceId']; ?></a></li>
                                     <li class="dropdown">
                                         <?php $userDevices = getUserDevices($USER['id']); ?>
