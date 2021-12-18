@@ -7,7 +7,9 @@
 *	Сайт: https://it-stories.ru
 */
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 define('START_TIME', microtime(true));					// засекаем время старта скрипта
 define('CORE_LOADED', true);									// флаг корректного запуска
 require_once __DIR__ . '/config.php';							// подключаем конфигурационный файл
@@ -38,6 +40,11 @@ if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сб
 CUser::init($DB);												// инициализация поддержки пользователей панели
 CEvents::init($DB);												// инициализация класса журналирования событий
 CCron::init($DB);												// инициализация крона
+
+/**
+ * Массив данных о текущем пользователе
+ */
+$USER = [];
 
 if(CUser::isUser()) {
     $cacheId = md5('CUser::getFields_'.CUser::$id);
