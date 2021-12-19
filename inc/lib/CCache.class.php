@@ -244,7 +244,6 @@ class CCache
 
     /**
      * Тестовый метод для очистки мемкэша
-     * TODO: переделать
      */
     public static function flushMemcache():void {
         self::$memcacheObject->flush();
