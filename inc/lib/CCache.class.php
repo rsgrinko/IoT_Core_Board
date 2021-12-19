@@ -17,6 +17,11 @@ class CCache
     private static $cache_dir;
 
     /**
+     * @var int $cache_ttl Время жизни кэша в секуднах
+     */
+    private static $cache_ttl;
+
+    /**
      * @var string Хост memcache сервера
      */
     private static $memcacheHost = 'localhost';
@@ -62,9 +67,10 @@ class CCache
      * @param string $dir Дирректория хранения файлов кэша
      * @param bool $enabled Флаг включения кэширования
      */
-    public static function init($dir, $enabled = true):void
+    public static function init($dir, $cache_ttl, $enabled = true):void
     {
         self::$cache_dir = $dir;
+        self::$cache_ttl = $cache_ttl;
         self::$cache_enabled = $enabled;
     }
 
@@ -103,7 +109,7 @@ class CCache
         }
 
         // если время жизни элемента истекло
-        if(self::getAge($name) > CACHE_TTL) {
+        if(self::getAge($name) > self::$cache_ttl) {
             return false;
         }
 
@@ -258,7 +264,7 @@ class CCache
      * Метод для записи в мемкэш
      */
     private static function writeMemcache($name, $value):void {
-        self::$memcacheObject->set($name, $value, MEMCACHE_COMPRESSED, CACHE_TTL);
+        self::$memcacheObject->set($name, $value, MEMCACHE_COMPRESSED, self::$cache_ttl);
         return;
     }
 

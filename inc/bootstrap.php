@@ -31,7 +31,7 @@ $DB = new CDB(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME); 		// создаем об
 $DB->query('SET sql_mode = \'\'');                              // сбрасываем режим работы sql_mode=only_full_group_by 
 
 CIoT::init($DB);											    // инициализация класса работы с контроллером
-CCache::init(CACHEDIR, USE_CACHE);    				// инициализация модуля кэширования
+CCache::init(CACHEDIR, CACHE_TTL, USE_CACHE);    				// инициализация модуля кэширования
 if(CACHE_TYPE == 'MEMCACHE') {
     CCache::useMemcache();
 }
