@@ -257,7 +257,7 @@ class CCache
     /**
      * Метод для записи в мемкэш
      */
-    public static function writeMemcache($name, $value):void {
+    private static function writeMemcache($name, $value):void {
         self::$memcacheObject->set($name, $value, MEMCACHE_COMPRESSED, CACHE_TTL);
         return;
     }
@@ -265,14 +265,14 @@ class CCache
     /**
      * Метод для чтения из мемкэша
      */
-    public static function getMemcache($name) {
+    private static function getMemcache($name) {
         return self::$memcacheObject->get($name);
     }
 
     /**
      * Тестовый метод для очистки мемкэша
      */
-    public static function flushMemcache():void {
+    private static function flushMemcache():void {
         self::$memcacheObject->flush();
         return;
     }
