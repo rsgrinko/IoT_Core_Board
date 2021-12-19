@@ -28,6 +28,12 @@ define('HOME', 'https://'.$_SERVER['SERVER_NAME']);
 define('USE_CACHE', true);
 
 /**
+ * Тип использоваемого кэширования
+ * FILES | MEMCACHE
+ */
+define('CACHE_TYPE', 'MEMCACHE');
+
+/**
  * Директория хранения файлов кэша
  */
 define('CACHEDIR', $_SERVER['DOCUMENT_ROOT'].'/cache/');

@@ -31,7 +31,10 @@ $DB = new CDB(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME); 		// создаем об
 $DB->query('SET sql_mode = \'\'');                              // сбрасываем режим работы sql_mode=only_full_group_by 
 
 CIoT::init($DB);											    // инициализация класса работы с контроллером
-CCache::init(CACHEDIR, USE_CACHE);    							// инициализация модуля кэширования
+CCache::init(CACHEDIR, USE_CACHE);    				// инициализация модуля кэширования
+if(CACHE_TYPE == 'MEMCACHE') {
+    CCache::useMemcache();
+}
 
 if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
     CCache::flush();

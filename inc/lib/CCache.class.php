@@ -87,13 +87,26 @@ class CCache
      * @return bool Флаг наличия или отсутствия кэша
      */
     public static function check($name):bool
-    { // Проверка наличия элемента в кэше
+    {
+        // если кэш отключен
         if (!self::$cache_enabled) {
             return false;
         }
+
+        // если используется memcache
+        if(self::$useMemcache) {
+            if(self::getMemcache($name)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // если время жизни элемента истекло
         if(self::getAge($name) > CACHE_TTL) {
             return false;
         }
+
         if (file_exists(self::$cache_dir . md5($name) . '.tmp')) {
             return true;
         } else {
@@ -111,7 +124,11 @@ class CCache
     {
         self::$quantity++;
         self::$quantity_read++;
-        return unserialize(base64_decode(file_get_contents(self::$cache_dir . md5($name) . '.tmp')));
+        if(self::$useMemcache) {
+            return self::getMemcache($name);
+        } else {
+            return unserialize(base64_decode(file_get_contents(self::$cache_dir . md5($name) . '.tmp')));
+        }
     }
 
     /**
@@ -128,10 +145,16 @@ class CCache
         }
         self::$quantity++;
         self::$quantity_write++;
-        if (file_put_contents(self::$cache_dir . md5($name) . '.tmp', base64_encode(serialize($arValue)))) {
+
+        if(self::$useMemcache) {
+            self::writeMemcache($name, $arValue);
             return true;
         } else {
-            return false;
+            if (file_put_contents(self::$cache_dir . md5($name) . '.tmp', base64_encode(serialize($arValue)))) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -142,12 +165,16 @@ class CCache
      */
     public static function flush():bool
     { // Очистить кэш
-        foreach (scandir(self::$cache_dir) as $file) {
-            if ($file == '.' or $file == '..') continue;
-            self::$quantity++;
-            self::$quantity_write++;
-            if (!unlink(self::$cache_dir . $file)) {
-                return false;
+        if(self::$useMemcache) {
+            self::flushMemcache();
+        } else {
+            foreach (scandir(self::$cache_dir) as $file) {
+                if ($file == '.' or $file == '..') continue;
+                self::$quantity++;
+                self::$quantity_write++;
+                if (!unlink(self::$cache_dir . $file)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -181,7 +208,6 @@ class CCache
     { // Получить размер элемента в кэше
         if (self::check($name)) {
             return filesize(self::$cache_dir . md5($name) . '.tmp');
-
         }
         return true;
     }
@@ -209,14 +235,17 @@ class CCache
      */
     public static function getAge(string $name)
     {
-        return (time() - @filectime(self::$cache_dir . md5($name) . '.tmp'));
+        if(self::$useMemcache) {
+            return 0;
+        } else {
+            return (time() - @filectime(self::$cache_dir . md5($name) . '.tmp'));
+        }
     }
-
 
     /**
      * Включение использования memcache вместо файлов
      */
-    public static function useMemcache(string $host, int $port):void {
+    public static function useMemcache(string $host = 'localhost', int $port = 11211):void {
         self::$useMemcache = true;
         self::$memcacheHost = $host;
         self::$memcachePort = $port;
@@ -225,11 +254,10 @@ class CCache
         return;
     }
 
-
     /**
      * Метод для записи в мемкэш
      */
-    private static function writeMemcache($name, $value):void {
+    public static function writeMemcache($name, $value):void {
         self::$memcacheObject->set($name, $value, MEMCACHE_COMPRESSED, CACHE_TTL);
         return;
     }
@@ -237,19 +265,16 @@ class CCache
     /**
      * Метод для чтения из мемкэша
      */
-    private static function getMemcache($name) {
+    public static function getMemcache($name) {
         return self::$memcacheObject->get($name);
     }
-
 
     /**
      * Тестовый метод для очистки мемкэша
      */
-    private static function flushMemcache():void {
+    public static function flushMemcache():void {
         self::$memcacheObject->flush();
         return;
     }
-    
 }
-
 ?>
