@@ -44,18 +44,7 @@ class CMQTT {
     public $will;                /* stores the will of the client */
     protected $username;            /* stores username */
     protected $password;            /* stores password */
-	private static $class_version = '1.0.1';
-	private static $class_author = 'Andrew Milsted (andrew@bluerhinos.co.uk)';
-	private static $class_description = 'Class to connect/publish/subscribe to an MQTT broker';
-	
-	public static function classinfo(){
-		$result = [];
-		$result['VERSION'] = self::$class_version;
-		$result['AUTHOR'] = self::$class_author;
-		$result['DESCRIPTION'] = self::$class_description;
-		return $result;
-	}
-	
+
     public $cafile;
     protected static $known_commands = [
         1 => 'CONNECT',

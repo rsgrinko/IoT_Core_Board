@@ -20,19 +20,6 @@ class CCron
      */
     private static $table;
 
-    private static $class_version = '1.0.5';
-    private static $class_author = 'Roman S Grinko (rsgrinko@gmail.com)';
-    private static $class_description = 'Класс планировщика задач';
-
-    public static function classinfo()
-    {
-        $result = [];
-        $result['VERSION'] = self::$class_version;
-        $result['AUTHOR'] = self::$class_author;
-        $result['DESCRIPTION'] = self::$class_description;
-        return $result;
-    }
-
     /**
      * Инициализация класса и задание начальных параметров
      *

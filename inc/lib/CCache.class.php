@@ -36,19 +36,6 @@ class CCache
      */
     private static $cache_enabled = true;
 
-    private static $class_version = '1.0.9';
-    private static $class_author = 'Roman S Grinko (rsgrinko@gmail.com)';
-    private static $class_description = 'Класс для кэширования данных и работы с кэшэм';
-
-    public static function classinfo():array
-    {
-        $result = [];
-        $result['VERSION'] = self::$class_version;
-        $result['AUTHOR'] = self::$class_author;
-        $result['DESCRIPTION'] = self::$class_description;
-        return $result;
-    }
-
     /**
      * Инициализация кэша
      *

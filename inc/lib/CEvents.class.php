@@ -10,18 +10,7 @@
 class CEvents {
 	private static $DB;
 	private static $table;
-	private static $class_version = '1.0.3';
-	private static $class_author = 'Roman S Grinko (rsgrinko@gmail.com)';
-	private static $class_description = 'Класс для работы с системой событий';
-	
-	public static function classinfo(){
-		$result = [];
-		$result['VERSION'] = self::$class_version;
-		$result['AUTHOR'] = self::$class_author;
-		$result['DESCRIPTION'] = self::$class_description;
-		return $result;
-	}
-	
+
 	public static function init($DB, $table = 'events'){
 		self::$DB = $DB;
 		self::$table = $table;
