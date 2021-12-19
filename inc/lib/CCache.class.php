@@ -17,6 +17,26 @@ class CCache
     private static $cache_dir;
 
     /**
+     * @var string Хост memcache сервера
+     */
+    private static $memcacheHost = 'localhost';
+
+    /**
+     * @var int Порт memcache сервера
+     */
+    private static $memcachePort = 11211;
+
+    /**
+     * @var bool Флаг использования memcache
+     */
+    private static $useMemcache = false;
+
+    /**
+     * @var object Объект Memcache
+     */
+    private static $memcacheObject;
+
+    /**
      * @var int $quantity Количество обращений к кэшу
      */
     public static $quantity = 0;
@@ -193,35 +213,32 @@ class CCache
     }
 
 
+    /**
+     * Включение использования memcache вместо файлов
+     */
+    public static function useMemcache(string $host, int $port):void {
+        self::$useMemcache = true;
+        self::$memcacheHost = $host;
+        self::$memcachePort = $port;
+        self::$memcacheObject = new Memcache;
+        self::$memcacheObject->connect( self::$memcacheHost, self::$memcachePort);
+        return;
+    }
 
 
     /**
-     * Тестовый метод для записи в мемкэш
-     * TODO: переделать
+     * Метод для записи в мемкэш
      */
-    public static function memcacheWrite($name, $value):bool {
-        $memcache = memcache_connect('localhost', 11211);
-
-        if ($memcache) {
-            $memcache->set($name, serialize($value));
-            return true;
-        } else {
-            return false;
-        }
+    private static function writeMemcache($name, $value):void {
+        self::$memcacheObject->set($name, $value, MEMCACHE_COMPRESSED, CACHE_TTL);
+        return;
     }
 
     /**
-     * Тестовый метод для чтения из мемкэша
-     * TODO: переделать
+     * Метод для чтения из мемкэша
      */
-    public static function memcacheGet($name) {
-        $memcache = memcache_connect('localhost', 11211);
-
-        if ($memcache) {
-           return unserialize($memcache->get($name));
-        } else {
-           return false;
-        }
+    public static function getMemcache($name) {
+        return self::$memcacheObject->get($name);
     }
 
 
@@ -229,9 +246,9 @@ class CCache
      * Тестовый метод для очистки мемкэша
      * TODO: переделать
      */
-    public static function memcacheFlush() {
-        $memcache = memcache_connect('localhost', 11211);
-        return ($memcache->flush());
+    public static function flushMemcache():void {
+        self::$memcacheObject->flush();
+        return;
     }
     
 }
