@@ -3,7 +3,7 @@
 	require_once __DIR__.'/inc/header.php';
 	
 	if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
-		$DB->update('configs', array('device' => $USER['deviceId']), array('ds_resolution' => $_REQUEST['ds_resolution'], 'sending_interval' => $_REQUEST['sending_interval']));
+		$DB->update('configs', ['device' => $USER['deviceId']], ['ds_resolution' => $_REQUEST['ds_resolution'], 'sending_interval' => $_REQUEST['sending_interval']]);
 		CEvents::add('Произведено изменение конфигурации контроллера ID: '.$USER['deviceId'], 'notice', 'core');
 		
 		echo '<script>alert("Настройки успешно сохранены");</script>';

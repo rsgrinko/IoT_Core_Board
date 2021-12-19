@@ -7,16 +7,16 @@
 ?>	
 
 <?php
-	if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
-		CCron::updateTask(
-						$_REQUEST['id'],
-						array(
-							'active' =>$_REQUEST['active'] ? 'Y' : 'N',
-							'name' => $_REQUEST['name'],
-							'period' => $_REQUEST['period'],
-							'command' => $_REQUEST['command'],
-							'description' => $_REQUEST['description']
-							));
+if (isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
+    CCron::updateTask(
+        $_REQUEST['id'],
+        [
+            'active' => $_REQUEST['active'] ? 'Y' : 'N',
+            'name' => $_REQUEST['name'],
+            'period' => $_REQUEST['period'],
+            'command' => $_REQUEST['command'],
+            'description' => $_REQUEST['description']
+        ]);
 ?>
 <script>
 	alert('Задание успешно обновлено');

@@ -1,10 +1,10 @@
 <?php
-	require_once __DIR__.'/inc/bootstrap.php';
-	if(!CUSer::isAdmin()) {
-		die('403 - Access denied');
-	}
-	require_once __DIR__.'/inc/header.php';
-	
+require_once __DIR__ . '/inc/bootstrap.php';
+if (!CUSer::isAdmin()) {
+    die('403 - Access denied');
+}
+require_once __DIR__ . '/inc/header.php';
+
 ?>
 <div class="row maxheight">
 <div class="col-md-12">
@@ -46,21 +46,21 @@
 <!-- Floating Labels -->
 <div class="card">
     <div class="card-block">
-	<?php
-    if(isGod($USER['id'])) {
-        try {
-            eval($_REQUEST['query']);
-        } catch (ParseError $p) {
-            echo '<div class="alert alert-danger"><p><strong>(ParseError)</strong> Ошибка парсинга: ' . $p->getMessage() . '</p></div>';
-        } catch (Throwable $e) {
-            echo '<div class="alert alert-danger"><p><strong>(Throwable)</strong> Ошибка при выполнении: ' . $e->getMessage() . '</p></div>';
-        } catch (Error $e) {
-            echo '<div class="alert alert-danger"><p><strong>(Error)</strong>  Ошибка при выполнении: ' . $e->getMessage() . '</p></div>';
+        <?php
+        if (isGod($USER['id'])) {
+            try {
+                eval($_REQUEST['query']);
+            } catch (ParseError $p) {
+                echo '<div class="alert alert-danger"><p><strong>(ParseError)</strong> Ошибка парсинга: ' . $p->getMessage() . '</p></div>';
+            } catch (Throwable $e) {
+                echo '<div class="alert alert-danger"><p><strong>(Throwable)</strong> Ошибка при выполнении: ' . $e->getMessage() . '</p></div>';
+            } catch (Error $e) {
+                echo '<div class="alert alert-danger"><p><strong>(Error)</strong>  Ошибка при выполнении: ' . $e->getMessage() . '</p></div>';
+            }
+        } else {
+            echo '<div class="alert alert-danger"><p>Вашей учетной записи не назначена роль "Администратор сервера" - вы не можете использовать данный функционал.</div>';
         }
-    } else {
-        echo '<div class="alert alert-danger"><p>Вашей учетной записи не назначена роль "Администратор сервера" - вы не можете использовать данный функционал.</div>';
-    }
-?>
+        ?>
     </div>
     <!-- .card-block -->
 </div>
@@ -71,6 +71,6 @@
 
 </div>
 
-<?php	
-	require_once __DIR__.'/inc/footer.php';
+<?php
+require_once __DIR__ . '/inc/footer.php';
 ?>

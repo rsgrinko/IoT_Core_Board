@@ -1,10 +1,10 @@
 <?php
-/*
-	Страница регистрации
-	Данный файл входит в состав системы IoT Core System
-	Разработчик: Роман Сергеевич Гринько
-	E-mail: rsgrinko@gmail.com
-	Сайт: https://it-stories.ru
+/**
+*   Страница регистрации
+*	Данный файл входит в состав системы IoT Core System
+*	Разработчик: Роман Сергеевич Гринько
+*	E-mail: rsgrinko@gmail.com
+*	Сайт: https://it-stories.ru
 */
 require_once __DIR__ . '/inc/bootstrap.php';
 $err_mess = false;
@@ -159,15 +159,9 @@ if(isset($_REQUEST['reg']) and $_REQUEST['reg'] == 'Y'){
                 font-family: "Roboto", sans-serif;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
-
-
                 background-color: #d8dbe2;
-                background-image:
-                        repeating-radial-gradient(circle at 0 100%, rgba(27,27,30, 0.1), rgba(88,164,176, 0.15) 1px, rgba(216,219,226, 0.2) 2px, rgba(88,164,176, 0.15) 3px, rgba(27,27,30, 0.1) 4px),
-                        radial-gradient(circle at 0 100%, #1b1b1e, #373f51, #58a4b0, #a9bcd0, #d8dbe2);
-
-
-
+                background-image: repeating-radial-gradient(circle at 0 100%, rgba(27, 27, 30, 0.1), rgba(88, 164, 176, 0.15) 1px, rgba(216, 219, 226, 0.2) 2px, rgba(88, 164, 176, 0.15) 3px, rgba(27, 27, 30, 0.1) 4px),
+                radial-gradient(circle at 0 100%, #1b1b1e, #373f51, #58a4b0, #a9bcd0, #d8dbe2);
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -185,7 +179,6 @@ if(isset($_REQUEST['reg']) and $_REQUEST['reg'] == 'Y'){
                 <input type="text" name="name" placeholder="Имя *" required/>
                 <input type="text" name="email" placeholder="E-Mail *" required/>
                 <input type="text" name="pass" placeholder="Пароль *" required/>
-
                 <button>Регистрация</button>
                 <p class="message">Уже зарегистрированы? <a href="login.php">Войти</a></p>
             </form>

@@ -6,15 +6,15 @@
 	require_once __DIR__ . '/inc/header.php';
 ?>	
 <?php
-if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
-		CCron::addTask(array(
-							'active' =>$_REQUEST['active'] ? 'Y' : 'N',
-							'name' => $_REQUEST['name'],
-							'period' => $_REQUEST['period'],
-							'command' => $_REQUEST['command'],
-							'description' => $_REQUEST['description']
-							)
-						);
+if (isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
+    CCron::addTask([
+            'active' => $_REQUEST['active'] ? 'Y' : 'N',
+            'name' => $_REQUEST['name'],
+            'period' => $_REQUEST['period'],
+            'command' => $_REQUEST['command'],
+            'description' => $_REQUEST['description']
+        ]
+    );
 ?>
 <script>
 jQuery(document).ready(function(){
