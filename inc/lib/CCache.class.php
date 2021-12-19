@@ -237,7 +237,7 @@ class CCache
     /**
      * Метод для чтения из мемкэша
      */
-    public static function getMemcache($name) {
+    private static function getMemcache($name) {
         return self::$memcacheObject->get($name);
     }
 
@@ -245,7 +245,7 @@ class CCache
     /**
      * Тестовый метод для очистки мемкэша
      */
-    public static function flushMemcache():void {
+    private static function flushMemcache():void {
         self::$memcacheObject->flush();
         return;
     }
