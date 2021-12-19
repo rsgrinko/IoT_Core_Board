@@ -31,7 +31,7 @@ define('USE_CACHE', true);
  * Тип использоваемого кэширования
  * FILES | MEMCACHE
  */
-define('CACHE_TYPE', 'MEMCACHE');
+define('CACHE_TYPE', 'FILES');
 
 /**
  * Директория хранения файлов кэша
