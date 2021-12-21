@@ -98,6 +98,19 @@ class CIoT {
 	}
 
     /**
+     * Добавление аналогого значения
+     *
+     * @param $deviceId
+     * @param $value
+     */
+    public static function addAnalogData($deviceId, $value):void {
+        self::$DB->addItem('sensors', array('device' => $deviceId, 'sensor' => 'analog', 'value' => $value, 'date' => date("Y-m-d H:i:00"), 'time' => time()));
+        $delTime = time() - 3600*24; // удалять старые записи показаний
+        self::$DB->query('DELETE FROM sensors WHERE device="'.$deviceId.'" and time<'.$delTime.'');
+        return;
+    }
+
+    /**
      * Получение состояний релейных выходов устройства
      *
      * @param int $id Идентификатор устройства
