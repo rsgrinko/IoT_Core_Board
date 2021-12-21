@@ -61,6 +61,7 @@ class CCache
      */
     private static $cache_enabled = true;
 
+    private static $lastError = '';
     /**
      * Инициализация кэша
      *
@@ -250,14 +251,24 @@ class CCache
 
     /**
      * Включение использования memcache вместо файлов
+     *
+     * @param string $host
+     * @param int $port
+     * @return bool
      */
-    public static function useMemcache(string $host = 'localhost', int $port = 11211):void {
-        self::$useMemcache = true;
+    public static function useMemcache(string $host = 'localhost', int $port = 11211):bool {
         self::$memcacheHost = $host;
         self::$memcachePort = $port;
         self::$memcacheObject = new Memcache;
-        self::$memcacheObject->connect( self::$memcacheHost, self::$memcachePort);
-        return;
+        $status = @self::$memcacheObject->connect( self::$memcacheHost, self::$memcachePort);
+        if($status) {
+            self::$useMemcache = true;
+            return true;
+        } else {
+            self::$useMemcache = false;
+            self::$lastError = 'Fail connect to Memcache! Host: '.self::$memcacheHost.', port: '.self::$memcachePort;
+            return false;
+        }
     }
 
     /**
@@ -281,6 +292,15 @@ class CCache
     private static function flushMemcache():void {
         self::$memcacheObject->flush();
         return;
+    }
+
+    /**
+     * Получение последней ошибки
+     *
+     * @return string
+     */
+    public static function getLastError():string {
+        return self::$lastError;
     }
 }
 ?>

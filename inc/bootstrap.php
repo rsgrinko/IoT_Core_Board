@@ -33,7 +33,9 @@ $DB->query('SET sql_mode = \'\'');                              // сбрасы�
 CIoT::init($DB);											    // инициализация класса работы с контроллером
 CCache::init(CACHEDIR, CACHE_TTL, USE_CACHE);    				// инициализация модуля кэширования
 if(CACHE_TYPE == 'MEMCACHE') {
-    CCache::useMemcache();
+    if(!CCache::useMemcache()) {
+       CEvents::add('Ошибка при включении memcache! Используется файловое хранилище. <code>'.CCache::getLastError().'</code>', 'warning', 'cache');
+    }
 }
 
 if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
