@@ -6,7 +6,7 @@ $cacheId = md5('CIoT::getDallasArrData_'.$USER['deviceId']);
 if(CCache::check($cacheId)) {
     $arSensors = CCache::get($cacheId);
 } else {
-    $arSensors = CIoT::getDallasArrData($USER['deviceId']);
+    $arSensors = CIoT::getSensorsArrData($USER['deviceId']);
     CCache::write($cacheId, $arSensors);
 }
 
@@ -35,7 +35,12 @@ if(CCache::check($cacheId)) {
                             } else {
                                 echo 'ion-thermometer';
                             } ?>"></i>
-                            Датчик <?php echo strtoupper(str_replace('ds', 'DS18B20_', $arSensor['sensor'])); ?></h4>
+                            <?php if(stristr($arSensor['sensor'],'ds')) { ?>
+                                Датчик <?php echo strtoupper(str_replace('ds', 'DS18B20_', $arSensor['sensor'])); ?>
+                            <?php } else { ?>
+                                Датчик ANALOG
+                        </h4>
+                            <?php } ?>
                         <ul class="card-actions">
                             <li>
                                 <button type="button"
@@ -46,11 +51,14 @@ if(CCache::check($cacheId)) {
                     </div>
                     <div class="card-block">
                         <p>
-                        <div class="monitoring_value"><span
-                                    id="<?php echo $arSensor['sensor']; ?>"><?php echo $arSensor['value']; ?></span> <?php if (stristr($arSensor['sensor'], 'dht_h')) {
+                        <div class="monitoring_value">
+                            <span id="<?php echo $arSensor['sensor']; ?>"><?php echo $arSensor['value']; ?></span>
+                            <?php if (stristr($arSensor['sensor'], 'dht_h')) {
                                 echo '%';
-                            } else {
+                            } elseif (stristr($arSensor['sensor'], 'ds')) {
                                 echo 'C';
+                            } else {
+                                echo 'единиц';
                             } ?></div>
                         </p>
                     </div>

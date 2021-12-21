@@ -144,7 +144,7 @@ class CIoT {
      * @param $deviceId
      * @return int
      */
-	public static function getCountDallas($deviceId):int{
+	public static function getCountSensors($deviceId):int{
 		$res = self::$DB->query('SELECT DISTINCT sensor FROM sensors WHERE device = "'.$deviceId.'"');
 		
 		if($res) {
@@ -215,8 +215,8 @@ class CIoT {
      * @param $deviceId
      * @return array
      */
-	public static function getDallasArrData($deviceId) {
-		$count = self::getCountDallas($deviceId);
+	public static function getSensorsArrData($deviceId) {
+		$count = self::getCountSensors($deviceId);
 		$res = self::$DB->query('SELECT DISTINCT sensor, value, time, id FROM sensors WHERE device="'.$deviceId.'" ORDER BY id DESC LIMIT 10');
 		$result = [];
 		
@@ -229,6 +229,7 @@ class CIoT {
 			return [];
 		}
 	}
+
 
     /**
      * Получаем массив с данными об устройстве
@@ -306,19 +307,13 @@ class CIoT {
      * @return array
      */
 	public static function getPlotDallasValues($deviceId, $sensor) {
-		$result = [];
-		/*$res = self::$DB->query('SELECT id, device, sensor, value, time FROM sensors WHERE device="'.$deviceId.'" and sensor="ds'.$sensor.'" AND (time % 300) = 0 AND time > '.(time()-86400*24).' ORDER BY id DESC LIMIT 100');
-		//SELECT id, device, sensor, value, time FROM sensors WHERE device="'.$deviceId.'" and sensor="ds'.$sensor.'" AND (time % 300) = 0 AND time > '.(time()-86400*24).' ORDER BY id DESC LIMIT 100*/
-		
 		$res = self::$DB->query('SELECT * FROM sensors WHERE mod(minute(date),5) = 0 AND sensor="'.$sensor.'" AND device="'.$deviceId.'" GROUP BY date ORDER BY id DESC LIMIT 1000');
 		if($res) {
-			//return $res;
 			return array_reverse($res);
 		} else {
 			return [];
 		}
 	}
-
 
     /**
      * Получение списка прошивок
@@ -479,7 +474,7 @@ class CIoT {
 			        scrollPositionX: 1
 			    },
 			    title: {
-			        text: "Показания температурного датчика (ID:'.$sensor.')"
+			        text: "Показания датчика (ID:'.$sensor.')"
 			    },
 			    subtitle: {
 			        text: "IoT Core System"
@@ -489,7 +484,7 @@ class CIoT {
 			    },
 			    yAxis: {
 			        title: {
-			            text: "Температура (°C)"
+			            text: "Показания (ед)"
 			        }
 			    },
 			    plotOptions: {
@@ -504,11 +499,11 @@ class CIoT {
 			        tooltip: {
 				    shared: true,
 			        crosshairs: true,
-			        pointFormat: "Температура: {point.y:.2f} С"
+			        pointFormat: "Значение: {point.y:.2f} ед."
 			    },
 			    series: [{
 				    
-			        name: "Показания температуры (ID:<?php echo $sensor;?>)",
+			        name: "Показания датчика (ID:<?php echo $sensor;?>)",
 			        data: ['.$temps.']
 			    }]
 			});
