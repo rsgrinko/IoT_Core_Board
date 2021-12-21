@@ -20,7 +20,14 @@
 		die('403 - Access denied');
 	}
 
-	$arDallasData = CIoT::getDallasData($deviceId, $sensor);
+    $cacheId = md5('CIoT::getSensorData_'.$deviceId.'_'.$sensor);
+    if(CCache::check($cacheId) and CCache::getAge($cacheId) < 10) {
+        $arDallasData = CCache::get($cacheId);
+    } else {
+        $arDallasData = CIoT::getSensorData($deviceId, $sensor);
+        CCache::write($cacheId, $arDallasData);
+    }
+
 	
 	$result = array('sensor' => $arDallasData['sensor'], 'value' => $arDallasData['value']);
 	

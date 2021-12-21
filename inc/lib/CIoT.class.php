@@ -158,11 +158,11 @@ class CIoT {
      * Получение последнюю актуальную температуру датчика DS18B20 из базы
      *
      * @param $deviceId
-     * @param $ds
+     * @param $sensor
      * @return mixed
      */
-	public static function getDallasData($deviceId, $ds){
-		$result = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="'.$ds.'" ORDER BY id DESC LIMIT 1');
+	public static function getSensorData($deviceId, $sensor){
+		$result = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="'.$sensor.'" ORDER BY id DESC LIMIT 1');
 		return $result[0];
 	}
 
