@@ -93,7 +93,7 @@ class CCache
      */
     public function __callStatic($method, $args)
     {
-        self::$lastError = 'Unsupported method. Method: '.$method.', arguments: '.$args;
+        self::$lastError = 'Unsupported method. Method: '.$method.', arguments: '.implode(',', $args);
         echo json_encode(['status' => 'fail', 'error' => 'Unsupported method', 'method' => $method, 'args' => $args], JSON_UNESCAPED_UNICODE);
     }
 
