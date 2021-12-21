@@ -70,8 +70,18 @@ class CCache
      */
     public static function init($dir, $cache_ttl, $enabled = true):void
     {
-        self::$cache_dir = $dir;
-        self::$cache_ttl = $cache_ttl;
+        if(!isset($dir) or empty($dir)) {
+            self::$cache_dir = $dir;
+        } else {
+            self::$lastError = 'Incorrect cache path!';
+        }
+
+        if(!isset($cache_ttl) or empty($cache_ttl)) {
+            self::$cache_ttl = $cache_ttl;
+        } else {
+            self::$lastError = 'Incorrect cache TTL!';
+        }
+
         self::$cache_enabled = $enabled;
     }
 
@@ -83,8 +93,8 @@ class CCache
      */
     public function __callStatic($method, $args)
     {
+        self::$lastError = 'Unsupported method. Method: '.$method.', arguments: '.$args;
         echo json_encode(['status' => 'fail', 'error' => 'Unsupported method', 'method' => $method, 'args' => $args], JSON_UNESCAPED_UNICODE);
-        die();
     }
 
     /**
@@ -160,6 +170,7 @@ class CCache
             if (file_put_contents(self::$cache_dir . md5($name) . '.tmp', base64_encode(serialize($arValue)))) {
                 return true;
             } else {
+                self::$lastError = 'Error writing cache "'.$name.'" to file: '.self::$cache_dir . md5($name) . '.tmp';
                 return false;
             }
         }
@@ -180,6 +191,7 @@ class CCache
                 self::$quantity++;
                 self::$quantity_write++;
                 if (!unlink(self::$cache_dir . $file)) {
+                    self::$lastError = 'Error remove file: '.self::$cache_dir . $file;
                     return false;
                 }
             }
@@ -199,6 +211,7 @@ class CCache
             if (!unlink(self::$cache_dir . md5($name) . '.tmp')) {
                 self::$quantity++;
                 self::$quantity_write++;
+                self::$lastError = 'Error remove file: '.self::$cache_dir . md5($name) . '.tmp';
                 return false;
             }
         }
@@ -209,14 +222,14 @@ class CCache
      * Получение размера элемента кэша в байтах
      *
      * @param string $name Имя элемента кэша
-     * @return bool|int Размер элемента в байтах или false
+     * @return int Размер элемента в байтах или false
      */
-    public static function getSize($name)
+    public static function getSize($name):int
     { // Получить размер элемента в кэше
         if (self::check($name)) {
             return filesize(self::$cache_dir . md5($name) . '.tmp');
         }
-        return true;
+        return 0;
     }
 
     /**
