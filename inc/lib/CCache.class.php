@@ -62,24 +62,25 @@ class CCache
     private static $cache_enabled = true;
 
     private static $lastError = '';
+
     /**
      * Инициализация кэша
      *
      * @param string $dir Дирректория хранения файлов кэша
      * @param bool $enabled Флаг включения кэширования
      */
-    public static function init($dir, $cache_ttl, $enabled = true):void
+    public static function init($dir, $cache_ttl, $enabled = true): void
     {
-        if(!isset($dir) or empty($dir)) {
-            self::$cache_dir = $dir;
-        } else {
+        if (!isset($dir) or empty($dir)) {
             self::$lastError = 'Incorrect cache path!';
+        } else {
+            self::$cache_dir = $dir;
         }
 
-        if(!isset($cache_ttl) or empty($cache_ttl)) {
-            self::$cache_ttl = $cache_ttl;
-        } else {
+        if (!isset($cache_ttl) or empty($cache_ttl)) {
             self::$lastError = 'Incorrect cache TTL!';
+        } else {
+            self::$cache_ttl = $cache_ttl;
         }
 
         self::$cache_enabled = $enabled;
@@ -93,7 +94,7 @@ class CCache
      */
     public function __callStatic($method, $args)
     {
-        self::$lastError = 'Unsupported method. Method: '.$method.', arguments: '.implode(',', $args);
+        self::$lastError = 'Unsupported method. Method: ' . $method . ', arguments: ' . implode(',', $args);
         echo json_encode(['status' => 'fail', 'error' => 'Unsupported method', 'method' => $method, 'args' => $args], JSON_UNESCAPED_UNICODE);
     }
 
@@ -103,7 +104,7 @@ class CCache
      * @param string $name Имя элемента кэша
      * @return bool Флаг наличия или отсутствия кэша
      */
-    public static function check($name):bool
+    public static function check($name): bool
     {
         // если кэш отключен
         if (!self::$cache_enabled) {
@@ -111,8 +112,8 @@ class CCache
         }
 
         // если используется memcache
-        if(self::$useMemcache) {
-            if(self::getMemcache($name)){
+        if (self::$useMemcache) {
+            if (self::getMemcache($name)) {
                 return true;
             } else {
                 return false;
@@ -120,7 +121,7 @@ class CCache
         }
 
         // если время жизни элемента истекло
-        if(self::getAge($name) > self::$cache_ttl) {
+        if (self::getAge($name) > self::$cache_ttl) {
             return false;
         }
 
@@ -141,7 +142,7 @@ class CCache
     {
         self::$quantity++;
         self::$quantity_read++;
-        if(self::$useMemcache) {
+        if (self::$useMemcache) {
             return self::getMemcache($name);
         } else {
             return unserialize(base64_decode(file_get_contents(self::$cache_dir . md5($name) . '.tmp')));
@@ -155,7 +156,7 @@ class CCache
      * @param mixed $arValue Значение элемента кэша
      * @return bool Флаг успешной или неудачной записи данных
      */
-    public static function write($name, $arValue):bool
+    public static function write($name, $arValue): bool
     { // Записать элемент в кэш
         if (!self::$cache_enabled) {
             return false;
@@ -163,14 +164,14 @@ class CCache
         self::$quantity++;
         self::$quantity_write++;
 
-        if(self::$useMemcache) {
+        if (self::$useMemcache) {
             self::writeMemcache($name, $arValue);
             return true;
         } else {
             if (file_put_contents(self::$cache_dir . md5($name) . '.tmp', base64_encode(serialize($arValue)))) {
                 return true;
             } else {
-                self::$lastError = 'Error writing cache "'.$name.'" to file: '.self::$cache_dir . md5($name) . '.tmp';
+                self::$lastError = 'Error writing cache "' . $name . '" to file: ' . self::$cache_dir . md5($name) . '.tmp';
                 return false;
             }
         }
@@ -181,9 +182,9 @@ class CCache
      *
      * @return bool Флаг успеха
      */
-    public static function flush():bool
+    public static function flush(): bool
     { // Очистить кэш
-        if(self::$useMemcache) {
+        if (self::$useMemcache) {
             self::flushMemcache();
         } else {
             foreach (scandir(self::$cache_dir) as $file) {
@@ -191,7 +192,7 @@ class CCache
                 self::$quantity++;
                 self::$quantity_write++;
                 if (!unlink(self::$cache_dir . $file)) {
-                    self::$lastError = 'Error remove file: '.self::$cache_dir . $file;
+                    self::$lastError = 'Error remove file: ' . self::$cache_dir . $file;
                     return false;
                 }
             }
@@ -205,13 +206,13 @@ class CCache
      * @param string $name Имя элемента кэша
      * @return bool Флаг успеха
      */
-    public static function del($name):bool
+    public static function del($name): bool
     { // Удалить элемент из кэша
         if (self::check($name)) {
             if (!unlink(self::$cache_dir . md5($name) . '.tmp')) {
                 self::$quantity++;
                 self::$quantity_write++;
-                self::$lastError = 'Error remove file: '.self::$cache_dir . md5($name) . '.tmp';
+                self::$lastError = 'Error remove file: ' . self::$cache_dir . md5($name) . '.tmp';
                 return false;
             }
         }
@@ -224,7 +225,7 @@ class CCache
      * @param string $name Имя элемента кэша
      * @return int Размер элемента в байтах или false
      */
-    public static function getSize($name):int
+    public static function getSize($name): int
     { // Получить размер элемента в кэше
         if (self::check($name)) {
             return filesize(self::$cache_dir . md5($name) . '.tmp');
@@ -234,10 +235,10 @@ class CCache
 
     /**
      * Получение общего размера кэша в байтах
-     * 
+     *
      * @return int Размер кэша в байтах или false
      */
-    public static function getCacheSize():int
+    public static function getCacheSize(): int
     { // Получить размер кэша
         $return_size = 0;
         foreach (scandir(self::$cache_dir) as $file) {
@@ -249,13 +250,13 @@ class CCache
 
     /**
      * Получение времени существованя кэша в секундах
-     * 
+     *
      * @param string $name Имя элемента кэша
      * @return int Время в секундах или false
      */
     public static function getAge(string $name)
     {
-        if(self::$useMemcache) {
+        if (self::$useMemcache) {
             return 0;
         } else {
             return (time() - @filectime(self::$cache_dir . md5($name) . '.tmp'));
@@ -269,17 +270,18 @@ class CCache
      * @param int $port
      * @return bool
      */
-    public static function useMemcache(string $host = 'localhost', int $port = 11211):bool {
+    public static function useMemcache(string $host = 'localhost', int $port = 11211): bool
+    {
         self::$memcacheHost = $host;
         self::$memcachePort = $port;
         self::$memcacheObject = new Memcache;
-        $status = @self::$memcacheObject->connect( self::$memcacheHost, self::$memcachePort);
-        if($status) {
+        $status = @self::$memcacheObject->connect(self::$memcacheHost, self::$memcachePort);
+        if ($status) {
             self::$useMemcache = true;
             return true;
         } else {
             self::$useMemcache = false;
-            self::$lastError = 'Fail connect to Memcache! Host: '.self::$memcacheHost.', port: '.self::$memcachePort;
+            self::$lastError = 'Fail connect to Memcache! Host: ' . self::$memcacheHost . ', port: ' . self::$memcachePort;
             return false;
         }
     }
@@ -287,7 +289,8 @@ class CCache
     /**
      * Метод для записи в мемкэш
      */
-    private static function writeMemcache($name, $value):void {
+    private static function writeMemcache($name, $value): void
+    {
         self::$memcacheObject->set($name, $value, MEMCACHE_COMPRESSED, self::$cache_ttl);
         return;
     }
@@ -295,14 +298,16 @@ class CCache
     /**
      * Метод для чтения из мемкэша
      */
-    private static function getMemcache($name) {
+    private static function getMemcache($name)
+    {
         return self::$memcacheObject->get($name);
     }
 
     /**
      * Тестовый метод для очистки мемкэша
      */
-    private static function flushMemcache():void {
+    private static function flushMemcache(): void
+    {
         self::$memcacheObject->flush();
         return;
     }
@@ -312,8 +317,10 @@ class CCache
      *
      * @return string
      */
-    public static function getLastError():string {
+    public static function getLastError(): string
+    {
         return self::$lastError;
     }
 }
+
 ?>
