@@ -31,7 +31,8 @@
     try {
         $API->$method();
     } catch (Throwable $e) {
-        CJson::create(['status' => 'fail', 'message' => 'Метод '.$method.' не найден']);
+        echo CJson::create(['status' => 'fail', 'message' => 'Метод '.$method.' не найден']);
+        die();
     }
 
     
