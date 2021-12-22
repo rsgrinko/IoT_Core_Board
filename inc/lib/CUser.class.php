@@ -111,7 +111,7 @@ class CUser {
 	 * @param string $image
 	 */
 	public static function registration($login, $password, $email, $level = 'user', $name = '', $image = ''):void {
-		self::$DB->addItem(self::$table, array('login' => $login, 'password' => $password, 'access_level' => $level, 'name' => $name,'image' => $image, 'email' => $email, 'last_active' => time()));
+		self::$DB->addItem(self::$table, ['login' => $login, 'password' => $password, 'access_level' => $level, 'name' => $name,'image' => $image, 'token' => '', 'email' => $email, 'last_active' => time()]);
 		$result = self::$DB->getItem(self::$table, array('login'=>$login, 'password' => $password));
 		
 		self::$id = $result['id'];
@@ -119,6 +119,7 @@ class CUser {
 		$_SESSION['authorize'] = 'Y';
 		$_SESSION['login'] = $result['login'];
 		$_SESSION['password'] = $result['password'];	
+		$_SESSION['token'] = $result['token'];
 		$_SESSION['user'] = $result;
 		return;
 		
@@ -133,6 +134,22 @@ class CUser {
 	 */
 	public static function isUserExists($login):bool{
 		$result = self::$DB->getItem(self::$table, array('login'=>$login));
+		
+		if($result) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Проверка существования токена
+	 * 
+	 * @param string $token
+	 * @return bool
+	 */
+	public static function isTokenExists($token):bool{
+		$result = self::$DB->getItem(self::$table, array('token'=>$token));
 		
 		if($result) {
 			return true;
@@ -172,6 +189,7 @@ class CUser {
 			$_SESSION['authorize'] = 'Y';
 			$_SESSION['login'] = $result['login'];
 			$_SESSION['password'] = $result['password'];	
+			$_SESSION['token'] = $result['token'];
 			$_SESSION['user'] = $result;
 			return true;
 		} else {
@@ -195,7 +213,8 @@ class CUser {
 			$_SESSION['id'] = $result['id'];
 			$_SESSION['authorize'] = 'Y';
 			$_SESSION['login'] = $result['login'];
-			$_SESSION['password'] = $result['password'];	
+			$_SESSION['password'] = $result['password'];
+			$_SESSION['token'] = $result['token'];
 			$_SESSION['user'] = $result;	
 			return true;
 		} else {
@@ -253,6 +272,7 @@ class CUser {
 		$_SESSION['authorize'] = '';
 		$_SESSION['login'] = '';
 		$_SESSION['password'] = '';
+		$_SESSION['token'] = '';
 		$_SESSION['user'] = '';
 		return;
     }
