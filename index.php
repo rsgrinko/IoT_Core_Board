@@ -62,9 +62,10 @@ if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
                             deviceId: "<?php echo $USER['deviceId']; ?>"
                         },
                         success: function (data) {
-
                             for (var key in data) {
+                                //$('#' + key).parent().slideUp('fast')
                                 $('#' + key).text(data[key].value);
+                                //$('#' + key).parent().slideDown('fast')
                             }
                         },
                         dataType: "json"
