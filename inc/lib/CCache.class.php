@@ -61,6 +61,9 @@ class CCache
      */
     private static $cache_enabled = true;
 
+    /**
+     * @var string $lastError Последняя ошибка
+     */
     private static $lastError = '';
 
     /**
