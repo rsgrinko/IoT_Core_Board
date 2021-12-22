@@ -167,6 +167,42 @@ class CIoT {
 	}
 
     /**
+     * Получение показаний датчиков устройства
+     * TODO: требует оптимизации
+     *
+     * @param $deviceId
+     */
+    public static function getSensorAllData($deviceId){
+        for($i=1; $i<11; $i++) {
+            $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="ds'.($i).'" ORDER BY id DESC LIMIT 1');
+            if($res) {
+                $result['ds'.$i]['sensor'] = $res[0]['sensor'];
+                $result['ds'.$i]['value'] = $res[0]['value'];
+            }
+        }
+
+        $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="dht_t" ORDER BY id DESC LIMIT 1');
+        if($res) {
+            $result['dht_t']['sensor'] = $res[0]['sensor'];
+            $result['dht_t']['value'] = $res[0]['value'];
+        }
+
+        $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="dht_h" ORDER BY id DESC LIMIT 1');
+        if($res) {
+            $result['dht_h']['sensor'] = $res[0]['sensor'];
+            $result['dht_h']['value'] = $res[0]['value'];
+        }
+
+        $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="analog" ORDER BY id DESC LIMIT 1');
+        if($res) {
+            $result['analog']['sensor'] = $res[0]['sensor'];
+            $result['analog']['value'] = $res[0]['value'];
+        }
+
+        return $result;
+    }
+
+    /**
      * Преобразование версии прошивки в человеческий вид
      *
      * @param $fw
@@ -271,7 +307,7 @@ class CIoT {
         if (stristr($sensor, 'dht_h')) {
             $result = ['name' => 'Датчик влажности', 'unit' => '%', 'icon' => 'fa fa-flask'];
         } elseif (stristr($sensor, 'dht_t')) {
-            $result = ['name' => 'Датчик температуры', 'unit' => '%', 'icon' => 'ion-thermometer'];
+            $result = ['name' => 'Датчик температуры', 'unit' => 'C', 'icon' => 'ion-thermometer'];
         } elseif (stristr($sensor, 'ds')) {
             $result = ['name' => 'Датчик температуры', 'unit' => 'C', 'icon' => 'ion-thermometer'];
         } elseif (stristr($sensor, 'analog')) {

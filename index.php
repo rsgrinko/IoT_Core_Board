@@ -51,26 +51,27 @@ if(CCache::check($cacheId)) {
                 </div>
             </div>
             <!-- .col-sm-6 -->
-            <script>
-                var <?php echo $arSensor['sensor'];?> = <?php echo $arSensor['value'];?>;
-                $(document).ready(function () {
-                    setInterval(function () {
-                        $.ajax({
-                            url: "ajax/getDallasData.php",
-                            data: {
-                                deviceId: "<?php echo $USER['deviceId']; ?>",
-                                sensor: "<?php echo $arSensor['sensor']; ?>"
-                            },
-                            success: function (data) {
-                                $('#<?php echo $arSensor['sensor'];?>').text(data.value);
-                                <?php echo $arSensor['sensor'];?> = data.value;
-                            },
-                            dataType: "json"
-                        });
-                    }, 3000);
-                });
-            </script>
         <?php endforeach; ?>
+        <script>
+            $(document).ready(function () {
+                setInterval(function () {
+                    $.ajax({
+                        url: "ajax/getSensorsData.php",
+                        data: {
+                            deviceId: "<?php echo $USER['deviceId']; ?>"
+                        },
+                        success: function (data) {
+
+                            for (var key in data) {
+                                $('#' + key).text(data[key].value);
+                            }
+                        },
+                        dataType: "json"
+                    });
+                }, 3000);
+            });
+        </script>
+
     </div>
     <!------>
 
