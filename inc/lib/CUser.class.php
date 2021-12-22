@@ -113,6 +113,36 @@ class CUser {
 		return strtoupper($guid);
 	}
 
+	
+	/**
+	 * Проверка существования токена
+	 * 
+	 * @param string $token
+	 * @return bool
+	 */
+	public static function isTokenExists($token):bool{
+		$result = self::$DB->getItem(self::$table, array('token' => $token));
+		
+		if($result) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Получение пользователя по токену
+	 */
+	public static function getUserByToken($token) {
+		$result = self::$DB->getItem(self::$table, array('token' => $token));
+		
+		if($result) {
+			return $result;
+		} else {
+			return false;
+		}
+
+	}
     /**
      * Проверка пользователя на онлайн
      *
@@ -166,22 +196,6 @@ class CUser {
 	 */
 	public static function isUserExists($login):bool{
 		$result = self::$DB->getItem(self::$table, array('login' => $login));
-		
-		if($result) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Проверка существования токена
-	 * 
-	 * @param string $token
-	 * @return bool
-	 */
-	public static function isTokenExists($token):bool{
-		$result = self::$DB->getItem(self::$table, array('token' => $token));
 		
 		if($result) {
 			return true;
