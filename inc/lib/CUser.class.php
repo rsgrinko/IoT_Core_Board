@@ -97,17 +97,21 @@ class CUser {
 	/**
 	 * Создание пользовательского токена
 	 */
-	/*public static function createUserToken($userId):string {
-
-
-		self::$DB->update(self::$table, array('id' => $result['id']), array('last_active' => time()));
+	public static function createUserToken($userId):string {
+		$newToken = self::generateGUID();
+		self::$DB->update(self::$table, array('id' => $userId), array('token' => $newToken));
 		
-		if($result) {
-			return $result['token'];
-		} else {
-			return '';
-		}
-	}*/
+		return $newToken;
+	}
+
+	/**
+	 * Генерация GUID
+	 */
+	private static function generateGUID():string {
+		$uid = dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) );
+		$guid = vsprintf('RG%s-1000-%s-8%.3s-%s%s%s0', str_split($uid,4));
+		return strtoupper($guid);
+	}
 
     /**
      * Проверка пользователя на онлайн
