@@ -28,4 +28,10 @@
     // pre($USER);
     require_once __DIR__ . '/../inc/lib/CAPI.class.php';
     $API = new CAPI();
-    $API->$method();
+    try {
+        $API->$method();
+    } catch (Throwable $e) {
+        CJson::create(['status' => 'fail', 'message' => 'Метод '.$method.' не найден']);
+    }
+
+    
