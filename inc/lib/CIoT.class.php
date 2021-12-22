@@ -210,7 +210,7 @@ class CIoT {
 	}
 
     /**
-     * Получаем показания со всех 10 датчиков DS18B20
+     * Получаем показания со всех 10 датчиков
      *
      * @param $deviceId
      * @return array
@@ -257,6 +257,30 @@ class CIoT {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Получение человеческого имени по типу датчика
+     *
+     * @param $sensor
+     * @return string[]
+     */
+    public static function getHumanSensorName($sensor):array {
+        $result = [];
+
+        if (stristr($sensor, 'dht_h')) {
+            $result = ['name' => 'Датчик влажности', 'unit' => '%', 'icon' => 'fa fa-flask'];
+        } elseif (stristr($sensor, 'dht_t')) {
+            $result = ['name' => 'Датчик температуры', 'unit' => '%', 'icon' => 'ion-thermometer'];
+        } elseif (stristr($sensor, 'ds')) {
+            $result = ['name' => 'Датчик температуры', 'unit' => 'C', 'icon' => 'ion-thermometer'];
+        } elseif (stristr($sensor, 'analog')) {
+            $result = ['name' => 'Аналоговый датчик', 'unit' => 'ед.', 'icon' => 'fa fa-bar-chart'];
+        } else {
+            $result = ['name' => 'Датчик', 'unit' => 'ед. ', 'icon' => 'ion-thermometer'];
+        }
+
+        return $result;
     }
 
     /**

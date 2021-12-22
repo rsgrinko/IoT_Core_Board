@@ -30,17 +30,9 @@ if(CCache::check($cacheId)) {
             <div class="col-sm-6 col-lg-3">
                 <div class="card" id="displaySensor_<?php echo $arSensor['sensor']; ?>">
                     <div class="card-header bg-cyan bg-inverse custom_text_center">
-                        <h4><i class="<?php if (stristr($arSensor['sensor'], 'dht_h')) {
-                                echo 'fa fa-flask';
-                            } else {
-                                echo 'ion-thermometer';
-                            } ?>"></i>
-                            <?php if(stristr($arSensor['sensor'],'ds')) { ?>
-                                Датчик <?php echo strtoupper(str_replace('ds', 'DS18B20_', $arSensor['sensor'])); ?>
-                            <?php } else { ?>
-                                Датчик ANALOG
+                        <h4><i class="<?php echo CIoT::getHumanSensorName($arSensor['sensor'])['icon']; ?>"></i>
+                               <?php echo CIoT::getHumanSensorName($arSensor['sensor'])['name'].' ('.$arSensor['sensor'].')'; ?>
                         </h4>
-                            <?php } ?>
                         <ul class="card-actions">
                             <li>
                                 <button type="button"
@@ -53,13 +45,7 @@ if(CCache::check($cacheId)) {
                         <p>
                         <div class="monitoring_value">
                             <span id="<?php echo $arSensor['sensor']; ?>"><?php echo $arSensor['value']; ?></span>
-                            <?php if (stristr($arSensor['sensor'], 'dht_h')) {
-                                echo '%';
-                            } elseif (stristr($arSensor['sensor'], 'ds')) {
-                                echo 'C';
-                            } else {
-                                echo 'единиц';
-                            } ?></div>
+                            <?php echo CIoT::getHumanSensorName($arSensor['sensor'])['unit'] ?></div>
                         </p>
                     </div>
                 </div>
