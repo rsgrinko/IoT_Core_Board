@@ -111,7 +111,7 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                             },
                             dataType: "json"
                         });
-                    }, 5000);
+                    }, 10000);
                 });
         </script>
 
