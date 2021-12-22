@@ -1,5 +1,7 @@
 <?php
 	require_once __DIR__ . '/../inc/bootstrap.php';
+    header('Content-Type: application/json; charset=utf-8');
+    
     unset($USER);
 
     if(!isset($_REQUEST['token']) or empty($_REQUEST['token'])) {
