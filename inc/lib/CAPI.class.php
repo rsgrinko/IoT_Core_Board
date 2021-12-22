@@ -1,7 +1,7 @@
 <?php
 class CAPI {
 
-    function test(){
-        echo 'test completed.';
+    public static function test(){
+        return ['status' => 'ok', 'message' => 'test was completed :)'];
     }
 }

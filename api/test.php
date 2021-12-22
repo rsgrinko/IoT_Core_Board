@@ -27,12 +27,13 @@
     // TODO: дописать реализацию API
     // pre($USER);
     require_once __DIR__ . '/../inc/lib/CAPI.class.php';
-    $API = new CAPI();
+
     try {
-        $API->$method();
+        $result = CAPI::$method();
     } catch (Throwable $e) {
         echo CJson::create(['status' => 'fail', 'message' => 'Метод '.$method.' не найден']);
         die();
     }
 
+    echo CJson::create($result);
     
