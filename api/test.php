@@ -7,6 +7,11 @@
         die();
     }
 
+    if(!isset($_REQUEST['method']) or empty($_REQUEST['method'])) {
+        echo CJson::create(['status' => 'fail', 'message' => 'Method not set']);
+        die();
+    }
+
     $token = prepareString($_REQUEST['token']);
 
     if(!CUser::isTokenExists($token)) {
@@ -14,8 +19,13 @@
         die();
     }
 
+    $method = prepareString($_REQUEST['method']);
+
     $USER = CUser::getUserByToken($token);
 
     // имеем пользователя, который что то хочет. действуем...
     // TODO: дописать реализацию API
-    pre($USER);
+    // pre($USER);
+    require_once __DIR__ . '/../inc/lib/CAPI.class.php';
+    $API = new CAPI();
+    $API->$method();
