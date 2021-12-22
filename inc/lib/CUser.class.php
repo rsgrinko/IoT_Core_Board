@@ -94,6 +94,21 @@ class CUser {
 		}
 	}
 
+	/**
+	 * Создание пользовательского токена
+	 */
+	/*public static function createUserToken($userId):string {
+
+
+		self::$DB->update(self::$table, array('id' => $result['id']), array('last_active' => time()));
+		
+		if($result) {
+			return $result['token'];
+		} else {
+			return '';
+		}
+	}*/
+
     /**
      * Проверка пользователя на онлайн
      *
