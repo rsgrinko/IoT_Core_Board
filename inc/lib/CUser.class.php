@@ -81,6 +81,19 @@ class CUser {
 		return $res;
 	}
 
+	/**
+	 * Возвращает токен пользователя
+	 */
+	public static function getUserToken($userId):string {
+		$result = self::$DB->getItem(self::$table, array('id' => $userId));
+		
+		if($result) {
+			return $result['token'];
+		} else {
+			return '';
+		}
+	}
+
     /**
      * Проверка пользователя на онлайн
      *
@@ -133,7 +146,7 @@ class CUser {
 	 * @return bool
 	 */
 	public static function isUserExists($login):bool{
-		$result = self::$DB->getItem(self::$table, array('login'=>$login));
+		$result = self::$DB->getItem(self::$table, array('login' => $login));
 		
 		if($result) {
 			return true;
@@ -149,7 +162,7 @@ class CUser {
 	 * @return bool
 	 */
 	public static function isTokenExists($token):bool{
-		$result = self::$DB->getItem(self::$table, array('token'=>$token));
+		$result = self::$DB->getItem(self::$table, array('token' => $token));
 		
 		if($result) {
 			return true;
