@@ -28,23 +28,21 @@ require_once DIR.'/inc/lib/CIoT.class.php';			  			// работа с контр
 
 
 $DB = new CDB(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME); 		// создаем объект для работы с базой данных
-$DB->query('SET sql_mode = \'\'');                              // сбрасываем режим работы sql_mode=only_full_group_by 
+$DB->query('SET sql_mode = \'\'');  // сбрасываем режим работы sql_mode=only_full_group_by
 
-CIoT::init($DB);											    // инициализация класса работы с контроллером
-CCache::init(CACHEDIR, CACHE_TTL, USE_CACHE);    				// инициализация модуля кэширования
+CIoT::init($DB); // инициализация класса работы с контроллером
+CCache::init(CACHEDIR, CACHE_TTL, USE_CACHE); // инициализация модуля кэширования
 if(CACHE_TYPE == 'MEMCACHE') {
     if(!CCache::useMemcache()) {
        CEvents::add('Ошибка при включении memcache! Используется файловое хранилище. <code>'.CCache::getLastError().'</code>', 'warning', 'cache');
     }
 }
 
-if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
-    CCache::flush();
-}
 
-CUser::init($DB);												// инициализация поддержки пользователей панели
-CEvents::init($DB);												// инициализация класса журналирования событий
-CCron::init($DB);												// инициализация крона
+
+CUser::init($DB);	// инициализация поддержки пользователей панели
+CEvents::init($DB);	// инициализация класса журналирования событий
+CCron::init($DB);	// инициализация крона
 
 /**
  * Массив данных о текущем пользователе
@@ -64,8 +62,12 @@ if(CUser::isUser()) {
 	$USER = ['id' => 0];
 }
 
-CCron::handler();  												// выполнение периодических задач на хитах
+CCron::handler(); // выполнение периодических задач на хитах
 
+if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
+    CCache::flush();
+    CEvents::add('Произведена очистка кэша. Инициатор: '.$USER['login'].', ID: '.$USER['id'], 'info', 'cache');
+}
 
 $userDevices = getUserDevices($USER['id']);
 
