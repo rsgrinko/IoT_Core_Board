@@ -57,10 +57,18 @@
                                                     
                                                     foreach($arrDevices as $device):
                                                     $arrUserFields = CUser::getFields($device['user']);
+
+                                                    $cacheId = md5('CIoT::isOnline_'.$device['id']);
+                                                    if(CCache::check($cacheId) and CCache::getAge($cacheId) < DEVICE_ONLINE_TIME) {
+                                                        $isDeviceOnline = CCache::get($cacheId);
+                                                    } else {
+                                                        $isDeviceOnline = CIoT::isOnline($device['id']);
+                                                        CCache::write($cacheId, $isDeviceOnline);
+                                                    }
                                                 ?>
                                                 <tr>
                                                     <td class="text-center"><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['id']; ?></a></td>
-                                                    <td><?php if(CIoT::isOnline($device['id'])) { ?><span class="bg-green label">Online</span><?php } else {?><span class="bg-red label">Offline</span><?php } ?></td>
+                                                    <td><?php if($isDeviceOnline) { ?><span class="bg-green label">Online</span><?php } else {?><span class="bg-red label">Offline</span><?php } ?></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['mac']; ?></a></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['chipid']; ?></a></td>
                                                     <td><?php echo $device['hw']; ?></td>

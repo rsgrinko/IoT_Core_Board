@@ -37,11 +37,21 @@ require_once __DIR__ . '/inc/header.php';
                             CPagination::execute($_REQUEST['page'], CUser::countUsers(), PAGINATION_LIMIT);
                             $limit = CPagination::getLimit();
                             ?>
-                            <?php foreach (CUser::getUsers($limit, 'ASC') as $user): ?>
+                            <?php
+                            foreach (CUser::getUsers($limit, 'ASC') as $user):
+
+                                $cacheId = md5('CUser::isOnline_'.$user['id']);
+                                if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
+                                    $isUserOnline = CCache::get($cacheId);
+                                } else {
+                                    $isUserOnline = CUser::isOnline($user['id']);
+                                    CCache::write($cacheId, $isUserOnline);
+                                }
+                                ?>
                                 <tr>
                                     <td class="text-center"><?php echo $user['id']; ?></td>
                                     <td><?php echo $user['login']; ?></td>
-                                    <th><?php if (CUser::isOnline($user['id'])) { ?><span
+                                    <th><?php if ($isUserOnline) { ?><span
                                                 class="bg-green label">Online</span><?php } else { ?><span
                                                 class="bg-red label">Offline</span><?php } ?></th>
                                     <td><?php echo $user['name']; ?></td>
