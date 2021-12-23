@@ -61,6 +61,13 @@ if (CCache::check($cacheId)) {
                         </div>
 
                         <div class="form-group">
+                            <label class="col-xs-12">Последняя активность:</label>
+                            <div class="col-sm-9">
+                                <div class="form-control-static"><?php echo date("d.m.Y H:i:s", $arrUser['last_active']); ?></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-xs-12" for="login-input">Имя:</label>
                             <div class="col-sm-9">
                                 <input class="form-control" type="text" id="login-input" name="name" placeholder="" value="<?php echo $arrUser['name']; ?>">

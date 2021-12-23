@@ -64,8 +64,8 @@
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['mac']; ?></a></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['chipid']; ?></a></td>
                                                     <td><?php echo $device['hw']; ?></td>
-                                                    <td><?php echo $device['fw']; ?></td>
-                                                    <td><?php echo $arrUserFields['name']; ?> (<?php echo $arrUserFields['login'];?>, ID: <?php echo $device['user'];?>)</td>
+                                                    <td><?php echo CIoT::parseFW($device['fw']); ?></td>
+                                                    <td><a href="editprofile.php?id=<?php echo $device['user'];?>"><?php echo $arrUserFields['name']; ?> (<?php echo $arrUserFields['login'];?>, ID: <?php echo $device['user'];?>)</td></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['time']); ?></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['last_active']); ?></td>
                                                 </tr>
