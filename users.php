@@ -51,9 +51,9 @@ require_once __DIR__ . '/inc/header.php';
                                 <tr>
                                     <td class="text-center"><?php echo $user['id']; ?></td>
                                     <td><?php echo $user['login']; ?></td>
-                                    <th><?php if ($isUserOnline) { ?><span
+                                    <td><?php if ($isUserOnline) { ?><span
                                                 class="bg-green label">Online</span><?php } else { ?><span
-                                                class="bg-red label">Offline</span><?php } ?></th>
+                                                class="bg-red label">Offline</span><?php } ?></td>
                                     <td><?php echo $user['name']; ?></td>
                                     <td><a href="mailto:<?php echo $user['email']; ?>"><?php echo $user['email']; ?></a>
                                     </td>
