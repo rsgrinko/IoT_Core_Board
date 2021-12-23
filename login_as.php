@@ -8,7 +8,7 @@
  * Сайт: https://it-stories.ru
  */
 require_once __DIR__ . '/inc/bootstrap.php';
-if (!CUSer::is_admin()) {
+if (!CUSer::isAdmin()) {
     die('403 - Access denied');
 }
 
@@ -20,6 +20,8 @@ if (!isGod($USER['id'])) {
 }
 
 $id = prepareString($_REQUEST['id']);
+
+CEvents::add('Пользователь '.$USER['login'].', ID: '.$USER['id'].' авторизовался под пользователем '.CUser::getFields($id)['login'].', ID: '.$id, 'info', 'core');
 
 CUser::logout();
 CUser::authorize($id);
