@@ -13,6 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
 define('START_TIME', microtime(true));					// засекаем время старта скрипта
 define('CORE_LOADED', true);									// флаг корректного запуска
 require_once __DIR__ . '/config.php';							// подключаем конфигурационный файл
+require_once DIR.'/inc/lib/CPushover.class.php';                // пуш уведомления
 require_once DIR.'/inc/lib/CFiles.class.php';			  		// работа с файлами и папками
 require_once DIR.'/inc/lib/CJson.class.php';			  		// работа с json
 require_once DIR.'/inc/lib/CMail.class.php';			  		// отправка почтовых сообщений
@@ -25,6 +26,7 @@ require_once DIR.'/inc/lib/CMQTT.class.php';			  		// работа с mqtt бр�
 require_once DIR.'/inc/func.php';						  		// вспомогательные функции
 require_once DIR.'/inc/lib/CCron.class.php';			  		// планировщик задач
 require_once DIR.'/inc/lib/CIoT.class.php';			  			// работа с контроллером
+
 
 
 $DB = new CDB(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME); 		// создаем объект для работы с базой данных
