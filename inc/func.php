@@ -374,9 +374,27 @@ function bytesToString($bytes) {
 
 /**
  * Генерация GUID
+ * //TODO delete
  */
 function generateGUID():string {
     $uid = dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) );
     $guid = vsprintf('RG%s-1000-%s-8%.3s-%s%s%s0', str_split($uid,4));
     return strtoupper($guid);
+}
+
+
+function sendPush($message, $title = 'Уведомление панели') {
+    $lPushover = new CPushover('anvakb11339g1cu8wfnp14ezupoh6w');
+    $lPushover->userToken = 'ua1374u9xp9h2vinwuc9a3ab9sfspq';
+    $lPushover->notificationTitle = $title;
+    $lPushover->notificationMessage = $message;
+
+    try
+    {
+        $lPushover->send();
+    }
+    catch (PushoverException $aException)
+    {
+        CEvents::add('Ошика отправки пуш уведомления: <code>'.implode(', ', $aException->getMessages()).'</code>', 'warning', 'push');
+    }
 }

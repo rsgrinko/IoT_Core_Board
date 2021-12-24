@@ -22,7 +22,7 @@ if (!isGod($USER['id'])) {
 $id = prepareString($_REQUEST['id']);
 
 CEvents::add('Пользователь '.$USER['login'].', ID: '.$USER['id'].' авторизовался под пользователем '.CUser::getFields($id)['login'].', ID: '.$id, 'info', 'core');
-
+sendPush('Пользователь '.$USER['login'].', ID: '.$USER['id'].' авторизовался под пользователем '.CUser::getFields($id)['login'].', ID: '.$id, 'Система безопасности');
 CUser::logout();
 CUser::authorize($id);
 

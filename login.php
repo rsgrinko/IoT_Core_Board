@@ -17,8 +17,8 @@ if (CUser::isUser()) {
             $auth = true;
         } else {
             $auth = false;
-            CEvents::add('Неудачная попытка авториации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')', 'warning', 'panel');
-
+            CEvents::add('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')', 'warning', 'panel');
+            sendPush('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')','Система безопасности');
             /**
              * В случае неудачной попытки входа информируем администратора о данной ситуации
              */
