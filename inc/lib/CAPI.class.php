@@ -11,6 +11,8 @@ class CAPI {
     public static function getUserInfo() {
         global $USER;
         unset($USER['password']);
-        return $USER;
+        $result = $USER;
+        $result['devices'] = getUserDevices($USER['id']);
+        return $result;
     }
 }
