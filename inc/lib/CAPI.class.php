@@ -10,7 +10,7 @@ class CAPI {
 
     public static function getUserInfo() {
         global $USER;
-        unset($USER['pass']);
+        unset($USER['password']);
         return $USER;
     }
 }
