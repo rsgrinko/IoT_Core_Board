@@ -34,8 +34,8 @@ class CAPI {
                 break;
             }
         }
-        if (!$canAccessToDevice) {
-            return ['status' => 'fail', 'message' => 'Выбранное устройство не принадлежит текущему пользователю'];
+        if (!$canAccessToDevice and $USER['access_level'] !== 'admin') {
+            return ['status' => 'fail', 'message' => 'Недостаточно прав для доступа к показаниям данного устройства'];
         }
 
         $sensorValue = CIoT::getSensorData($deviceId, $sensor)['value'];
