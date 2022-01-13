@@ -38,7 +38,7 @@ class CAPI {
             return ['status' => 'fail', 'message' => 'Выбранное устройство не принадлежит текущему пользователю'];
         }
 
-        $sensorValue = CIoT::getSensorData($deviceId, $sensor);
+        $sensorValue = CIoT::getSensorData($deviceId, $sensor)['value'];
         return ['status' => 'ok', 'deviceId' => $deviceId, 'sensor' => $sensor, 'value' => $sensorValue];
        
     }
