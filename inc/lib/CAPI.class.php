@@ -26,6 +26,14 @@ class CAPI {
         $deviceId = $_REQUEST['deviceId'];
 
         $arUserDevices = getUserDevices($USER['id']);
+
+        $canAccessToDevice = false;
+        foreach($arUserDevices as $device) {
+            if($device['id'] == $deviceId) {
+                $canAccessToDevice = true;
+                break;
+            }
+        }
         if (!in_array($deviceId, $arUserDevices)) {
             return ['status' => 'fail', 'message' => 'Выбранное устройство не принадлежит текущему пользователю'];
         }
