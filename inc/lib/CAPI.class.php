@@ -25,7 +25,7 @@ class CAPI {
         $sensor = $_REQUEST['sensor'];
         $deviceId = $_REQUEST['deviceId'];
 
-        $arUserDevices = CIoT::getUserDevices($USER['id']);
+        $arUserDevices = getUserDevices($USER['id']);
         if (!in_array($deviceId, $arUserDevices)) {
             return ['status' => 'fail', 'message' => 'Выбранное устройство не принадлежит текущему пользователю'];
         }
