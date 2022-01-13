@@ -34,7 +34,7 @@ class CAPI {
                 break;
             }
         }
-        if (!in_array($deviceId, $arUserDevices)) {
+        if (!$canAccessToDevice) {
             return ['status' => 'fail', 'message' => 'Выбранное устройство не принадлежит текущему пользователю'];
         }
 
