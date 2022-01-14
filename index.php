@@ -2,7 +2,7 @@
 require_once __DIR__ . '/inc/bootstrap.php';
 require_once __DIR__ . '/inc/header.php';
 
-$cacheId = md5('CIoT::getDallasArrData_'.$USER['deviceId']);
+$cacheId = md5('CIoT::getSensorsArrData_'.$USER['deviceId']);
 
 if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
     $arSensors = CCache::get($cacheId);
@@ -70,7 +70,7 @@ if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
                         },
                         dataType: "json"
                     });
-                }, 3000);
+                }, 30000);
             });
         </script>
 

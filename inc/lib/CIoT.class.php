@@ -173,7 +173,7 @@ class CIoT {
      * @param $deviceId
      */
     public static function getSensorAllData($deviceId){
-        for($i=1; $i<11; $i++) {
+        for($i=1; $i<5; $i++) {
             $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="ds'.($i).'" ORDER BY id DESC LIMIT 1');
             if($res) {
                 $result['ds'.$i]['sensor'] = $res[0]['sensor'];
