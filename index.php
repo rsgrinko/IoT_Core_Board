@@ -4,11 +4,11 @@ require_once __DIR__ . '/inc/header.php';
 
 $cacheId = md5('CIoT::getSensorsArrData_'.$USER['deviceId']);
 
-if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
-    $arSensors = CCache::get($cacheId);
+if(Cache::check($cacheId) and Cache::getAge($cacheId) < 60) {
+    $arSensors = Cache::get($cacheId);
 } else {
-    $arSensors = CIoT::getSensorsArrData($USER['deviceId']);
-    CCache::write($cacheId, $arSensors);
+    $arSensors = IoT::getSensorsArrData($USER['deviceId']);
+    Cache::write($cacheId, $arSensors);
 }
 
 
@@ -31,8 +31,8 @@ if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
             <div class="col-sm-6 col-lg-3">
                 <div class="card" id="displaySensor_<?php echo $arSensor['sensor']; ?>">
                     <div class="card-header bg-cyan bg-inverse custom_text_center">
-                        <h4><i class="<?php echo CIoT::getHumanSensorName($arSensor['sensor'])['icon']; ?>"></i>
-                               <?php echo CIoT::getHumanSensorName($arSensor['sensor'])['name'].' ('.$arSensor['sensor'].')'; ?>
+                        <h4><i class="<?php echo IoT::getHumanSensorName($arSensor['sensor'])['icon']; ?>"></i>
+                               <?php echo IoT::getHumanSensorName($arSensor['sensor'])['name'].' ('.$arSensor['sensor'].')'; ?>
                         </h4>
                         <ul class="card-actions">
                             <li>
@@ -46,7 +46,7 @@ if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
                         <p>
                         <div class="monitoring_value">
                             <span id="<?php echo $arSensor['sensor']; ?>"><?php echo $arSensor['value']; ?></span>
-                            <?php echo CIoT::getHumanSensorName($arSensor['sensor'])['unit'] ?></div>
+                            <?php echo IoT::getHumanSensorName($arSensor['sensor'])['unit'] ?></div>
                         </p>
                     </div>
                 </div>
@@ -79,15 +79,15 @@ if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
 
     <div class="test-draggable-items row">
         <?php
-        CIoT::initHighcharts();
+        IoT::initHighcharts();
         //pre($arSensors);
         foreach ($arSensors as $arSensor):
             $cacheId = md5('CIoT::getPlotDallasValues_'.$USER['deviceId'].'_'.$arSensor['sensor']);
-            if(CCache::check($cacheId) and CCache::getAge($cacheId) < 300) {
-                $arValues = CCache::get($cacheId);
+            if(Cache::check($cacheId) and Cache::getAge($cacheId) < 300) {
+                $arValues = Cache::get($cacheId);
             } else {
-                $arValues = CIoT::getPlotDallasValues($USER['deviceId'], $arSensor['sensor']);
-                CCache::write($cacheId, $arValues);
+                $arValues = IoT::getPlotDallasValues($USER['deviceId'], $arSensor['sensor']);
+                Cache::write($cacheId, $arValues);
             }
 
             
@@ -122,7 +122,7 @@ if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
 
 
             if (count($arValues) > 1) {
-                CIoT::drawHighcharts($arSensor['sensor'], $arValues);
+                IoT::drawHighcharts($arSensor['sensor'], $arValues);
             }
 
             ?>

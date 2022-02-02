@@ -4,7 +4,7 @@
  */
 require_once __DIR__ . '/../inc/bootstrap.php';
 
-if (!CUser::isUser()) {
+if (!User::isUser()) {
     die('403 - Access denied');
 }
 
@@ -14,11 +14,11 @@ if (!isset($_REQUEST['deviceId']) or $_REQUEST['deviceId'] == '') {
 
 $deviceId = prepareString($_REQUEST['deviceId']);
 
-if (!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::isAdmin()) {
+if (!isHaveAccessToDevice($deviceId, $USER['id']) and !User::isAdmin()) {
     die('403 - Access denied');
 }
 
 $relay = prepareString($_REQUEST['relay']);
 $state = prepareString($_REQUEST['state']);
 
-CIoT::setRelayState($deviceId, $relay, $state ? '1' : '0');
+IoT::setRelayState($deviceId, $relay, $state ? '1' : '0');

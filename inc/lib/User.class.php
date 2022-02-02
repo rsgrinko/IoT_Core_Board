@@ -7,7 +7,7 @@
 *	Сайт: https://it-stories.ru
 */
 	
-class CUser {
+class User {
 
 	/**
 	 * ID текущего пользователя

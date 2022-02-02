@@ -8,7 +8,7 @@
  * @author rsgrinko@gmail.com
  */
 
-class CDB
+class DB
 {
     /**
      * @var resource $db Объект базы

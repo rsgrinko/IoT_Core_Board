@@ -4,7 +4,7 @@
  */
 require_once __DIR__ . '/../inc/bootstrap.php';
 
-if(!CUser::isUser()) {
+if(!User::isUser()) {
     die('403 - Access denied');
 }
 
@@ -15,18 +15,18 @@ if(!isset($_REQUEST['deviceId']) or $_REQUEST['deviceId'] == ''){
 $deviceId = prepareString($_REQUEST['deviceId']);
 
 
-if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::isAdmin()) {
+if(!isHaveAccessToDevice($deviceId, $USER['id']) and !User::isAdmin()) {
     die('403 - Access denied');
 }
 
 $cacheId = md5('CIoT::getSensorAllData_'.$deviceId);
-if(CCache::check($cacheId) and CCache::getAge($cacheId) < 10) {
-    $arSensorsData = CCache::get($cacheId);
+if(Cache::check($cacheId) and Cache::getAge($cacheId) < 10) {
+    $arSensorsData = Cache::get($cacheId);
 } else {
-    $arSensorsData = CIoT::getSensorAllData($deviceId);
-    CCache::write($cacheId, $arSensorsData);
+    $arSensorsData = IoT::getSensorAllData($deviceId);
+    Cache::write($cacheId, $arSensorsData);
 }
 
 
 header('Content-Type: application/json');
-echo CJson::create($arSensorsData);
+echo Json::create($arSensorsData);

@@ -2,7 +2,7 @@
 /**
  * Класс для предоставления API функционала
  */
-class CAPI {
+class API {
 
     public static function test() {
         return ['status' => 'ok', 'message' => 'test was completed :)'];
@@ -14,7 +14,7 @@ class CAPI {
         $result = $USER;
         $result['devices'] = getUserDevices($USER['id']);
         foreach($result['devices'] as $key => $value) {
-            $result['devices'][$key]['config'] = CIoT::getBoardConfig($value['id']);
+            $result['devices'][$key]['config'] = IoT::getBoardConfig($value['id']);
         }
         $result['status'] = 'ok';
         return $result;
@@ -38,7 +38,7 @@ class CAPI {
             return ['status' => 'fail', 'message' => 'Недостаточно прав для доступа к показаниям данного устройства'];
         }
 
-        $sensorValue = CIoT::getSensorData($deviceId, $sensor)['value'];
+        $sensorValue = IoT::getSensorData($deviceId, $sensor)['value'];
         return ['status' => 'ok', 'deviceId' => $deviceId, 'sensor' => $sensor, 'value' => $sensorValue];
        
     }

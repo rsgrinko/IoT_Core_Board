@@ -31,7 +31,7 @@
 	
 */
 
-class CMQTT {
+class MQTT {
     protected $socket;            /* holds the socket	*/
     protected $msgid = 1;            /* counter for message id */
     public $keepalive = 10;        /* default keepalive timmer */

@@ -7,7 +7,7 @@
 	Сайт: https://it-stories.ru
 */
 
-class CEvents {
+class Events {
 	private static $DB;
 	private static $table;
 

@@ -8,16 +8,16 @@
 */
 require_once __DIR__ . '/inc/bootstrap.php';
 
-if (CUser::isUser()) {
+if (User::isUser()) {
     $auth = true;
 } else {
     $auth = false;
     if ($_REQUEST['login'] !== '' and $_REQUEST['pass'] !== '' and !empty($_REQUEST['login'] and !empty($_REQUEST['pass']))) {
-        if (CUser::securityAuthorize($_REQUEST['login'], $_REQUEST['pass'])) {
+        if (User::securityAuthorize($_REQUEST['login'], $_REQUEST['pass'])) {
             $auth = true;
         } else {
             $auth = false;
-            CEvents::add('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')', 'warning', 'panel');
+            Events::add('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')', 'warning', 'panel');
             sendPush('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')','Система безопасности');
             /**
              * В случае неудачной попытки входа информируем администратора о данной ситуации
@@ -41,7 +41,7 @@ if ($auth == false and isset($_REQUEST['login']) and $_REQUEST['login'] !== '') 
 
 if ($auth == true) {
     if (isset($_REQUEST['login']) and $_REQUEST['login'] !== '') {
-        CEvents::add('Пользователь ' . $_REQUEST['login'] . ' авторизировался в системе (IP: ' . getClientInfo()['ip'] . ', OS: ' . getOS() . ', UA: ' . getClientInfo()['name'] . ')', 'info', 'panel');
+        Events::add('Пользователь ' . $_REQUEST['login'] . ' авторизировался в системе (IP: ' . getClientInfo()['ip'] . ', OS: ' . getOS() . ', UA: ' . getClientInfo()['name'] . ')', 'info', 'panel');
     }
     header('Location: index.php?');
 } else {

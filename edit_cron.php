@@ -1,6 +1,6 @@
 <?php
 	require_once __DIR__ . '/inc/bootstrap.php';
-	if(!CUSer::isAdmin()) {
+	if(!User::isAdmin()) {
 		die('403 - Access denied');
 	}
 	require_once __DIR__ . '/inc/header.php';
@@ -8,7 +8,7 @@
 
 <?php
 if (isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
-    CCron::updateTask(
+    Cron::updateTask(
         $_REQUEST['id'],
         [
             'active' => $_REQUEST['active'] ? 'Y' : 'N',
@@ -24,7 +24,7 @@ if (isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
 <?php	
 	endif;
 	
-	$task = CCron::getTask($_REQUEST['id']);
+	$task = Cron::getTask($_REQUEST['id']);
 ?>
 <form action="edit_cron.php" method="POST">
 <input type="hidden" name="save" value="Y">

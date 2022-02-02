@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/inc/bootstrap.php';
-if (!CUSer::isAdmin()) {
+if (!User::isAdmin()) {
     die('403 - Access denied');
 }
 require_once __DIR__ . '/inc/header.php';
@@ -31,10 +31,10 @@ require_once __DIR__ . '/inc/header.php';
                             </thead>
                             <tbody>
                             <?php
-                            CPagination::execute($_REQUEST['page'], CEvents::count(), PAGINATION_LIMIT);
-                            $limit = CPagination::getLimit();
+                            Pagination::execute($_REQUEST['page'], Events::count(), PAGINATION_LIMIT);
+                            $limit = Pagination::getLimit();
                             ?>
-                            <?php foreach (CEvents::getEvents('', $limit, 'DESC') as $event): ?>
+                            <?php foreach (Events::getEvents('', $limit, 'DESC') as $event): ?>
                                 <tr>
                                     <td class="text-center"><?php echo $event['id']; ?></td>
                                     <td><?php echo date("d.m.Y H:i:s", $event['time']); ?></td>
@@ -48,7 +48,7 @@ require_once __DIR__ . '/inc/header.php';
                             </tbody>
                         </table>
                     </div>
-                    <?php CPagination::show('page'); ?>
+                    <?php Pagination::show('page'); ?>
                 </div>
                 <!-- .card-block -->
             </div>

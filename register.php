@@ -9,7 +9,7 @@
 require_once __DIR__ . '/inc/bootstrap.php';
 $err_mess = false;
 
-if(CUser::isUser()) {
+if(User::isUser()) {
     header("Location: index.php");
     die();
 }
@@ -19,26 +19,26 @@ if(isset($_REQUEST['reg']) and $_REQUEST['reg'] == 'Y'){
       isset($_REQUEST['email']) and $_REQUEST['email'] !=='' and
       isset($_REQUEST['pass']) and $_REQUEST['pass'] !=='') {
 
-      if(!CUser::isUserExists($_REQUEST['login'])) {
-          CUser::registration($_REQUEST['login'],
+      if(!User::isUserExists($_REQUEST['login'])) {
+          User::registration($_REQUEST['login'],
               $_REQUEST['pass'],
               $_REQUEST['email'],
               'user', $_REQUEST['name'],
               'assets/img/avatars/default_avatar.jpg');
-          CUser::securityAuthorize($_REQUEST['login'], $_REQUEST['pass']);
-          CEvents::add('Зарегистрирован новый пользователь <b>'.$_REQUEST['login'].'</b>', 'info', 'reguser');
+          User::securityAuthorize($_REQUEST['login'], $_REQUEST['pass']);
+          Events::add('Зарегистрирован новый пользователь <b>'.$_REQUEST['login'].'</b>', 'info', 'reguser');
           header("Location: index.php");
           die();
       } else {
           $err_mess = 'Данный логин уже занят';
-          CEvents::add('Ошибка - логин уже существует. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
+          Events::add('Ошибка - логин уже существует. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
       }
 
 
 
   } else {
       $err_mess = 'Не заполненны необходимые поля';
-      CEvents::add('Ошибка - не заполненны необходимые поля. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
+      Events::add('Ошибка - не заполненны необходимые поля. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
   }
 }
 

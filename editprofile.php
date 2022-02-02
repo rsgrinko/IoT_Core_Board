@@ -8,7 +8,7 @@ require_once __DIR__ . '/inc/header.php';
 $userId = $USER['id'];
 
 
-if (isset($_REQUEST['id']) and !empty($_REQUEST['id']) and CUser::isAdmin()) {
+if (isset($_REQUEST['id']) and !empty($_REQUEST['id']) and User::isAdmin()) {
     $userId = $_REQUEST['id'];
 }
 
@@ -16,17 +16,17 @@ $cacheId = md5('CUser::getFields_' . $userId);
 
 if(isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
     $DB->update('users', ['id' => $userId], ['name' => $_REQUEST['name'], 'email' => $_REQUEST['email'], 'image' => $_REQUEST['image']]);
-    CCache::del($cacheId);
-    CEvents::add('Изменен профиль пользователя с ID: '.$userId.', инициатор ID: '.CUser::$id.' ('.$USER['login'].')', 'notice', 'user');
+    Cache::del($cacheId);
+    Events::add('Изменен профиль пользователя с ID: '.$userId.', инициатор ID: '.User::$id.' ('.$USER['login'].')', 'notice', 'user');
     echo '<script>alert("Профиль успешно отредактирован");</script>';
 endif;
 
 
-if (CCache::check($cacheId)) {
-    $arrUser = CCache::get($cacheId);
+if (Cache::check($cacheId)) {
+    $arrUser = Cache::get($cacheId);
 } else {
-    $arrUser = CUser::getFields($userId);
-    CCache::write($cacheId, $arrUser);
+    $arrUser = User::getFields($userId);
+    Cache::write($cacheId, $arrUser);
 }
 //pre($arrUser);
 ?>

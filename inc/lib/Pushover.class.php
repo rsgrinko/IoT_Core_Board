@@ -1,5 +1,5 @@
 <?php
-class CPushover
+class Pushover
 {
 	/*
 	 * Pushover json api service url

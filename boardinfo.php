@@ -5,31 +5,31 @@
 		header("Location: index.php?"); die();
 	}
 	$deviceId = prepareString($_REQUEST['id']);
-	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::isAdmin()) {
+	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !User::isAdmin()) {
 		die('403 - Access denied');
 	}
 	
 	require_once __DIR__ . '/inc/header.php';
 
     $cacheId = md5('CIoT::getDevice_'.$deviceId);
-    if(CCache::check($cacheId)) {
-        $arDevice = CCache::get($cacheId);
+    if(Cache::check($cacheId)) {
+        $arDevice = Cache::get($cacheId);
     } else {
-        $arDevice = CIoT::getDevice($deviceId);
-        CCache::write($cacheId, $arDevice);
+        $arDevice = IoT::getDevice($deviceId);
+        Cache::write($cacheId, $arDevice);
     }
 
     $cacheId = md5('CUser::getFields_'.$arDevice['user']);
-    if(CCache::check($cacheId)) {
-        $arDeviceUser = CCache::get($cacheId);
+    if(Cache::check($cacheId)) {
+        $arDeviceUser = Cache::get($cacheId);
     } else {
-        $arDeviceUser = CUser::getFields($arDevice['user']);
-        CCache::write($cacheId, $arDeviceUser);
+        $arDeviceUser = User::getFields($arDevice['user']);
+        Cache::write($cacheId, $arDeviceUser);
     }
 
 
      if(isset($_REQUEST['select']) and $_REQUEST['select'] == 'Y') {
-         CIoT::setSelectedDevice($_REQUEST['id']);
+         IoT::setSelectedDevice($_REQUEST['id']);
          echo '<script>alert("Устройство выбрано")</script>';
      }
 
@@ -61,7 +61,7 @@
                         <label class="col-xs-12 custom_bold">Статус</label>
                         <div class="col-sm-9">
                             <div class="form-control-static">
-                                <?php if(CIoT::isOnline($arDevice['id'])) { ?>
+                                <?php if(IoT::isOnline($arDevice['id'])) { ?>
                                     <span class="bg-green label">Online</span>
                                 <?php } else {?>
                                     <span class="bg-red label">Offline</span>
@@ -101,7 +101,7 @@
 					<div class="form-group">
 						<label class="col-xs-12 custom_bold">Версия прошивки</label>
 						<div class="col-sm-9">
-							<div class="form-control-static"><code><?php echo CIoT::parseFW($arDevice['fw']);?></code></div>
+							<div class="form-control-static"><code><?php echo IoT::parseFW($arDevice['fw']);?></code></div>
 						</div>
 					</div>
 					

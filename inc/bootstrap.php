@@ -13,70 +13,70 @@ if (session_status() == PHP_SESSION_NONE) {
 define('START_TIME', microtime(true));					// засекаем время старта скрипта
 define('CORE_LOADED', true);									// флаг корректного запуска
 require_once __DIR__ . '/config.php';							// подключаем конфигурационный файл
-require_once DIR.'/inc/lib/CPushover.class.php';                // пуш уведомления
-require_once DIR.'/inc/lib/CFiles.class.php';			  		// работа с файлами и папками
-require_once DIR.'/inc/lib/CJson.class.php';			  		// работа с json
-require_once DIR.'/inc/lib/CMail.class.php';			  		// отправка почтовых сообщений
-require_once DIR.'/inc/lib/CCache.class.php';			  		// кэширование
-require_once DIR.'/inc/lib/CDB.class.php';			  			// работа с базой данных
-require_once DIR.'/inc/lib/CEvents.class.php';		  			// работа с событиями системы
-require_once DIR.'/inc/lib/CUser.class.php';			  		// работа с пользователями панели
-require_once DIR.'/inc/lib/CPagination.class.php';	  			// обработчик пагинации
-require_once DIR.'/inc/lib/CMQTT.class.php';			  		// работа с mqtt брокером
+require_once DIR . '/inc/lib/Pushover.class.php';                // пуш уведомления
+require_once DIR . '/inc/lib/Files.class.php';			  		// работа с файлами и папками
+require_once DIR . '/inc/lib/Json.class.php';			  		// работа с json
+require_once DIR . '/inc/lib/Mail.class.php';			  		// отправка почтовых сообщений
+require_once DIR . '/inc/lib/Cache.class.php';			  		// кэширование
+require_once DIR . '/inc/lib/DB.class.php';			  			// работа с базой данных
+require_once DIR . '/inc/lib/Events.class.php';		  			// работа с событиями системы
+require_once DIR . '/inc/lib/User.class.php';			  		// работа с пользователями панели
+require_once DIR . '/inc/lib/Pagination.class.php';	  			// обработчик пагинации
+require_once DIR . '/inc/lib/MQTT.class.php';			  		// работа с mqtt брокером
 require_once DIR.'/inc/func.php';						  		// вспомогательные функции
-require_once DIR.'/inc/lib/CCron.class.php';			  		// планировщик задач
-require_once DIR.'/inc/lib/CIoT.class.php';			  			// работа с контроллером
+require_once DIR . '/inc/lib/Cron.class.php';			  		// планировщик задач
+require_once DIR . '/inc/lib/IoT.class.php';			  			// работа с контроллером
 
 
 
-$DB = new CDB(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME); 		// создаем объект для работы с базой данных
+$DB = new DB(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME); 		// создаем объект для работы с базой данных
 $DB->query('SET sql_mode = \'\'');  // сбрасываем режим работы sql_mode=only_full_group_by
 
-CIoT::init($DB); // инициализация класса работы с контроллером
-CCache::init(CACHEDIR, CACHE_TTL, USE_CACHE); // инициализация модуля кэширования
+IoT::init($DB); // инициализация класса работы с контроллером
+Cache::init(CACHEDIR, CACHE_TTL, USE_CACHE); // инициализация модуля кэширования
 if(CACHE_TYPE == 'MEMCACHE') {
-    if(!CCache::useMemcache()) {
-       CEvents::add('Ошибка при включении memcache! Используется файловое хранилище. <code>'.CCache::getLastError().'</code>', 'warning', 'cache');
+    if(!Cache::useMemcache()) {
+       Events::add('Ошибка при включении memcache! Используется файловое хранилище. <code>'.Cache::getLastError().'</code>', 'warning', 'cache');
     }
 }
 
 
 
-CUser::init($DB);	// инициализация поддержки пользователей панели
-CEvents::init($DB);	// инициализация класса журналирования событий
-CCron::init($DB);	// инициализация крона
+User::init($DB);	// инициализация поддержки пользователей панели
+Events::init($DB);	// инициализация класса журналирования событий
+Cron::init($DB);	// инициализация крона
 
 /**
  * Массив данных о текущем пользователе
  */
 $USER = [];
 
-if(CUser::isUser()) {
-    $cacheId = md5('CUser::getFields_'.CUser::$id);
-    if(CCache::check($cacheId)) {
-        $USER = CCache::get($cacheId);
+if(User::isUser()) {
+    $cacheId = md5('CUser::getFields_'.User::$id);
+    if(Cache::check($cacheId)) {
+        $USER = Cache::get($cacheId);
     } else {
-        $USER = CUser::getFields();
+        $USER = User::getFields();
         unset($USER['password']);
-        CCache::write($cacheId, $USER);
+        Cache::write($cacheId, $USER);
     }
 } else {
 	$USER = ['id' => 0];
 }
 
-CCron::handler(); // выполнение периодических задач на хитах
+Cron::handler(); // выполнение периодических задач на хитах
 
 if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
-    CCache::flush();
-    CEvents::add('Произведена очистка кэша. Инициатор: '.$USER['login'].', ID: '.$USER['id'], 'info', 'cache');
+    Cache::flush();
+    Events::add('Произведена очистка кэша. Инициатор: '.$USER['login'].', ID: '.$USER['id'], 'info', 'cache');
 }
 
 $userDevices = getUserDevices($USER['id']);
 
 //TODO: реализовать выбор устройства пользователя через панель
 if($userDevices) {
-    if(CIoT::getSelectedDevice()) {
-        $USER['deviceId'] = CIoT::getSelectedDevice();
+    if(IoT::getSelectedDevice()) {
+        $USER['deviceId'] = IoT::getSelectedDevice();
     } else {
         $USER['deviceId'] = $userDevices[0]['id'];
     }

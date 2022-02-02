@@ -3,7 +3,7 @@
  * Класс для JSON представления
  */
 
- class CJson {
+ class Json {
      public static function create($assocArray) {
          return json_encode($assocArray, JSON_UNESCAPED_UNICODE);
      }

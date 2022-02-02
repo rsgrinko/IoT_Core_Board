@@ -1,6 +1,6 @@
 <?php
 	require_once __DIR__.'/inc/bootstrap.php';
-	if(!CUSer::isAdmin()) {
+	if(!User::isAdmin()) {
 		die('403 - Access denied');
 	}
 	require_once __DIR__.'/inc/header.php';
@@ -36,34 +36,34 @@
                                             <tbody>
 	                                            <?php
                                                     $cacheId = md5('CIoT::getCountDevices');
-                                                    if(CCache::check($cacheId)) {
-                                                        $countDevices = CCache::get($cacheId);
+                                                    if(Cache::check($cacheId)) {
+                                                        $countDevices = Cache::get($cacheId);
                                                     } else {
-                                                        $countDevices = CIoT::getCountDevices();
-                                                        CCache::write($cacheId, $countDevices);
+                                                        $countDevices = IoT::getCountDevices();
+                                                        Cache::write($cacheId, $countDevices);
                                                     }
 
-													CPagination::execute($_REQUEST['page'], $countDevices, PAGINATION_LIMIT);
-													$limit = CPagination::getLimit();
+													Pagination::execute($_REQUEST['page'], $countDevices, PAGINATION_LIMIT);
+													$limit = Pagination::getLimit();
 												?>
 	                                            <?php
                                                     $cacheId = md5('CIoT::getDevices_'.$limit.'_ASC');
-                                                    if(CCache::check($cacheId)) {
-                                                        $arrDevices = CCache::get($cacheId);
+                                                    if(Cache::check($cacheId)) {
+                                                        $arrDevices = Cache::get($cacheId);
                                                     } else {
-                                                        $arrDevices = CIoT::getDevices($limit, 'ASC');
-                                                        CCache::write($cacheId, $arrDevices);
+                                                        $arrDevices = IoT::getDevices($limit, 'ASC');
+                                                        Cache::write($cacheId, $arrDevices);
                                                     }
                                                     
                                                     foreach($arrDevices as $device):
-                                                    $arrUserFields = CUser::getFields($device['user']);
+                                                    $arrUserFields = User::getFields($device['user']);
 
                                                     $cacheId = md5('CIoT::isOnline_'.$device['id']);
-                                                    if(CCache::check($cacheId) and CCache::getAge($cacheId) < DEVICE_ONLINE_TIME) {
-                                                        $isDeviceOnline = CCache::get($cacheId);
+                                                    if(Cache::check($cacheId) and Cache::getAge($cacheId) < DEVICE_ONLINE_TIME) {
+                                                        $isDeviceOnline = Cache::get($cacheId);
                                                     } else {
-                                                        $isDeviceOnline = CIoT::isOnline($device['id']);
-                                                        CCache::write($cacheId, $isDeviceOnline);
+                                                        $isDeviceOnline = IoT::isOnline($device['id']);
+                                                        Cache::write($cacheId, $isDeviceOnline);
                                                     }
                                                 ?>
                                                 <tr>
@@ -72,7 +72,7 @@
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['mac']; ?></a></td>
                                                     <td><a href="boardinfo.php?id=<?php echo $device['id']; ?>"><?php echo $device['chipid']; ?></a></td>
                                                     <td><?php echo $device['hw']; ?></td>
-                                                    <td><?php echo CIoT::parseFW($device['fw']); ?></td>
+                                                    <td><?php echo IoT::parseFW($device['fw']); ?></td>
                                                     <td><a href="editprofile.php?id=<?php echo $device['user'];?>"><?php echo $arrUserFields['name']; ?> (<?php echo $arrUserFields['login'];?>, ID: <?php echo $device['user'];?>)</td></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['time']); ?></td>
                                                     <td><?php echo date("d.m.Y H:i:s", $device['last_active']); ?></td>
@@ -81,7 +81,7 @@
                                             </tbody>
                                         </table>
 	                                    </div>
-                                        <?php CPagination::show('page'); ?>
+                                        <?php Pagination::show('page'); ?>
                                     </div>
                                     <!-- .card-block -->
                                 </div>

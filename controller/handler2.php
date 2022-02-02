@@ -21,28 +21,28 @@
 	$DEVICE['hw'] = prepareString($_REQUEST['hw']);
 	$DEVICE['fw'] = prepareString($_REQUEST['fw']);
 	
-	if(!CIoT::isDeviceExists($DEVICE['mac'])){ 					 // если устройства нет в базе
-		CIoT::addDevice($DEVICE['mac'], $DEVICE['chipid'], $DEVICE['hw'], $DEVICE['fw']);  // добавляем его
+	if(!IoT::isDeviceExists($DEVICE['mac'])){ 					 // если устройства нет в базе
+		IoT::addDevice($DEVICE['mac'], $DEVICE['chipid'], $DEVICE['hw'], $DEVICE['fw']);  // добавляем его
 	}
 	
-	$DEVICE['id'] = CIoT::getDeviceId($DEVICE['mac']);
+	$DEVICE['id'] = IoT::getDeviceId($DEVICE['mac']);
 	
-	CIoT::updateDeviceInfo($DEVICE['id'], $DEVICE['fw']);
+	IoT::updateDeviceInfo($DEVICE['id'], $DEVICE['fw']);
 	
 	if(isset($_REQUEST['ds']) and !empty($_REQUEST['ds'])){			// еели принята телеметрия с датчиков dallas
 		foreach($_REQUEST['ds'] as $key => $dallasSensor){ 			// забиваем показания температурных датчиков
-			CIoT::addDallasData($DEVICE['id'], 'ds'.($key+1), $dallasSensor);
+			IoT::addDallasData($DEVICE['id'], 'ds'.($key+1), $dallasSensor);
 		}
 	}
 	
 	
 	if(isset($_REQUEST['dht_t']) and !empty($_REQUEST['dht_t'])){		 // если получены данные с датчика DTH
-		CIoT::addDallasData($DEVICE['id'], 'dht_t', $_REQUEST['dht_t']); //забиваем показания температуры
-		CIoT::addDallasData($DEVICE['id'], 'dht_h', $_REQUEST['dht_h']); // забиваем показания влажности
+		IoT::addDallasData($DEVICE['id'], 'dht_t', $_REQUEST['dht_t']); //забиваем показания температуры
+		IoT::addDallasData($DEVICE['id'], 'dht_h', $_REQUEST['dht_h']); // забиваем показания влажности
 	}
 	
 	
-	$DEVICE['relays'] = CIoT::getRelaysState($DEVICE['id']);
+	$DEVICE['relays'] = IoT::getRelaysState($DEVICE['id']);
 	
 	foreach($DEVICE['relays'] as $relayState) {
 		echo $relayState;

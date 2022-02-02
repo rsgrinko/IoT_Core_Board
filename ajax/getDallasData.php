@@ -4,7 +4,7 @@
  */
 	require_once __DIR__ . '/../inc/bootstrap.php';
 
-	if(!CUser::isUser()) {
+	if(!User::isUser()) {
 		die('403 - Access denied');
 	}
 	
@@ -16,16 +16,16 @@
 	$sensor = prepareString($_REQUEST['sensor']);
 	
 	
-	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::isAdmin()) {
+	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !User::isAdmin()) {
 		die('403 - Access denied');
 	}
 
     $cacheId = md5('CIoT::getSensorData_'.$deviceId.'_'.$sensor);
-    if(CCache::check($cacheId) and CCache::getAge($cacheId) < 10) {
-        $arDallasData = CCache::get($cacheId);
+    if(Cache::check($cacheId) and Cache::getAge($cacheId) < 10) {
+        $arDallasData = Cache::get($cacheId);
     } else {
-        $arDallasData = CIoT::getSensorData($deviceId, $sensor);
-        CCache::write($cacheId, $arDallasData);
+        $arDallasData = IoT::getSensorData($deviceId, $sensor);
+        Cache::write($cacheId, $arDallasData);
     }
 
 	

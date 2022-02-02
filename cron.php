@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/inc/bootstrap.php';
-if (!CUSer::isAdmin()) {
+if (!User::isAdmin()) {
     die('403 - Access denied');
 }
 require_once __DIR__ . '/inc/header.php';
@@ -10,7 +10,7 @@ if (
     isset($_REQUEST['run_task']) and $_REQUEST['run_task'] == 'Y' and
     isset($_REQUEST['task_id']) and !empty($_REQUEST['task_id'])
 ):
-    CCron::runTask($_REQUEST['task_id']);
+    Cron::runTask($_REQUEST['task_id']);
     ?>
     <script>
         $(document).ready(function () {
@@ -24,7 +24,7 @@ if (
     isset($_REQUEST['remove_task']) and $_REQUEST['remove_task'] == 'Y' and
     isset($_REQUEST['task_id']) and !empty($_REQUEST['task_id'])
 ):
-    CCron::removeTask($_REQUEST['task_id']);
+    Cron::removeTask($_REQUEST['task_id']);
     ?>
     <script>
         $(document).ready(function () {
@@ -47,8 +47,8 @@ if (
 
             <div class="card-block">
                 <?php
-                CPagination::execute($_REQUEST['page'], CCron::count_tasks(), PAGINATION_LIMIT);
-                $limit = CPagination::getLimit();
+                Pagination::execute($_REQUEST['page'], Cron::count_tasks(), PAGINATION_LIMIT);
+                $limit = Pagination::getLimit();
                 ?>
                 <div class="table-responsive">
                     <table class="table table-striped table-borderless table-header-bg">
@@ -65,7 +65,7 @@ if (
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach (CCron::getTasks($limit, 'ASC') as $task): ?>
+                        <?php foreach (Cron::getTasks($limit, 'ASC') as $task): ?>
                             <tr data-name="<?php echo htmlspecialchars($task['name']); ?>"
                                 data-id="<?php echo $task['id']; ?>">
                                 <td class="mob_hide"><?php echo $task['id']; ?></td>
@@ -95,7 +95,7 @@ if (
                         </tbody>
                     </table>
                 </div>
-                <?php CPagination::show('page'); ?>
+                <?php Pagination::show('page'); ?>
             </div>
             <!-- .card-block -->
         </div>

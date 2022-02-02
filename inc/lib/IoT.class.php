@@ -7,7 +7,7 @@
 *	Сайт: https://it-stories.ru
 */
 	
-class CIoT {
+class IoT {
 	public static $DB;
 
 	/**

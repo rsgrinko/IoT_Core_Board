@@ -12,10 +12,10 @@
 		die('400 - Bad Request');
 	}
 	$mac = prepareString($_REQUEST['mac']);
-	$deviceId = CIoT::getDeviceId($mac);
+	$deviceId = IoT::getDeviceId($mac);
 
 	header('Content-type: application/json; charset=utf-8');
-	$boardConfig = CIoT::getBoardConfig($deviceId);
+	$boardConfig = IoT::getBoardConfig($deviceId);
 	$arr = array (
 				'dallas_resolution' => $boardConfig['ds_resolution'],	 // разрядность датчика 9..12
 				'deviceId' => $deviceId,								 // идентификатор устройства

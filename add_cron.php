@@ -1,13 +1,13 @@
 <?php
 	require_once __DIR__ . '/inc/bootstrap.php';
-	if(!CUSer::isAdmin()) {
+	if(!User::isAdmin()) {
 		die('403 - Access denied');
 	}
 	require_once __DIR__ . '/inc/header.php';
 ?>	
 <?php
 if (isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
-    CCron::addTask([
+    Cron::addTask([
             'active' => $_REQUEST['active'] ? 'Y' : 'N',
             'name' => $_REQUEST['name'],
             'period' => $_REQUEST['period'],

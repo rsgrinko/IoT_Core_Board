@@ -5,37 +5,37 @@
     unset($USER);
 
     if(!isset($_REQUEST['token']) or empty($_REQUEST['token'])) {
-        echo CJson::create(['status' => 'fail', 'message' => 'Token not set']);
+        echo Json::create(['status' => 'fail', 'message' => 'Token not set']);
         die();
     }
 
     if(!isset($_REQUEST['method']) or empty($_REQUEST['method'])) {
-        echo CJson::create(['status' => 'fail', 'message' => 'Method not set']);
+        echo Json::create(['status' => 'fail', 'message' => 'Method not set']);
         die();
     }
 
     $token = prepareString($_REQUEST['token']);
 
-    if(!CUser::isTokenExists($token)) {
-        echo CJson::create(['status' => 'fail', 'message' => 'Token not found']);
+    if(!User::isTokenExists($token)) {
+        echo Json::create(['status' => 'fail', 'message' => 'Token not found']);
         die();
     }
 
     $method = prepareString($_REQUEST['method']);
 
-    $USER = CUser::getUserByToken($token);
+    $USER = User::getUserByToken($token);
 
     // имеем пользователя, который что то хочет. действуем...
     // TODO: дописать реализацию API
     // pre($USER);
-    require_once __DIR__ . '/../inc/lib/CAPI.class.php';
+    require_once __DIR__ . '/../inc/lib/API.class.php';
 
     try {
-        $result = CAPI::$method();
+        $result = API::$method();
     } catch (Throwable $e) {
-        echo CJson::create(['status' => 'fail', 'message' => 'Метод '.$method.' не найден']);
+        echo Json::create(['status' => 'fail', 'message' => 'Метод '.$method.' не найден']);
         die();
     }
 
-    echo CJson::create($result);
+    echo Json::create($result);
     

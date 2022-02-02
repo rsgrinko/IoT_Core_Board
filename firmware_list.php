@@ -1,7 +1,7 @@
 <?php
 	require_once __DIR__.'/inc/bootstrap.php';
 	require_once __DIR__.'/inc/header.php';
-	$arFirmwareList = CIoT::getFirmwareList();
+	$arFirmwareList = IoT::getFirmwareList();
 ?>
 
 <div class="row maxheight">
@@ -31,10 +31,10 @@
                                             </thead>
                                             <tbody>
 	                                            <?php
-													CPagination::execute($_REQUEST['page'], CIoT::countFirmwareList(), PAGINATION_LIMIT);
-													$limit = CPagination::getLimit();	
+													Pagination::execute($_REQUEST['page'], IoT::countFirmwareList(), PAGINATION_LIMIT);
+													$limit = Pagination::getLimit();
 												?>
-	                                            <?php foreach(CIoT::getFirmwareList($hw = false, $limit, 'DESC') as $arFirmware): ?>
+	                                            <?php foreach(IoT::getFirmwareList($hw = false, $limit, 'DESC') as $arFirmware): ?>
                                                 <tr>
                                                     <td class="text-center"><?php echo $arFirmware['id']; ?></td>
                                                     <td><?php echo $arFirmware['created']; ?></td>
@@ -52,7 +52,7 @@
                                             </tbody>
                                         </table>
 	                                    </div>
-                                        <?php CPagination::show('page'); ?>
+                                        <?php Pagination::show('page'); ?>
                                     </div>
                                     <!-- .card-block -->
                                 </div>

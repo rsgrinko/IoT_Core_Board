@@ -3,7 +3,7 @@
  * Файл для тестирования и отладки нового функционала
  */
 require_once __DIR__.'/inc/bootstrap.php';
-if(!CUser::isAdmin()) {
+if(!User::isAdmin()) {
     die('403 - Access denied');
 }
 //userSendMail(1, 'Test userMail', 'Hello!!!',false);

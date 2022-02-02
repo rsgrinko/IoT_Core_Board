@@ -83,12 +83,12 @@ function pre($arr, $stop = false) {
  */
 function isHaveAccessToDevice($deviceId, $userId){
     $cacheId = md5('isHaveAccessToDevice_'.$deviceId.'_'.$userId);
-    if(CCache::check($cacheId)){
-        $arDevice = CCache::get($cacheId);
+    if(Cache::check($cacheId)){
+        $arDevice = Cache::get($cacheId);
     } else {
         global $DB;
         $arDevice = $DB->query('SELECT user FROM devices WHERE id="'.$deviceId.'"');
-        CCache::write($cacheId, $arDevice);
+        Cache::write($cacheId, $arDevice);
     }
 
 
@@ -203,12 +203,12 @@ function getClientInfo() {
  */
 function getUserDevices($userId) {
     $cacheId = md5('getUserDevices_'.$userId);
-    if(CCache::check($cacheId)){
-        $res = CCache::get($cacheId);
+    if(Cache::check($cacheId)){
+        $res = Cache::get($cacheId);
     } else {
         global $DB;
         $res = $DB->query('SELECT * FROM devices WHERE user="'.$userId.'"');
-        CCache::write($cacheId, $res);
+        Cache::write($cacheId, $res);
     }
 
 	if($res){
@@ -273,7 +273,7 @@ function adminSendMail($subject, $message, $file = false)
         'LINKNAME' => 'Перейти в панель',
         'HOME' => 'https://it-stories.ru'
     ];
-    $mail = new CMail;
+    $mail = new Mail;
     $mail->dump = true;
     $mail->dumpPath = $_SERVER['DOCUMENT_ROOT'] . '/uploads/emails';
     $mail->from('iot@' . $_SERVER['SERVER_NAME'], 'IoT Core Board v.' . VERSION);
@@ -290,7 +290,7 @@ function adminSendMail($subject, $message, $file = false)
     }
 
     $mail->send();
-    CEvents::add('Выполнена отправка письма администратору. <code>'.CJson::create($arMailFields).'</code>', 'info', 'core');
+    Events::add('Выполнена отправка письма администратору. <code>'.Json::create($arMailFields).'</code>', 'info', 'core');
     return;
 }
 
@@ -304,8 +304,8 @@ function adminSendMail($subject, $message, $file = false)
  * @param string|false $file
  */
  function userSendMail($userId, $subject, $message, $file = false) {
-     $arUser = CUser::getFields($userId);
-     $mail = new CMail;
+     $arUser = User::getFields($userId);
+     $mail = new Mail;
      $mail->from('iot@'.$_SERVER['SERVER_NAME'], 'Система оповещений IoT Core');
      $mail->to($arUser['email'], $arUser['name']);
      $mail->subject = $subject;
@@ -384,7 +384,7 @@ function generateGUID():string {
 
 
 function sendPush($message, $title = 'Уведомление панели') {
-    $lPushover = new CPushover('anvakb11339g1cu8wfnp14ezupoh6w');
+    $lPushover = new Pushover('anvakb11339g1cu8wfnp14ezupoh6w');
     $lPushover->userToken = 'ua1374u9xp9h2vinwuc9a3ab9sfspq';
     $lPushover->notificationTitle = $title;
     $lPushover->notificationMessage = $message;
@@ -395,6 +395,6 @@ function sendPush($message, $title = 'Уведомление панели') {
     }
     catch (PushoverException $aException)
     {
-        CEvents::add('Ошика отправки пуш уведомления: <code>'.implode(', ', $aException->getMessages()).'</code>', 'warning', 'push');
+        Events::add('Ошика отправки пуш уведомления: <code>'.implode(', ', $aException->getMessages()).'</code>', 'warning', 'push');
     }
 }

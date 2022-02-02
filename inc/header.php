@@ -13,7 +13,7 @@ if(!defined('CORE_LOADED') or CORE_LOADED !== true) {
     die();
 }
 
-if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
+if(!User::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 	header("Location: login.php");
 	die();
 }
@@ -46,7 +46,7 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                 'date': '<?php echo date("d.m.Y H:i:s"); ?>',
                 'version': '<?php echo VERSION; ?>',
             };
-            var arrUser = <?php echo CJson::create($USER); ?>            
+            var arrUser = <?php echo Json::create($USER); ?>
         </script>
         
         <!-- Favicons -->
@@ -152,7 +152,7 @@ if(!CUser::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
 
                                 <li class="nav-item nav-drawer-header">Компоненты</li>
 
-								<?php if(CUSer::isAdmin()): ?>
+								<?php if(User::isAdmin()): ?>
 								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'events.php' ? 'active' : '';?>">
                                     <a href="<?php echo HOME; ?>/events.php"><i class="fa fa-list"></i> Журнал событий</a>
 								</li>

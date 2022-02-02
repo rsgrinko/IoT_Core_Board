@@ -18,8 +18,8 @@ $delta = round($finish_time - START_TIME, 3);
 if ($delta < 0.001) {
 	$delta = 0.001;
 }
-$cacheSize = CCache::getCacheSize();
-echo '<span class="footer_debug">Использовано ОЗУ: '.round(memory_get_usage() / 1024 / 1024, 2).' МБ / БД: '.round($DB::$workingTime, 3).' сек ('.$DB::$quantity.' шт.) / Кэш: '.CFiles::convertBytes($cacheSize).' (<a href="'.$_SERVER['REQUEST_URI'].'?&clear_cache=Y">X</a>) / Генерация: '.$delta.' сек</span>';
+$cacheSize = Cache::getCacheSize();
+echo '<span class="footer_debug">Использовано ОЗУ: '.round(memory_get_usage() / 1024 / 1024, 2).' МБ / БД: '.round($DB::$workingTime, 3).' сек ('.$DB::$quantity.' шт.) / Кэш: '.Files::convertBytes($cacheSize).' (<a href="'.$_SERVER['REQUEST_URI'].'?&clear_cache=Y">X</a>) / Генерация: '.$delta.' сек</span>';
 ?>
             </div>
         </main>

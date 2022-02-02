@@ -36,7 +36,7 @@ if (isset($_REQUEST['save']) and $_REQUEST['save'] == 'Y'):
         $message = nl2br($_REQUEST['message']);
     }
 
-    $mail = new CMail;
+    $mail = new Mail;
     $mail->dump = true;
     $mail->dumpPath = $_SERVER['DOCUMENT_ROOT'] . '/uploads/emails';
     $mail->from('iot@' . $_SERVER['SERVER_NAME'], 'IoT Core Board v.' . VERSION);
@@ -88,7 +88,7 @@ endif;
                             <label class="col-xs-12" for="template-select">Выберите шаблон письма:</label>
                                 <div class="col-sm-9">
                                 <select class="form-control" id="template-select" name="template" size="1">
-                                    <?php foreach(CMail::getMailTemplates() as $mailTemplate): ?>
+                                    <?php foreach(Mail::getMailTemplates() as $mailTemplate): ?>
 									    <option value="<?php echo $mailTemplate; ?>"><?php echo $mailTemplate; ?></option>
                                     <?php endforeach; ?>
 								</select>

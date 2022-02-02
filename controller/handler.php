@@ -23,29 +23,29 @@ $DEVICE['hw'] = prepareString($_REQUEST['hw']);
 $DEVICE['fw'] = prepareString($_REQUEST['fw']);
 
 // если устройство не найдено в базе - регистрируем его
-if (!CIoT::isDeviceExists($DEVICE['mac'])) {
-    CIoT::addDevice($DEVICE['mac'], $DEVICE['chipid'], $DEVICE['hw'], $DEVICE['fw']);
+if (!IoT::isDeviceExists($DEVICE['mac'])) {
+    IoT::addDevice($DEVICE['mac'], $DEVICE['chipid'], $DEVICE['hw'], $DEVICE['fw']);
 }
 
-$DEVICE['id'] = CIoT::getDeviceId($DEVICE['mac']);
+$DEVICE['id'] = IoT::getDeviceId($DEVICE['mac']);
 
 // обновление информации об устройстве
-CIoT::updateDeviceInfo($DEVICE['id'], $DEVICE['fw']);
+IoT::updateDeviceInfo($DEVICE['id'], $DEVICE['fw']);
 
 // добавляем показания датчиков DS18B20 при наличии
 if (isset($_REQUEST['ds']) and !empty($_REQUEST['ds'])) {
     foreach ($_REQUEST['ds'] as $key => $dallasSensor) {
-        CIoT::addDallasData($DEVICE['id'], 'ds' . ($key + 1), prepareString($dallasSensor));
+        IoT::addDallasData($DEVICE['id'], 'ds' . ($key + 1), prepareString($dallasSensor));
     }
 }
 
 // добавляем показания аналогого пина при наличии
 if (isset($_REQUEST['analog']) and !empty($_REQUEST['analog'])) {
-    CIoT::addAnalogData($DEVICE['id'], prepareString($_REQUEST['analog']));
+    IoT::addAnalogData($DEVICE['id'], prepareString($_REQUEST['analog']));
 }
 
 // получаем состояние каналов реле
-$DEVICE['relays'] = CIoT::getRelaysState($DEVICE['id']);
+$DEVICE['relays'] = IoT::getRelaysState($DEVICE['id']);
 
 // отдаем контроллеру требуемые состояния реле
 foreach ($DEVICE['relays'] as $relayState) {

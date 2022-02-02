@@ -10,5 +10,5 @@
 set_time_limit(60);
 require_once __DIR__ . '/bootstrap.php';
 
-CCron::cronUpdate();	 // обновляем время выполнения крона
-CCron::handler();        // работаем с периодическими заданиями
+Cron::cronUpdate();	 // обновляем время выполнения крона
+Cron::handler();        // работаем с периодическими заданиями

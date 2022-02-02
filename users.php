@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/inc/bootstrap.php';
-if (!CUSer::isAdmin()) {
+if (!User::isAdmin()) {
     die('403 - Access denied');
 }
 require_once __DIR__ . '/inc/header.php';
@@ -34,18 +34,18 @@ require_once __DIR__ . '/inc/header.php';
                             </thead>
                             <tbody>
                             <?php
-                            CPagination::execute($_REQUEST['page'], CUser::countUsers(), PAGINATION_LIMIT);
-                            $limit = CPagination::getLimit();
+                            Pagination::execute($_REQUEST['page'], User::countUsers(), PAGINATION_LIMIT);
+                            $limit = Pagination::getLimit();
                             ?>
                             <?php
-                            foreach (CUser::getUsers($limit, 'ASC') as $user):
+                            foreach (User::getUsers($limit, 'ASC') as $user):
 
                                 $cacheId = md5('CUser::isOnline_'.$user['id']);
-                                if(CCache::check($cacheId) and CCache::getAge($cacheId) < 60) {
-                                    $isUserOnline = CCache::get($cacheId);
+                                if(Cache::check($cacheId) and Cache::getAge($cacheId) < 60) {
+                                    $isUserOnline = Cache::get($cacheId);
                                 } else {
-                                    $isUserOnline = CUser::isOnline($user['id']);
-                                    CCache::write($cacheId, $isUserOnline);
+                                    $isUserOnline = User::isOnline($user['id']);
+                                    Cache::write($cacheId, $isUserOnline);
                                 }
                                 ?>
                                 <tr>
@@ -78,7 +78,7 @@ require_once __DIR__ . '/inc/header.php';
                             </tbody>
                         </table>
                     </div>
-                    <?php CPagination::show('page'); ?>
+                    <?php Pagination::show('page'); ?>
                 </div>
                 <!-- .card-block -->
             </div>

@@ -4,7 +4,7 @@
  */
 	require_once __DIR__ . '/../inc/bootstrap.php';
 	
-	if(!CUser::isUser()) {
+	if(!User::isUser()) {
 		die('403 - Access denied');
 	}
 	
@@ -14,12 +14,12 @@
 	
 	$deviceId = prepareString($_REQUEST['deviceId']);
 	
-	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !CUser::isAdmin()) {
+	if(!isHaveAccessToDevice($deviceId, $USER['id']) and !User::isAdmin()) {
 		die('403 - Access denied');
 	}
 	$result = [];
 	
-	$arRelaysState = CIoT::getRelaysState($deviceId);
+	$arRelaysState = IoT::getRelaysState($deviceId);
 	
 	$index = 1;
 	foreach($arRelaysState as $state):

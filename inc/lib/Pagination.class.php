@@ -7,7 +7,7 @@
 *	Сайт: https://it-stories.ru
 */
 
-class CPagination {
+class Pagination {
 	private static $page;
 	private static $total;
 	private static $total_pages;

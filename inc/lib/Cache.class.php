@@ -9,7 +9,7 @@
  * @author rsgrinko@gmail.com
  */
 
-class CCache
+class Cache
 {
     /**
      * @var string $cache_dir Директория хранения файлов кэша
