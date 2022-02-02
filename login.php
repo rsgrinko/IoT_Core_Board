@@ -17,7 +17,7 @@ if (User::isUser()) {
             $auth = true;
         } else {
             $auth = false;
-            Events::add('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')', 'warning', 'panel');
+            Log::add('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')', 'warning', 'panel');
             sendPush('Неудачная попытка авторизации в системе (IP: ' . getIp() . ', ' . $_REQUEST['login'] . ', OS: ' . getOS() . ')','Система безопасности');
             /**
              * В случае неудачной попытки входа информируем администратора о данной ситуации
@@ -41,7 +41,7 @@ if ($auth == false and isset($_REQUEST['login']) and $_REQUEST['login'] !== '') 
 
 if ($auth == true) {
     if (isset($_REQUEST['login']) and $_REQUEST['login'] !== '') {
-        Events::add('Пользователь ' . $_REQUEST['login'] . ' авторизировался в системе (IP: ' . getClientInfo()['ip'] . ', OS: ' . getOS() . ', UA: ' . getClientInfo()['name'] . ')', 'info', 'panel');
+        Log::add('Пользователь ' . $_REQUEST['login'] . ' авторизировался в системе (IP: ' . getClientInfo()['ip'] . ', OS: ' . getOS() . ', UA: ' . getClientInfo()['name'] . ')', 'info', 'panel');
     }
     header('Location: index.php?');
 } else {

@@ -19,7 +19,7 @@ require_once DIR . '/inc/lib/Json.class.php';			  		// работа с json
 require_once DIR . '/inc/lib/Mail.class.php';			  		// отправка почтовых сообщений
 require_once DIR . '/inc/lib/Cache.class.php';			  		// кэширование
 require_once DIR . '/inc/lib/DB.class.php';			  			// работа с базой данных
-require_once DIR . '/inc/lib/Events.class.php';		  			// работа с событиями системы
+require_once DIR . '/inc/lib/Log.class.php';		  			// работа с событиями системы
 require_once DIR . '/inc/lib/User.class.php';			  		// работа с пользователями панели
 require_once DIR . '/inc/lib/Pagination.class.php';	  			// обработчик пагинации
 require_once DIR . '/inc/lib/MQTT.class.php';			  		// работа с mqtt брокером
@@ -36,14 +36,14 @@ IoT::init($DB); // инициализация класса работы с ко�
 Cache::init(CACHEDIR, CACHE_TTL, USE_CACHE); // инициализация модуля кэширования
 if(CACHE_TYPE == 'MEMCACHE') {
     if(!Cache::useMemcache()) {
-       Events::add('Ошибка при включении memcache! Используется файловое хранилище. <code>'.Cache::getLastError().'</code>', 'warning', 'cache');
+       Log::add('Ошибка при включении memcache! Используется файловое хранилище. <code>'.Cache::getLastError().'</code>', 'warning', 'cache');
     }
 }
 
 
 
 User::init($DB);	// инициализация поддержки пользователей панели
-Events::init($DB);	// инициализация класса журналирования событий
+Log::init($DB);	// инициализация класса журналирования событий
 Cron::init($DB);	// инициализация крона
 
 /**
@@ -68,7 +68,7 @@ Cron::handler(); // выполнение периодических задач �
 
 if(isset($_REQUEST['clear_cache']) and $_REQUEST['clear_cache'] =='Y') { // сброс кэша по запросу
     Cache::flush();
-    Events::add('Произведена очистка кэша. Инициатор: '.$USER['login'].', ID: '.$USER['id'], 'info', 'cache');
+    Log::add('Произведена очистка кэша. Инициатор: '.$USER['login'].', ID: '.$USER['id'], 'info', 'cache');
 }
 
 $userDevices = getUserDevices($USER['id']);

@@ -21,7 +21,7 @@ if (!isGod($USER['id'])) {
 
 $id = prepareString($_REQUEST['id']);
 
-Events::add('Пользователь '.$USER['login'].', ID: '.$USER['id'].' авторизовался под пользователем '.User::getFields($id)['login'].', ID: '.$id, 'info', 'core');
+Log::add('Пользователь '.$USER['login'].', ID: '.$USER['id'].' авторизовался под пользователем '.User::getFields($id)['login'].', ID: '.$id, 'info', 'core');
 sendPush('Пользователь '.$USER['login'].', ID: '.$USER['id'].' авторизовался под пользователем '.User::getFields($id)['login'].', ID: '.$id, 'Система безопасности');
 User::logout();
 User::authorize($id);

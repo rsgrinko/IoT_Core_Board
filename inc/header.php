@@ -153,8 +153,8 @@ if(!User::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
                                 <li class="nav-item nav-drawer-header">Компоненты</li>
 
 								<?php if(User::isAdmin()): ?>
-								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'events.php' ? 'active' : '';?>">
-                                    <a href="<?php echo HOME; ?>/events.php"><i class="fa fa-list"></i> Журнал событий</a>
+								<li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'log.php' ? 'active' : '';?>">
+                                    <a href="<?php echo HOME; ?>/log.php"><i class="fa fa-list"></i> Журнал событий</a>
 								</li>
 
                                 <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'boardlist.php' ? 'active' : '';?>">

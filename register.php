@@ -26,19 +26,19 @@ if(isset($_REQUEST['reg']) and $_REQUEST['reg'] == 'Y'){
               'user', $_REQUEST['name'],
               'assets/img/avatars/default_avatar.jpg');
           User::securityAuthorize($_REQUEST['login'], $_REQUEST['pass']);
-          Events::add('Зарегистрирован новый пользователь <b>'.$_REQUEST['login'].'</b>', 'info', 'reguser');
+          Log::add('Зарегистрирован новый пользователь <b>'.$_REQUEST['login'].'</b>', 'info', 'reguser');
           header("Location: index.php");
           die();
       } else {
           $err_mess = 'Данный логин уже занят';
-          Events::add('Ошибка - логин уже существует. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
+          Log::add('Ошибка - логин уже существует. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
       }
 
 
 
   } else {
       $err_mess = 'Не заполненны необходимые поля';
-      Events::add('Ошибка - не заполненны необходимые поля. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
+      Log::add('Ошибка - не заполненны необходимые поля. <code>'.json_encode($_REQUEST, JSON_UNESCAPED_UNICODE).'</code>', 'warning', 'reguser');
   }
 }
 

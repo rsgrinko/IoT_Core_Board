@@ -290,7 +290,7 @@ function adminSendMail($subject, $message, $file = false)
     }
 
     $mail->send();
-    Events::add('Выполнена отправка письма администратору. <code>'.Json::create($arMailFields).'</code>', 'info', 'core');
+    Log::add('Выполнена отправка письма администратору. <code>'.Json::create($arMailFields).'</code>', 'info', 'core');
     return;
 }
 
@@ -395,6 +395,6 @@ function sendPush($message, $title = 'Уведомление панели') {
     }
     catch (PushoverException $aException)
     {
-        Events::add('Ошика отправки пуш уведомления: <code>'.implode(', ', $aException->getMessages()).'</code>', 'warning', 'push');
+        Log::add('Ошика отправки пуш уведомления: <code>'.implode(', ', $aException->getMessages()).'</code>', 'warning', 'push');
     }
 }

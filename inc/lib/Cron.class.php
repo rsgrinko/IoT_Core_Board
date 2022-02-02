@@ -49,7 +49,7 @@ class Cron
     public static function cron_is_run()
     {
         if (!file_exists(DIR . '/cron.run')) {
-            Events::add('Ошибка в работе CRON - время последнего запуска превысило таймаут!', 'warning', 'cron');
+            Log::add('Ошибка в работе CRON - время последнего запуска превысило таймаут!', 'warning', 'cron');
             return false;
         }
 
@@ -57,7 +57,7 @@ class Cron
         if ($last_run < (time() - 120)) {
             if ($last_run != '0') {
                 file_put_contents(DIR . '/cron.run', '0');
-                Events::add('Ошибка в работе CRON - время последнего запуска превысило таймаут!', 'warning', 'cron');
+                Log::add('Ошибка в работе CRON - время последнего запуска превысило таймаут!', 'warning', 'cron');
             }
             return false;
         } else {
@@ -154,17 +154,17 @@ class Cron
             eval(base64_decode($res['command']));
             $result = ob_get_clean();
             self::$DB->update(self::$table, array('id' => $id), array('last_run' => time()));
-            Events::add('Выполнено задание с ID: ' . $id . '.' . (!empty($result) ? "\n" . 'Результат выполнения:' . "\n" . '<code>' . $result . '</code>' : ''), 'success', 'cron');
+            Log::add('Выполнено задание с ID: ' . $id . '.' . (!empty($result) ? "\n" . 'Результат выполнения:' . "\n" . '<code>' . $result . '</code>' : ''), 'success', 'cron');
             return true;
 
         } catch (ParseError $p) {
             ob_clean();
-            Events::add('Ошибка синтаксиса задания с ID ' . $id . ': <code>' . $p->getMessage() . '</code>', 'warning', 'cron');
+            Log::add('Ошибка синтаксиса задания с ID ' . $id . ': <code>' . $p->getMessage() . '</code>', 'warning', 'cron');
             return false;
 
         } catch (Throwable $e) {
             ob_clean();
-            Events::add('Фатальная ошибка при выполнении задания с ID ' . $id, 'warning', 'cron');
+            Log::add('Фатальная ошибка при выполнении задания с ID ' . $id, 'warning', 'cron');
             return false;
         }
         return true;
@@ -181,7 +181,7 @@ class Cron
     {
         if (!isset($id) or empty($id)) return false;
         $res = self::$DB->remove(self::$table, array('id' => $id));
-        Events::add('Задание с ID: ' . $id . ' было удалено', 'info', 'cron');
+        Log::add('Задание с ID: ' . $id . ' было удалено', 'info', 'cron');
         return true;
     }
 

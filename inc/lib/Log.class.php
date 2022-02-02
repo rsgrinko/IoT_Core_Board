@@ -7,11 +7,11 @@
 	Сайт: https://it-stories.ru
 */
 
-class Events {
+class Log {
 	private static $DB;
 	private static $table;
 
-	public static function init($DB, $table = 'events'){
+	public static function init($DB, $table = 'logs'){
 		self::$DB = $DB;
 		self::$table = $table;
 	}
@@ -22,7 +22,7 @@ class Events {
 		return $result;
 	}
 	
-	public static function count($types = array('info', 'notice', 'warning', 'success')){
+	public static function getCount($types = array('info', 'notice', 'warning', 'success')){
 		if(!empty($types)) {
 			foreach($types as $type){
 				$where .= ' type=\''.$type.'\' OR';
