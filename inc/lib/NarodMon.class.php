@@ -28,6 +28,7 @@ class NarodMon
             foreach($this->arData as $sensor => $value){
                 $package .= '#'.$sensor.'#'.$value."\n";
             }
+            $package .= '##';
 
             fwrite($fp, $package);
             fclose($fp);
