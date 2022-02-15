@@ -25,7 +25,8 @@ require_once DIR . '/inc/lib/Pagination.class.php';	  			// обработчик
 require_once DIR . '/inc/lib/MQTT.class.php';			  		// работа с mqtt брокером
 require_once DIR.'/inc/func.php';						  		// вспомогательные функции
 require_once DIR . '/inc/lib/Cron.class.php';			  		// планировщик задач
-require_once DIR . '/inc/lib/IoT.class.php';			  			// работа с контроллером
+require_once DIR . '/inc/lib/IoT.class.php';			  		// работа с контроллером
+require_once DIR . '/inc/lib/NarodMon.class.php';		// работа с народным мониторингом
 
 
 
