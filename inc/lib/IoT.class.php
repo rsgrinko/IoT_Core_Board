@@ -173,32 +173,14 @@ class IoT {
      * @param $deviceId
      */
     public static function getSensorAllData($deviceId){
-        for($i=1; $i<5; $i++) {
-            $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="ds'.($i).'" ORDER BY id DESC LIMIT 1');
-            if($res) {
-                $result['ds'.$i]['sensor'] = $res[0]['sensor'];
-                $result['ds'.$i]['value'] = $res[0]['value'];
+        $result = [];
+        $res = self::$DB->query('SELECT device, sensor, value, date, MAX(time) as time FROM sensors WHERE device="'.$deviceId.'" GROUP BY sensor');
+        if($res) {
+            foreach($res as $arSensor){
+                $result[$arSensor['sensor']]['sensor'] = $arSensor['sensor'];
+                $result[$arSensor['sensor']]['value'] = $arSensor['value'];
             }
         }
-
-        $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="dht_t" ORDER BY id DESC LIMIT 1');
-        if($res) {
-            $result['dht_t']['sensor'] = $res[0]['sensor'];
-            $result['dht_t']['value'] = $res[0]['value'];
-        }
-
-        $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="dht_h" ORDER BY id DESC LIMIT 1');
-        if($res) {
-            $result['dht_h']['sensor'] = $res[0]['sensor'];
-            $result['dht_h']['value'] = $res[0]['value'];
-        }
-
-        $res = self::$DB->query('SELECT * FROM sensors WHERE device="'.$deviceId.'" and sensor="analog" ORDER BY id DESC LIMIT 1');
-        if($res) {
-            $result['analog']['sensor'] = $res[0]['sensor'];
-            $result['analog']['value'] = $res[0]['value'];
-        }
-
         return $result;
     }
 
