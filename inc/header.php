@@ -65,6 +65,7 @@ if(!User::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
         <link rel="stylesheet" id="css-ionicons" href="assets/css/ionicons.css" />
         <link rel="stylesheet" id="css-bootstrap" href="assets/css/bootstrap.css" />
         <link rel="stylesheet" id="css-app" href="assets/css/app.css" />
+        <link rel="stylesheet" id="css-app" href="assets/codemirror/codemirror.css" />
         <link rel="stylesheet" id="css-app-custom" href="assets/css/app-custom.css" />
 
         <!-- End Stylesheets -->
@@ -76,6 +77,10 @@ if(!User::isUser() and $_SERVER['REQUEST_URI'] !== '/login.php') {
         <script src="assets/js/core/jquery.scrollLock.min.js"></script>
         <script src="assets/js/core/jquery.placeholder.min.js"></script>
         <script src="assets/js/app.js"></script>
+        <script src="assets/codemirror/codemirror.js"></script>
+        <script src="assets/codemirror/xml.js"></script>
+        <script src="assets/codemirror/php.js"></script>
+        <script src="assets/codemirror/sql.js"></script>
         <script src="assets/js/app-custom.js"></script>
 
         <!-- Page Plugins -->

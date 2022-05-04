@@ -312,7 +312,6 @@ class Cache
     private static function flushMemcache(): void
     {
         self::$memcacheObject->flush();
-        return;
     }
 
     /**

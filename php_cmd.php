@@ -23,7 +23,7 @@ require_once __DIR__ . '/inc/header.php';
                 <div class="col-xs-12">
                     <div class="form-material floating">
                         <textarea class="form-control" id="query" name="query" rows="8"><?php echo isset($_REQUEST['query']) ? $_REQUEST['query'] : ''; ?></textarea>
-                        <label for="query">Введите PHP код</label>
+                        <?/*<label for="query">Введите PHP код</label>*/?>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,11 @@ require_once __DIR__ . '/inc/header.php';
 <?php endif; ?>
 
 </div>
-
+<script>
+    CodeMirror.fromTextArea(document.getElementById("query"), {
+        lineNumbers: true
+    });
+</script>
 <?php
 require_once __DIR__ . '/inc/footer.php';
 ?>

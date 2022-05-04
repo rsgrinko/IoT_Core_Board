@@ -22,7 +22,7 @@ require_once __DIR__ . '/inc/header.php';
                         <div class="form-material floating">
                             <textarea class="form-control" id="query" name="query"
                                       rows="8"><?php echo $_REQUEST['query'] ?? ''; ?></textarea>
-                            <label for="query">Введите SQL запрос</label>
+                            <?/*<label for="query">Введите SQL запрос</label>*/?>
                         </div>
                     </div>
                 </div>
@@ -72,6 +72,25 @@ require_once __DIR__ . '/inc/header.php';
 </div>
 <?php endif; ?>
 </div>
+    <script>
+        /*CodeMirror.fromTextArea(document.getElementById("query"), {
+            lineNumbers: true
+        });*/
+
+        CodeMirror.fromTextArea(document.getElementById("query"), {
+            mode: "sql",
+            indentWithTabs: true,
+            smartIndent: true,
+            lineNumbers: true,
+            matchBrackets : true,
+            autofocus: true,
+            extraKeys: {"Ctrl-Space": "autocomplete"},
+            hintOptions: {tables: {
+                    users: ["name", "score", "birthDate"],
+                    countries: ["name", "population", "size"]
+                }}
+        });
+    </script>
 <?php
 require_once __DIR__ . '/inc/footer.php';
 ?>

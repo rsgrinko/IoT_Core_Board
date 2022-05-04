@@ -42,4 +42,20 @@ class API {
         return ['status' => 'ok', 'deviceId' => $deviceId, 'sensor' => $sensor, 'value' => $sensorValue];
        
     }
+
+    public static function getSensorData()
+    {
+        $sensor   = $_REQUEST['sensor'];
+        $deviceId = $_REQUEST['deviceId'];
+
+        $cacheId = md5('CIoT::getPlotDallasValues_' . $deviceId . '_' . $sensor);
+        if (Cache::check($cacheId) and Cache::getAge($cacheId) < 300) {
+            $arValues = Cache::get($cacheId);
+        } else {
+            $arValues = IoT::getPlotDallasValues($deviceId, $sensor);
+            Cache::write($cacheId, $arValues);
+        }
+
+        return ['status' => 'ok', 'deviceId' => $deviceId, 'sensor' => $sensor, 'data' => $arValues];
+    }
 }

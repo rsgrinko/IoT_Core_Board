@@ -1,41 +1,41 @@
 <?php
-	require_once __DIR__ . '/../inc/bootstrap.php';
-    header('Content-Type: application/json; charset=utf-8');
-    
-    unset($USER);
+require_once __DIR__ . '/../inc/bootstrap.php';
+header('Content-Type: application/json; charset=utf-8');
 
-    if(!isset($_REQUEST['token']) or empty($_REQUEST['token'])) {
-        echo Json::create(['status' => 'fail', 'message' => 'Token not set']);
-        die();
-    }
+unset($USER);
 
-    if(!isset($_REQUEST['method']) or empty($_REQUEST['method'])) {
-        echo Json::create(['status' => 'fail', 'message' => 'Method not set']);
-        die();
-    }
+if (!isset($_REQUEST['token']) or empty($_REQUEST['token'])) {
+    echo Json::create(['status' => 'fail', 'message' => 'Token not set']);
+    die();
+}
 
-    $token = prepareString($_REQUEST['token']);
+if (!isset($_REQUEST['method']) or empty($_REQUEST['method'])) {
+    echo Json::create(['status' => 'fail', 'message' => 'Method not set']);
+    die();
+}
 
-    if(!User::isTokenExists($token)) {
-        echo Json::create(['status' => 'fail', 'message' => 'Token not found']);
-        die();
-    }
+$token = prepareString($_REQUEST['token']);
 
-    $method = prepareString($_REQUEST['method']);
+if (!User::isTokenExists($token)) {
+    echo Json::create(['status' => 'fail', 'message' => 'Token not found']);
+    die();
+}
 
-    $USER = User::getUserByToken($token);
+$method = prepareString($_REQUEST['method']);
 
-    // имеем пользователя, который что то хочет. действуем...
-    // TODO: дописать реализацию API
-    // pre($USER);
-    require_once __DIR__ . '/../inc/lib/API.class.php';
+$USER = User::getUserByToken($token);
 
-    try {
-        $result = API::$method();
-    } catch (Throwable $e) {
-        echo Json::create(['status' => 'fail', 'message' => 'Метод '.$method.' не найден']);
-        die();
-    }
+// имеем пользователя, который что то хочет. действуем...
+// TODO: дописать реализацию API
+// pre($USER);
+require_once __DIR__ . '/../inc/lib/API.class.php';
 
-    echo Json::create($result);
+try {
+    $result = API::$method();
+} catch (Throwable $e) {
+    echo Json::create(['status' => 'fail', 'message' => 'Метод ' . $method . ' не найден']);
+    die();
+}
+
+echo Json::create($result);
     
