@@ -1,6 +1,8 @@
 <?php
 /**
  * Класс для предоставления API функционала
+ *
+ * @package IOT_CORE
  */
 class API {
 

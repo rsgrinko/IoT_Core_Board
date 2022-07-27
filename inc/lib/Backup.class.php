@@ -1,4 +1,5 @@
 <?php
+
 class Backup {
     private string $backupFolder;// куда будут сохранятся файлы
     private string $backupName;// имя архива

@@ -89,7 +89,25 @@ class IoT
         $result = self::$DB->addItem('sensors', array('device' => $deviceId, 'sensor' => $sensor, 'value' => $value, 'date' => date("Y-m-d H:i:00"), 'time' => time()));
 
         $delTime = time() - 3600 * 24; // удалять старые записи показаний
-        self::$DB->query('DELETE FROM sensors WHERE device="' . $deviceId . '" and time<' . $delTime . '');
+        self::$DB->query('DELETE FROM sensors WHERE device="' . $deviceId . '" and time<' . $delTime);
+    }
+
+    /**
+     * Добавление показаний датчика DHT в базу
+     *
+     * @param $deviceId
+     * @param $sensor
+     * @param $value
+     */
+    public static function addDHTData($deviceId, $sensor, $value): void
+    {
+        if ($value == 'nan') {
+            return;
+        }
+        $result = self::$DB->addItem('sensors', array('device' => $deviceId, 'sensor' => $sensor, 'value' => $value, 'date' => date("Y-m-d H:i:00"), 'time' => time()));
+
+        $delTime = time() - 3600 * 24; // удалять старые записи показаний
+        self::$DB->query('DELETE FROM sensors WHERE device="' . $deviceId . '" and time<' . $delTime);
     }
 
     /**
@@ -102,7 +120,7 @@ class IoT
     {
         self::$DB->addItem('sensors', array('device' => $deviceId, 'sensor' => 'analog', 'value' => $value, 'date' => date("Y-m-d H:i:00"), 'time' => time()));
         $delTime = time() - 3600 * 24; // удалять старые записи показаний
-        self::$DB->query('DELETE FROM sensors WHERE device="' . $deviceId . '" and time<' . $delTime . '');
+        self::$DB->query('DELETE FROM sensors WHERE device="' . $deviceId . '" and time<' . $delTime);
     }
 
     /**
